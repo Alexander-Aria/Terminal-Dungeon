@@ -8,6 +8,6 @@ void NumInput(T &num);
 void Ignore();
 
 // Game Functions
-int Battle();
-void Start(int &stage);
+int Battle(int &stage, GameState &game);
+void Start(int &stage, GameState &game);
 void Game(int save);

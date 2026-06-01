@@ -3,7 +3,7 @@
 template <typename T>
 void NumInput(T &num){
     while(!cin >> num){
-        cin.clear;
+        cin.clear();
         Ignore();
         cout << "Invalid input!\n";
         cout << "Try again : ";
@@ -19,7 +19,7 @@ void Game(int save){
     while(loop){
         switch(game.GetStage()){
             case 0:
-                Start(game.GetStage());
+                Start(game.GetStage(), game);
                 break;
         }
         if(game.GetStage() == 1){
@@ -35,8 +35,20 @@ void Game(int save){
     }
 }
 
-void Start(int &stage){
-    int status = 0;
+int Battle(int &stage, GameState &game, Enemy enemytype){
+    
+}
+
+void Start(int &stage, GameState &game){
+    char choice = 'n';
+    Enemy dummy(Stats(100000000000), "Dummy", "Test Dummy.");
+
+    cout << "Do you want to play the tutorial? y/n?";
+    if(choice == 'y'){
+        cout << "Try interacting with the dummy. You can surrender to continue.\n";
+        Battle(stage, game, dummy);
+    }
+    stage++;
 }
 
 int main(){

@@ -5,45 +5,82 @@
 
 class Items{
     private:
-        string name;
+        string name = "Undefined Item";
+        string description = "No Description";
     public:
+        Items(){}
+        Items(string &n, string &d){
+            name = n;
+            description = d;
+        }
+
         const string &GetName() const {return name;};
+        const string &GetDescription() const {return description;};
 };
 
 class Consumables : public Items{
+    private:
+        int healthgain = 0;
+    public:
+        Consumables(){}
+        Consumables(string &name, string &description, int &health):Items(name, description){
+            healthgain = health;
+        }
 
+        const int &GetHealth(){return healthgain;}
 };
 
 class Inventory{
     private:
-        vector<Items> consumables;
+        vector<Consumables> consumables;
     public:
-        Inventory(){};
+        Inventory(){}
+
+        vector<Consumables> &GetConsumables(){return consumables;}
 };
 
 class Stats{
     private:
-        int health = 100, maxhealth = 100;
+        int health = 100;
     public:
-        Stats(){};
+        Stats(){}
+        Stats(int h){
+            health = h;
+        }
 
         int &GetHealth(){return health;}
-        int &GetMaxHealth(){return maxhealth;}
+};
 
+class Enemy{
+    private:
+        Stats stats;
+        string name = "Undefined Enemy";
+        string description = "No Description";
+    public:
+        Enemy(){}
+        Enemy(Stats s, string n, string d){
+            stats = s;
+            name = n;
+            description = d;
+        }
+
+        Stats &GetStats(){return stats;}
+        string &GetName(){return name;}
+        string &GetDescription(){return description;}
 };
 
 class GameState{
     private:
         int stage = 0;
         int status = 0;
-        Stats player;
+        Stats playerstats;
         Inventory items;
     public:
         GameState(){};
 
         int &GetStage(){return stage;}
         int &GetStatus(){return status;}
-        Stats &GetStats(){return player;}
+        Stats &GetStats(){return playerstats;}
         Inventory &GetItems(){return items;}
 };
 
