@@ -2,6 +2,9 @@
 #include <vector>
 #include <random>
 #include <limits>
+#include <cmath>
+
+using namespace std;
 
 class Items{
     private:
@@ -9,7 +12,7 @@ class Items{
         string description = "No Description";
     public:
         Items(){}
-        Items(string &n, string &d){
+        Items(const string &n, const string &d){
             name = n;
             description = d;
         }
@@ -42,13 +45,22 @@ class Inventory{
 class Stats{
     private:
         int health = 100;
+        int maxhealth = 100;
+        int strength = 10;
+        int defense = 10;
     public:
         Stats(){}
-        Stats(int h){
+        Stats(const int &h, const int &mh, const int &str, const int &def){
             health = h;
+            maxhealth = mh;
+            strength = str;
+            defense = def;
         }
 
         int &GetHealth(){return health;}
+        int &GetMaxHealth(){return maxhealth;}
+        int &GetStrength(){return strength;}
+        int &GetDefense(){return defense;}
 };
 
 class Enemy{
@@ -58,7 +70,7 @@ class Enemy{
         string description = "No Description";
     public:
         Enemy(){}
-        Enemy(Stats s, string n, string d){
+        Enemy(const Stats &s, const string &n, const string &d){
             stats = s;
             name = n;
             description = d;
@@ -82,6 +94,8 @@ class GameState{
         int &GetStatus(){return status;}
         Stats &GetStats(){return playerstats;}
         Inventory &GetItems(){return items;}
+
+        void HealthReset(){playerstats.GetHealth() = playerstats.GetMaxHealth();}
 };
 
 class Random{
