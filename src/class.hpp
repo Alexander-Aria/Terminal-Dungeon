@@ -23,14 +23,16 @@ class Items{
 
 class Consumables : public Items{
     private:
+        struct{
         int healthgain = 0;
+        } effect;
     public:
         Consumables(){}
         Consumables(string &name, string &description, int &health):Items(name, description){
-            healthgain = health;
+            effect.healthgain = health;
         }
 
-        const int &GetHealth(){return healthgain;}
+        const int &GetHealth(){return effect.healthgain;}
 };
 
 class Inventory{
@@ -63,6 +65,17 @@ class Stats{
         int &GetDefense(){return defense;}
 };
 
+class Player{
+    private:
+        Stats stats;
+        Inventory inventory;
+    public:
+        Player(){}
+
+        Stats &GetStats(){return stats;}
+        Inventory &GetInventory(){return inventory;}
+};
+
 class Enemy{
     private:
         Stats stats;
@@ -85,17 +98,15 @@ class GameState{
     private:
         int stage = 0;
         int status = 0;
-        Stats playerstats;
-        Inventory items;
+        Player player;
     public:
         GameState(){};
 
         int &GetStage(){return stage;}
         int &GetStatus(){return status;}
-        Stats &GetStats(){return playerstats;}
-        Inventory &GetItems(){return items;}
+        Player &GetPlayer(){return player;}
 
-        void HealthReset(){playerstats.GetHealth() = playerstats.GetMaxHealth();}
+        void HealthReset(){player.GetStats().GetHealth() = player.GetStats().GetMaxHealth();}
 };
 
 class Random{

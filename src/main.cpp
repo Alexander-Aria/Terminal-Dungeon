@@ -41,68 +41,106 @@ int Battle(int &stage, GameState &game, Enemy &enemy){
     int status = 0;
     bool playerdefend = false, enemydefend = false;
 
+
     cout << enemy.GetName() << " appeared!\n";
-    cout << enemy.GetDescription() << "\n";
+    cout << "Description : " << enemy.GetDescription() << "\n";
     while(status == 0){
         cout << "__________________________\n";
-        cout << "Player Health : " << game.GetStats().GetHealth() << "\n";
+        cout << "Player Health : " << game.GetPlayer().GetStats().GetHealth() << "\n";
         cout << enemy.GetName() << " Health : " << enemy.GetStats().GetHealth() << "\n\n";
 
-        PlayerTurn(game, enemy, playerdefend, enemydefend);
-        EnemyTurn(game, enemy, playerdefend, enemydefend);
+        PlayerTurn(game.GetPlayer(), enemy, playerdefend, enemydefend);
+        status = StatusCheck(game.GetPlayer().GetStats(), enemy.GetStats());
+        if(status != 0) break;
 
+        EnemyTurn(game.GetPlayer(), enemy, playerdefend, enemydefend);
+        status = StatusCheck(game.GetPlayer().GetStats(), enemy.GetStats());
+        if(status != 0) break;
     }
-    if(status = -1 && stage != 0) cout << "You lose!\n";
-    else cout << "You won!\n";
+    if(status == -1) cout << "You lose!\n";
+    else if(status == 1) cout << "You won!\n";
     return status;
 }
 
 int StatusCheck(Stats &playerstats, Stats &enemystats){
-    // WIP
+    if(playerstats.GetHealth() <= 0) return -1;
+    else if(enemystats.GetHealth() <= 0) return 1;
+    else return 0;
 }
 
-void PlayerTurn(GameState &game, Enemy &enemy, bool &playerdefend, bool &enemydefend){
+void PlayerTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefend){
     int opt = 0;
+    bool finish = false;
 
-    cout << "1. Attack\n2. Defend\n3. Items\n4. Surrender\n\n- ";
-    NumInput(opt);
-    switch(opt){
-        case 1:
-            if(enemydefend) enemy.GetStats().GetHealth() -= 0.5 * Attack(game.GetStats(), enemy.GetStats());
-            else enemy.GetStats().GetHealth() -= Attack(game.GetStats(), enemy.GetStats());
-            break;
-        case 2:
-            playerdefend = true;
-            break;
-        case 3:
-            // WIP
-            break;
-        case 4:
-            game.GetStats().GetHealth() = 0;
-            break;
+    while(!finish){
+        cout << "1. Attack\n2. Defend\n3. Items\n4. Surrender\n\n- ";
+        NumInput(opt);
+        switch(opt){
+            case 1:
+                enemy.GetStats().GetHealth() -= Attack(player.GetStats(), enemy.GetStats(), enemydefend);
+                finish = true;
+                break;
+            case 2:
+                playerdefend = true;
+                finish = true;
+                break;
+            case 3:
+                InventoryAccess(player);
+                break;
+            case 4:
+                player.GetStats().GetHealth() = 0;
+                finish = true;
+                break;
+        }
     }
 }
 
-void EnemyTurn(GameState &game, Enemy &enemy, bool &playerdefend, bool &enemydefend){
-    Random RNG;
-    int range[2];
+void InventoryAccess(Player &player){
+    int itemnum = 1, opt = 0;   
 
-    if(enemy.GetName() == "Dummy") {
-        range[0] = 0;
-        range[1] = 0;
+    if(size(player.GetInventory().GetConsumables()) == 0) cout << "You don't have any consumables!\n";
+    else{
+        for(auto &i : player.GetInventory().GetConsumables()){
+            cout << itemnum << ". " << i.GetName() << "\n";
+            itemnum++;
+        }
+        itemnum = 1;
+        NumInput(opt);
+        player.GetStats().GetHealth() += player.GetInventory().GetConsumables()[opt-1].GetHealth();
+        if(player.GetStats().GetHealth() > player.GetStats().GetMaxHealth()) player.GetStats().GetHealth() = player.GetStats().GetMaxHealth();
     }
+}
 
+void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefend){
+    Random RNG;
+    int range[2] = {0, 2};
+
+    // 0 = Nothing, 1 = Attack, 2 = Defend
     switch(RNG.Int(range[0], range[1])){
         case 0:
             cout << enemy.GetName() << " does nothing!\n";
             break;
+        case 1:
+            cout << enemy.GetName() << " attacks!\n";
+            player.GetStats().GetHealth() -= Attack(enemy.GetStats(), player.GetStats(), playerdefend);
+            break;
+        case 2:
+            enemydefend = true;
+            cout << enemy.GetName() << " is defending!\n";
+            break;
     }
 }
 
-int Attack(Stats &attackerstats, Stats &defenderstats){
+int Attack(Stats &attackerstats, Stats &defenderstats, bool &defend){
     Random RNG;
     int basedamage = round(10 * attackerstats.GetStrength()/defenderstats.GetDefense());
-    int damage = RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage));
+    int damage; 
+    
+    if(defend){
+        damage = 0.5 * RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage));
+        defend = false;
+    }
+    else damage = RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage));
 
     cout << "The attacker dealt " << damage << " damage!\n";
     return damage;
@@ -110,14 +148,13 @@ int Attack(Stats &attackerstats, Stats &defenderstats){
 
 void StageZero(int &stage, GameState &game){
     char choice = 'n';
-    Enemy dummy(Stats(10000, 10000, 0, 10000), "Dummy", "Test Dummy.");
+    Enemy wolfcub(Stats(50, 50, 3, 5), "Wolf Cub", "A young wolf cub.");
 
     cout << "Do you want to play the tutorial? y/n?";
     cin >> choice;
     Ignore();
     if(choice == 'y'){
-        cout << "Try interacting with the dummy. You can surrender to continue.\n";
-        Battle(stage, game, dummy);
+        Battle(stage, game, wolfcub);
     }
     stage++;
 }
