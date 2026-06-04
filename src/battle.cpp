@@ -1,34 +1,12 @@
+#include "battle.hpp"
 #include "stages.hpp"
 #include "utility.hpp"
+#include "inventory.hpp"
 
 #include <iostream>
 
 using std::cout;
-using std::cin;
 
-void Game(){
-    GameState game;
-    bool loop = true;
-
-    while(loop){
-        switch(game.GetStage()){
-            case 0:
-                StageZero(game.GetStage(), game);
-                break;
-        }
-        if(game.GetStage() == 10){
-            cout << "Congratulations!\n";
-            cout << "You won the game!\n";
-            cout << "Thanks for playing!\n";
-            loop = false;
-        }
-        else if(game.GetStage() == -1){
-            cout << "You died!\n";
-            loop = false;
-        }
-    }
-}
-/*
 int Battle(int &stage, GameState &game, Enemy &enemy){
     Random RNG;
     int status = 0;
@@ -89,22 +67,6 @@ void PlayerTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydef
     }
 }
 
-void InventoryAccess(Player &player){
-    int itemnum = 1, opt = 0;   
-
-    if(size(player.GetInventory().GetConsumables()) == 0) cout << "You don't have any consumables!\n";
-    else{
-        for(auto &i : player.GetInventory().GetConsumables()){
-            cout << itemnum << ". " << i.GetName() << "\n";
-            itemnum++;
-        }
-        itemnum = 1;
-        NumInput(opt);
-        player.GetStats().GetHealth() += player.GetInventory().GetConsumables()[opt-1].GetHealth();
-        if(player.GetStats().GetHealth() > player.GetStats().GetMaxHealth()) player.GetStats().GetHealth() = player.GetStats().GetMaxHealth();
-    }
-}
-
 void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefend){
     Random RNG;
     int range[2] = {0, 2};
@@ -138,36 +100,4 @@ int Attack(Stats &attackerstats, Stats &defenderstats, bool &defend){
 
     cout << "The attacker dealt " << damage << " damage!\n";
     return damage;
-}
-
-void StageZero(int &stage, GameState &game){
-    char choice = 'n';
-    Enemy wolfcub(Stats(50, 50, 3, 5), "Wolf Cub", "A young wolf cub.");
-
-    cout << "Do you want to play the tutorial? y/n?";
-    cin >> choice;
-    Ignore();
-    if(choice == 'y'){
-        Battle(stage, game, wolfcub);
-    }
-    stage++;
-}
-*/
-int main(){
-    int opt, status = 0;
-
-    cout << "______________________________\n";
-    cout << "Terminal Dungeon\n";
-    cout << "0. Exit\n1. Start\n\n- ";
-    NumInput<int> (opt);
-    switch(opt){
-        case 0:
-            cout << "Exiting...\n";
-            return 0;
-        case 1:
-            Game();
-            break;
-        case 2:
-            cout << "Invalid input!\n";
-    }
 }
