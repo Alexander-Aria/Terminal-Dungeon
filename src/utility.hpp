@@ -6,7 +6,7 @@
 using std::cin;
 using std::cout;
 
-void Ignore();
+void Ignore(){cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');}
 
 template <typename T>
 void NumInput(T &num){

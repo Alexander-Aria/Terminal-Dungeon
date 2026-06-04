@@ -19,5 +19,3 @@ class Enemy{
         string &GetName(){return name;}
         string &GetDescription(){return description;}
 };
-
-void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefend);

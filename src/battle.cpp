@@ -89,7 +89,7 @@ void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefe
 
 int Attack(Stats &attackerstats, Stats &defenderstats, bool &defend){
     Random RNG;
-    double basedamage = 10 * attackerstats.GetStrength()/defenderstats.GetDefense();
+    double basedamage = 10.0 * attackerstats.GetStrength()/defenderstats.GetDefense();
     int damage; 
     
     if(defend){

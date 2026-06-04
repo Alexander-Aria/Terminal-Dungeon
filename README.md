@@ -4,11 +4,11 @@ A terminal-based dungeon game written in C++.
 
 ## Features
 
-- Battle System (WIP)
+- Battle System
 - Inventory System (WIP)
 - Economy System (WIP)
 - 10 stages/levels (WIP)
-- RNG (WIP)
+- RNG
 - Terminal Interface
 
 ## Requirements
