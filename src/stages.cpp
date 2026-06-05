@@ -1,3 +1,4 @@
+#include "gamestate.hpp"
 #include "stages.hpp"
 #include "enemy.hpp"
 #include "battle.hpp"

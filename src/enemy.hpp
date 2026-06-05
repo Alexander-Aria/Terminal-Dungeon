@@ -1,6 +1,9 @@
 #pragma once
 
 #include "stats.hpp"
+#include <string>
+
+using std::string;
 
 class Enemy{
     private:

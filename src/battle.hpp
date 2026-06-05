@@ -1,7 +1,9 @@
 #pragma once
 
-#include "gamestate.hpp"
-#include "enemy.hpp"
+class GameState;
+class Player;
+class Enemy;
+class Stats;
 
 int Battle(int &stage, GameState &game, Enemy &enemytype);
 int StatusCheck(Stats &playerstats, Stats &enemystats);

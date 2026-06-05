@@ -1,5 +1,5 @@
 #pragma once
 
-#include "gamestate.hpp"
+class GameState;
 
 void StageZero(int &stage, GameState &game);

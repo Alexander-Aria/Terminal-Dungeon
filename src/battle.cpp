@@ -1,7 +1,8 @@
 #include "battle.hpp"
-#include "stages.hpp"
+#include "gamestate.hpp"
+#include "player.hpp"
+#include "enemy.hpp"
 #include "utility.hpp"
-#include "inventory.hpp"
 
 #include <iostream>
 
