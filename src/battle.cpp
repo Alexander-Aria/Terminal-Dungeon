@@ -8,7 +8,7 @@
 
 using std::cout;
 
-int Battle(int &stage, GameState &game, Enemy &enemy){
+int Battle(GameState &game, Enemy &enemy){
     Random RNG;
     int status = 0;
     bool playerdefend = false, enemydefend = false;
@@ -31,7 +31,6 @@ int Battle(int &stage, GameState &game, Enemy &enemy){
     }
     if(status == -1) cout << "You lose!\n";
     else if(status == 1) cout << "You won!\n";
-    game.HealthReset();
     return status;
 }
 
@@ -50,10 +49,12 @@ void PlayerTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydef
         NumInput(opt);
         switch(opt){
             case 1:
+                cout << "You attack!\n";
                 enemy.GetStats().GetHealth() -= Attack(player.GetStats(), enemy.GetStats(), enemydefend);
                 finish = true;
                 break;
             case 2:
+                cout << "You are defending!\n\n";
                 playerdefend = true;
                 finish = true;
                 break;
@@ -83,7 +84,7 @@ void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefe
             break;
         case 2:
             enemydefend = true;
-            cout << enemy.GetName() << " is defending!\n";
+            cout << enemy.GetName() << " is defending!\n\n";
             break;
     }
 }
@@ -95,10 +96,14 @@ int Attack(Stats &attackerstats, Stats &defenderstats, bool &defend){
     
     if(defend){
         damage = static_cast<int>(round(0.5 * RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage))));
-        defend = false;
+        if(RNG.Int(0,1) == 0){
+            cout << "The defense is broken!\n";
+            defend = false;
+        }
+        else cout << "The defenders defense held strong!\n";
     }
     else damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
 
-    cout << "The attacker dealt " << damage << " damage!\n";
+    cout << "The attacker dealt " << damage << " damage!\n\n";
     return damage;
 }

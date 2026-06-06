@@ -28,7 +28,7 @@ class Consumables : public Items{
         } effect;
     public:
         Consumables(){}
-        Consumables(string &name, string &description, int &health):Items(name, description){
+        Consumables(const string &name, const string &description, const int &health):Items(name, description){
             effect.healthgain = health;
         }
 
@@ -43,3 +43,6 @@ class Inventory{
 
         vector<Consumables> &GetConsumables(){return consumables;}
 };
+
+inline Consumables SmallPotion() {return Consumables("Small Potion", "A small potion that heals a small amount of health.", 40);}
+inline Consumables LargePotion() {return Consumables("Large Potion", "A large potion that heals a considerable amount of health.", 80);}

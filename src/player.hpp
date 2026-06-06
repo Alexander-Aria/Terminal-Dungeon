@@ -15,3 +15,4 @@ class Player{
 };
 
 void InventoryAccess(Player &player);
+void StatsCheck(Stats &playerstats);

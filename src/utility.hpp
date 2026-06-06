@@ -6,18 +6,6 @@
 using std::cin;
 using std::cout;
 
-inline void Ignore(){cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');}
-
-template <typename T>
-inline void NumInput(T &num){
-    while(!(cin >> num)){
-        cin.clear();
-        Ignore();
-        cout << "Invalid input!\n";
-        cout << "Try again : ";
-    }
-}
-
 class Random{
     private:
         std::mt19937 gen;
@@ -30,3 +18,15 @@ class Random{
             return dist(gen);
         }
 };
+
+inline void Ignore(){cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');}
+
+template <typename T>
+inline void NumInput(T &num){
+    while(!(cin >> num)){
+        cin.clear();
+        Ignore();
+        cout << "Invalid input!\n";
+        cout << "Try again : ";
+    }
+}
