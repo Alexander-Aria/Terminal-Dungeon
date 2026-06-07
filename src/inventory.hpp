@@ -12,10 +12,10 @@ class Items{
         string description = "No Description";
     public:
         Items(){}
-        Items(const string &n, const string &d){
-            name = n;
-            description = d;
-        }
+        Items(
+            const string &n, 
+            const string &d
+        ) : name(n), description(d) {}
 
         const string &GetName() const {return name;};
         const string &GetDescription() const {return description;};
@@ -28,7 +28,7 @@ class Consumables : public Items{
         } effect;
     public:
         Consumables(){}
-        Consumables(const string &name, const string &description, const int &health):Items(name, description){
+        Consumables(const string &name, const string &description, const int &health) : Items(name, description) {
             effect.healthgain = health;
         }
 

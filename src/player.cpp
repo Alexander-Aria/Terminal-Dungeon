@@ -10,6 +10,7 @@ void InventoryAccess(Player &player){
 
     cout << "\n_____________________________________________\n";
     cout << "CONSUMABLES\n";
+    cout << "Gold : " << player.GetGold() << "\n\n";
     if(size(player.GetInventory().GetConsumables()) == 0) cout << "You don't have any consumables!\n";
     else{
         for(auto &i : player.GetInventory().GetConsumables()){

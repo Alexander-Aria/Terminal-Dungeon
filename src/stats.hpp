@@ -8,12 +8,12 @@ class Stats{
         int defense = 10;
     public:
         Stats(){}
-        Stats(const int &h, const int &mh, const int &str, const int &def){
-            health = h;
-            maxhealth = mh;
-            strength = str;
-            defense = def;
-        }
+        Stats(
+            const int &h, 
+            const int &mh, 
+            const int &str, 
+            const int &def
+        ) : health(h), maxhealth(mh), strength(str), defense(def) {}
 
         int &GetHealth(){return health;}
         int &GetMaxHealth(){return maxhealth;}

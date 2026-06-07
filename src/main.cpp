@@ -31,7 +31,8 @@ void Game(){
             loop = false;
         }
         else if(game.GetStatus() == -2){
-
+            cout << "You turned back and left.\n";
+            loop = false;
         }
     }
 }

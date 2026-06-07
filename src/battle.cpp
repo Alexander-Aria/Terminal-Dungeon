@@ -8,11 +8,10 @@
 
 using std::cout;
 
-int Battle(GameState &game, Enemy &enemy){
+void Battle(GameState &game, Enemy &enemy){
     Random RNG;
     int status = 0;
     bool playerdefend = false, enemydefend = false;
-
 
     cout << enemy.GetName() << " appeared!\n";
     cout << "Description : " << enemy.GetDescription() << "\n";
@@ -29,9 +28,15 @@ int Battle(GameState &game, Enemy &enemy){
         status = StatusCheck(game.GetPlayer().GetStats(), enemy.GetStats());
         if(status != 0) break;
     }
-    if(status == -1) cout << "You lose!\n";
-    else if(status == 1) cout << "You won!\n";
-    return status;
+    if(status == -1){
+        game.GetStatus() = -1;
+    }
+    else if(status == 1){
+        cout << "\nYou won!\n";
+        game.GetPlayer().GetExp() += enemy.GetExpReward();
+        game.GetPlayer().GetGold() += enemy.GetGoldReward();
+        cout << "You gained " << enemy.GetExpReward() << " experience and " << enemy.GetGoldReward() << " gold!\n";
+    }
 }
 
 int StatusCheck(Stats &playerstats, Stats &enemystats){
@@ -71,13 +76,17 @@ void PlayerTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydef
 
 void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefend){
     Random RNG;
-    int range[2] = {0, 2};
+    int RNGnum = RNG.Int(1,100);
+    int choice = 0;
+
+    if(enemydefend == true) choice = 1;
+    else{
+        if(RNGnum <= enemy.GetAttChance()) choice = 1;
+        else if(RNGnum > 100 - enemy.GetDefChance()) choice = 2;
+    }
 
     // 0 = Nothing, 1 = Attack, 2 = Defend
-    switch(RNG.Int(range[0], range[1])){
-        case 0:
-            cout << enemy.GetName() << " does nothing!\n";
-            break;
+    switch(choice){
         case 1:
             cout << enemy.GetName() << " attacks!\n";
             player.GetStats().GetHealth() -= Attack(enemy.GetStats(), player.GetStats(), playerdefend);
@@ -86,6 +95,8 @@ void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefe
             enemydefend = true;
             cout << enemy.GetName() << " is defending!\n\n";
             break;
+        default:
+            cout << enemy.GetName() << " does nothing!\n\n";
     }
 }
 

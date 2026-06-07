@@ -14,6 +14,9 @@ void Choice(GameState &game){
     int opt = 0;
 
     while(!done){
+        cout << "_____________________________\n";
+        cout << "Player Lv." << game.GetPlayer().GetLevel() << "\n";
+        cout << "Player EXP : " << game.GetPlayer().GetExp() << "\n\n";
         cout << "0. Turn Back\n1. Continue\n2. Check Stats\n3. Items\n\n-";
         NumInput(opt);
         switch(opt){
@@ -41,7 +44,10 @@ void StageZero(GameState &game){
     cout << "Do you want to play the tutorial? y/n?\n\n- ";
     cin >> choice;
     Ignore();
-    if(choice == 'y') Battle(game, enemy);
+    if(choice == 'y'){
+        cout << "\nTUTORIAL\n\n";
+        Battle(game, enemy);
+    }
     game.HealthReset();
     game.GetStage()++;
 }
@@ -51,14 +57,12 @@ void StageOne(GameState &game){
     Enemy enemy = Bat();
 
     game.GetPlayer().GetInventory().GetConsumables().push_back(SmallPotion());
+    game.GetPlayer().GetGold() = 100;
 
+    cout << "\nFLOOR 1\n\n";
     cout << "You are a lone adventurer looking for treasures inside a dungeon.\n";
-    cout << "You entered a dungeon with a small potion.\n";
-    cout << "What will you do?\n";
+    cout << "You entered a dungeon with a small potion and 100 gold.\n\n";
     Choice(game);
     if(game.GetStatus() == 0) Battle(game, enemy);
     game.GetStage()++;
-    
-    //Temporary
-    game.GetStatus() = 1;
 }
