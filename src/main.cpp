@@ -19,6 +19,9 @@ void Game(){
             case 1:
                 StageOne(game);
                 break;
+            case 2:
+                StageTwo(game);
+                break;
         }
         if(game.GetStatus() == 1){
             cout << "Congratulations!\n";
@@ -31,7 +34,7 @@ void Game(){
             loop = false;
         }
         else if(game.GetStatus() == -2){
-            cout << "You turned back and left.\n";
+            cout << "Fearing the danger ahead, you decided to turn back and left.\n";
             loop = false;
         }
     }

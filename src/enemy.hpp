@@ -35,22 +35,53 @@ class Enemy{
         int &GetDefChance(){return defchance;}
 };
 
+inline Enemy Dummy() {return Enemy(
+    Stats(200, 200, 0, 5),
+    "Dummy",
+    "A practice dummy.",
+    0,
+    0,
+    0,
+    0
+);}
+
 inline Enemy WolfCub() {return Enemy(
-    Stats(50, 50, 3, 5), 
+    Stats(60, 60, 10, 6), 
     "Wolf Cub", 
     "A young wolf cub.", 
-    0, 
-    0,
+    20, 
+    30,
     50,
     50
 );}
 
+inline Enemy FemaleWolf() {return Enemy(
+    Stats(150, 150, 15, 8),
+    "Female Wolf",
+    "A female wolf and a grieving mother of a wolf cub.",
+    50,
+    150,
+    40,
+    60
+);}
+
+inline Enemy MaleWolf() {return Enemy(
+    Stats(200, 200, 18, 10),
+    "Male Wolf",
+    "A male wolf and a furious father of a wolf cub.",
+    80,
+    200,
+    40,
+    60
+);}
+
 inline Enemy Bat() {return Enemy(
-    Stats(75, 75, 15, 5), 
+    Stats(50, 50, 8, 5), 
     "Bat", 
-    "An agressive bat.", 
+    "An agressive and territorial bat.", 
     30, 
     50,
-    80,
-    20
+    20,
+    80
 );}
+

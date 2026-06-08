@@ -10,32 +10,33 @@ using std::cout;
 
 void Battle(GameState &game, Enemy &enemy){
     Random RNG;
-    int status = 0;
+    int battlestatus = 0;
     bool playerdefend = false, enemydefend = false;
 
     cout << enemy.GetName() << " appeared!\n";
     cout << "Description : " << enemy.GetDescription() << "\n";
-    while(status == 0){
+    while(battlestatus == 0){
         cout << "__________________________\n";
         cout << "Player Health : " << game.GetPlayer().GetStats().GetHealth() << "\n";
         cout << enemy.GetName() << " Health : " << enemy.GetStats().GetHealth() << "\n\n";
 
         PlayerTurn(game.GetPlayer(), enemy, playerdefend, enemydefend);
-        status = StatusCheck(game.GetPlayer().GetStats(), enemy.GetStats());
-        if(status != 0) break;
+        battlestatus = StatusCheck(game.GetPlayer().GetStats(), enemy.GetStats());
+        if(battlestatus != 0) break;
 
         EnemyTurn(game.GetPlayer(), enemy, playerdefend, enemydefend);
-        status = StatusCheck(game.GetPlayer().GetStats(), enemy.GetStats());
-        if(status != 0) break;
+        battlestatus = StatusCheck(game.GetPlayer().GetStats(), enemy.GetStats());
+        if(battlestatus != 0) break;
     }
-    if(status == -1){
+    if(battlestatus == -1){
         game.GetStatus() = -1;
     }
-    else if(status == 1){
+    else if(battlestatus == 1){
         cout << "\nYou won!\n";
         game.GetPlayer().GetExp() += enemy.GetExpReward();
         game.GetPlayer().GetGold() += enemy.GetGoldReward();
-        cout << "You gained " << enemy.GetExpReward() << " experience and " << enemy.GetGoldReward() << " gold!\n";
+        cout << "You gained " << enemy.GetExpReward() << " experience and " << enemy.GetGoldReward() << " gold!\n\n";
+        game.GetPlayer().LevelUp();
     }
 }
 

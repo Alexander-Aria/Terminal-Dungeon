@@ -22,7 +22,7 @@ class Player{
         int &GetGold(){return gold;}
 
         void LevelUp(){
-            while(exp >= 300){
+            while(exp >= 250){
                 level++;
                 stats.GetMaxHealth() += 20;
                 stats.GetHealth() = stats.GetMaxHealth();
