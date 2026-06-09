@@ -56,7 +56,7 @@ inline Enemy WolfCub() {return Enemy(
 );}
 
 inline Enemy FemaleWolf() {return Enemy(
-    Stats(150, 150, 15, 8),
+    Stats(120, 120, 15, 8),
     "Female Wolf",
     "A female wolf and a grieving mother of a wolf cub.",
     50,
@@ -66,7 +66,7 @@ inline Enemy FemaleWolf() {return Enemy(
 );}
 
 inline Enemy MaleWolf() {return Enemy(
-    Stats(200, 200, 18, 10),
+    Stats(150, 150, 18, 10),
     "Male Wolf",
     "A male wolf and a furious father of a wolf cub.",
     80,

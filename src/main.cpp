@@ -23,17 +23,17 @@ void Game(){
                 StageTwo(game);
                 break;
         }
-        if(game.GetStatus() == 1){
+        if(game.GetStatus() == Status::WIN){
             cout << "Congratulations!\n";
             cout << "You won the game!\n";
             cout << "Thanks for playing!\n";
             loop = false;
         }
-        else if(game.GetStatus() == -1){
+        else if(game.GetStatus() == Status::LOSE){
             cout << "You lose!\n";
             loop = false;
         }
-        else if(game.GetStatus() == -2){
+        else if(game.GetStatus() == Status::TURNBACK){
             cout << "Fearing the danger ahead, you decided to turn back and left.\n";
             loop = false;
         }

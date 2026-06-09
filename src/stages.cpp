@@ -9,6 +9,8 @@
 using std::cout;
 using std::cin;
 
+bool GameStatusCheck(Status &status){return (status != Status::ONGOING);}
+
 void Choice(GameState &game){
     bool done = false;
     int opt = 0;
@@ -21,7 +23,7 @@ void Choice(GameState &game){
         NumInput(opt);
         switch(opt){
             case 0:
-                game.GetStatus() = -2;
+                game.GetStatus() = Status::TURNBACK;
                 done = true;
                 break;
             case 1:
@@ -63,16 +65,16 @@ void StageOne(GameState &game){
     cout << "You are a lone adventurer looking for treasures inside a dungeon.\n";
     cout << "You entered a dungeon with a small potion and 100 gold.\n\n";
     Choice(game);
-    if(game.GetStatus() != 0) return;
+    if(GameStatusCheck(game.GetStatus())) return;
     
     cout << "Entering the dungeon, you encountered a few teritorial bats.\n";
     cout << "A bat attacks!\n\n";
     Battle(game, enemy1);
-    if(game.GetStatus() != 0) return;
+    if(GameStatusCheck(game.GetStatus())) return;
 
     cout << "Before you can recover, another bat attacks!\n\n";
     Battle(game, enemy2);
-    if(game.GetStatus() != 0) return;
+    if(GameStatusCheck(game.GetStatus())) return;
 
     game.GetStage()++;
 }
@@ -87,24 +89,29 @@ void StageTwo(GameState &game) {
     cout << "After you have beaten the bats, you continued.\n";
     cout << "Exploring the first floor, you found a small potion.\n\n";
     Choice(game);
-    if(game.GetStatus() != 0) return;
+    if(GameStatusCheck(game.GetStatus())) return;
 
     cout << "Suddenly, a wolf cub jumps at you!\n\n";
     Battle(game, enemy1);
-    if(game.GetStatus() != 0) return;
+    if(GameStatusCheck(game.GetStatus())) return;
 
     cout << "You easily beat the wolf cub. However, it is the least of your worries.\n";
     cout << "You hear a wolf approaching from the distance, presumably the mother.\n";
     cout << "You prepare for the battle.\n\n";
     Choice(game);
-    if(game.GetStatus() != 0) return;
+    if(GameStatusCheck(game.GetStatus())) return;
 
-    cout << "After seeing the dead wolf cub, the female wolf immediately jumps at you!\n\n";
+    cout << "\nAfter seeing the dead wolf cub, the female wolf immediately jumps at you!\n\n";
     Battle(game, enemy2);
-    if(game.GetStatus() != 0) return;
+    if(GameStatusCheck(game.GetStatus())) return;
+
+    cout << "The mother wolf cried one last time before it perished.\n";
+    cout << "That last cry brought the father into the room. It looks like you're in trouble...\n\n";
+    Battle(game, enemy3);
+    if(GameStatusCheck(game.GetStatus())) return;
     
     game.GetStage()++;
     
     // Temporary
-    if(game.GetStatus() == 0) game.GetStatus() = 1;
+    if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
 }

@@ -29,7 +29,7 @@ void Battle(GameState &game, Enemy &enemy){
         if(battlestatus != 0) break;
     }
     if(battlestatus == -1){
-        game.GetStatus() = -1;
+        game.GetStatus() = Status::LOSE;
     }
     else if(battlestatus == 1){
         cout << "\nYou won!\n";
@@ -53,11 +53,24 @@ void PlayerTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydef
     while(!finish){
         cout << "1. Attack\n2. Defend\n3. Items\n4. Surrender\n\n- ";
         NumInput(opt);
+
         switch(opt){
             case 1:
-                cout << "You attack!\n";
-                enemy.GetStats().GetHealth() -= Attack(player.GetStats(), enemy.GetStats(), enemydefend);
-                finish = true;
+                cout << "___________________________\n";
+                cout << "0. Back\n1. Slash | High Damage\n2. Stab  | Medium Damage, Piercing (breaks defense)\n\n- ";
+                NumInput(opt);
+                switch(opt){
+                    case 1:
+                        cout << "You slashed the enemy!\n";
+                        enemy.GetStats().GetHealth() -= Slash(player.GetStats(), enemy.GetStats(), enemydefend);
+                        finish = true;
+                        break;
+                    case 2:
+                        cout << "You stabbed the enemy!\n";
+                        enemy.GetStats().GetHealth() -= Stab(player.GetStats(), enemy.GetStats(), enemydefend);
+                        finish = true;
+                        break;
+                }
                 break;
             case 2:
                 cout << "You are defending!\n\n";
@@ -71,6 +84,8 @@ void PlayerTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydef
                 player.GetStats().GetHealth() = 0;
                 finish = true;
                 break;
+            default:
+                cout << "Invalid Input!\n\n";
         }
     }
 }
@@ -90,7 +105,7 @@ void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefe
     switch(choice){
         case 1:
             cout << enemy.GetName() << " attacks!\n";
-            player.GetStats().GetHealth() -= Attack(enemy.GetStats(), player.GetStats(), playerdefend);
+            player.GetStats().GetHealth() -= Slash(enemy.GetStats(), player.GetStats(), playerdefend);
             break;
         case 2:
             enemydefend = true;
@@ -101,20 +116,35 @@ void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefe
     }
 }
 
-int Attack(Stats &attackerstats, Stats &defenderstats, bool &defend){
+int Slash(Stats &attackerstats, Stats &defenderstats, bool &defend){
     Random RNG;
     double basedamage = 10.0 * attackerstats.GetStrength()/defenderstats.GetDefense();
     int damage; 
     
     if(defend){
         damage = static_cast<int>(round(0.5 * RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage))));
-        if(RNG.Int(0,1) == 0){
+        if(RNG.Int(0,2) == 0){
             cout << "The defense is broken!\n";
             defend = false;
         }
         else cout << "The defenders defense held strong!\n";
     }
     else damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
+
+    cout << "The attacker dealt " << damage << " damage!\n\n";
+    return damage;
+}
+
+int Stab(Stats &attackerstats, Stats &defenderstats, bool &defend){
+    Random RNG;
+    double basedamage = 6.0 * attackerstats.GetStrength()/defenderstats.GetDefense();
+    int damage; 
+    
+    damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
+    if(defend) {
+        cout << "The defense is broken!\n";
+        defend = false;
+    }
 
     cout << "The attacker dealt " << damage << " damage!\n\n";
     return damage;
