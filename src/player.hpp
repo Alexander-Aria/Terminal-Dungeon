@@ -5,6 +5,11 @@
 #include "stats.hpp"
 #include "inventory.hpp"
 
+enum class BattleState {
+    OUTBATTLE,
+    INBATTLE
+};
+
 class Player{
     private:
         Stats stats;
@@ -34,5 +39,5 @@ class Player{
         }
 };
 
-void InventoryAccess(Player &player);
+bool InventoryAccess(Player &player, const BattleState &state);
 void StatsCheck(Stats &playerstats);

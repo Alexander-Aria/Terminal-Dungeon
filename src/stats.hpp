@@ -6,6 +6,8 @@ class Stats{
         int maxhealth = 100;
         int strength = 10;
         int defense = 10;
+        int strboost = 0;
+        int defboost = 0;
     public:
         Stats(){}
         Stats(
@@ -19,4 +21,6 @@ class Stats{
         int &GetMaxHealth(){return maxhealth;}
         int &GetStrength(){return strength;}
         int &GetDefense(){return defense;}
+        int &GetStrengthBoost(){return strboost;}
+        int &GetDefenseBoost(){return defboost;}
 };

@@ -38,6 +38,7 @@ void Battle(GameState &game, Enemy &enemy){
         cout << "You gained " << enemy.GetExpReward() << " experience and " << enemy.GetGoldReward() << " gold!\n\n";
         game.GetPlayer().LevelUp();
     }
+    game.BattleStateReset();
 }
 
 int StatusCheck(Stats &playerstats, Stats &enemystats){
@@ -78,7 +79,7 @@ void PlayerTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydef
                 finish = true;
                 break;
             case 3:
-                InventoryAccess(player);
+                if(InventoryAccess(player, BattleState::INBATTLE)) finish = true;
                 break;
             case 4:
                 player.GetStats().GetHealth() = 0;

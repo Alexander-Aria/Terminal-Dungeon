@@ -21,7 +21,11 @@ class GameState{
         Status &GetStatus(){return status;}
         Player &GetPlayer(){return player;}
 
-        void HealthReset(){player.GetStats().GetHealth() = player.GetStats().GetMaxHealth();}
+        void BattleStateReset(){
+            player.GetStats().GetStrengthBoost() = 0;
+            player.GetStats().GetDefenseBoost() = 0;
+        }
 };
 
 void Game();
+inline bool IsRunning(Status &status) {return (status == Status::ONGOING);}
