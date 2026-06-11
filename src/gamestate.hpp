@@ -27,5 +27,5 @@ class GameState{
         }
 };
 
-void Game();
+void Game(bool developermode);
 inline bool IsRunning(Status &status) {return (status == Status::ONGOING);}

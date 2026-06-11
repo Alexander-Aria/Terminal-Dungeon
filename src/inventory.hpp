@@ -19,8 +19,9 @@ class Items{
             const int &v
         ) : name(n), description(d), value(v) {}
 
-        const string &GetName() const {return name;};
-        const string &GetDescription() const {return description;};
+        const string &GetName() const {return name;}
+        const string &GetDescription() const {return description;}
+        const int &GetValue() const {return value;}
 };
 
 class Consumables : public Items{
@@ -45,9 +46,9 @@ class Consumables : public Items{
             effect.defboost = def;
         }
 
-        const int &GetHealthGain(){return effect.healthgain;}
-        const int &GetStrengthBoost(){return effect.strboost;}
-        const int &GetDefenseBoost(){return effect.defboost;}
+        const int &GetHealthGain() const {return effect.healthgain;}
+        const int &GetStrengthBoost() const {return effect.strboost;}
+        const int &GetDefenseBoost() const {return effect.defboost;}
 };
 
 class Inventory{
@@ -60,9 +61,11 @@ class Inventory{
         vector<Consumables> &GetConsumables(){return consumables;}
 };
 
+void ShowInventory(Inventory &inventory, bool shop);
+
 inline Consumables SmallPotion() {return Consumables(
     "Small Potion", 
-    "A small potion that heals a small amount of health.", 
+    "A small potion that heals a small amount of health (40 HP).", 
     100, 
     40, 
     0, 
@@ -71,8 +74,8 @@ inline Consumables SmallPotion() {return Consumables(
 
 inline Consumables LargePotion() {return Consumables(
     "Large Potion", 
-    "A large potion that heals a considerable amount of health.", 
-    300, 
+    "A large potion that heals a considerable amount of health (100 HP).", 
+    250, 
     80, 
     0, 
     0
@@ -95,3 +98,19 @@ inline Consumables ArmorStone() {return Consumables(
     0, 
     3
 );}
+
+
+inline vector<Consumables> AllItems() {return {
+    SmallPotion(),
+    SmallPotion(),
+    SmallPotion(),
+    LargePotion(),
+    LargePotion(),
+    LargePotion(),
+    PowerStone(),
+    PowerStone(),
+    PowerStone(),
+    ArmorStone(),
+    ArmorStone(),
+    ArmorStone()
+};}

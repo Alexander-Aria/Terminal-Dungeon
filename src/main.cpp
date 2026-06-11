@@ -7,9 +7,19 @@
 using std::cout;
 using std::cin;
 
-void Game(){
+void Game(bool developermode){
     GameState game;
     bool loop = true;
+    int devstage = 0;
+
+    if(developermode){
+        cout << "\n____________________________________\n";
+        cout << "DEVELOPER MODE\n\n";
+        cout << "Choose stage (0-10) : ";
+        NumInput(devstage);
+        game.GetPlayer() = Player(true);
+        game.GetStage() = devstage;
+    }
 
     while(loop){
         switch(game.GetStage()){
@@ -22,6 +32,12 @@ void Game(){
             case 2:
                 StageTwo(game);
                 break;
+            case 3:
+                StageThree(game);
+                break;
+            default:
+                cout << "Error : Out of the stage range!\n";
+                return;
         }
         if(game.GetStatus() == Status::WIN){
             cout << "Congratulations!\n";
@@ -46,16 +62,19 @@ int main(){
     while(true){
         cout << "______________________________\n";
         cout << "Terminal Dungeon\n";
-        cout << "0. Exit\n1. Start\n\n- ";
-        NumInput<int> (opt);
+        cout << "0. Exit\n1. Start\n2. Start (Developer Mode)\n\n- ";
+        NumInput(opt);
         switch(opt){
             case 0:
                 cout << "Exiting...\n";
                 return 0;
             case 1:
-                Game();
+                Game(false);
                 break;
             case 2:
+                Game(true);
+                break;
+            default:
                 cout << "Invalid input!\n";
                 break;
         }

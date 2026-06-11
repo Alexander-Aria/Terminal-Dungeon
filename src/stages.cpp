@@ -2,6 +2,7 @@
 #include "stages.hpp"
 #include "enemy.hpp"
 #include "battle.hpp"
+#include "shop.hpp"
 #include "utility.hpp"
 
 #include <iostream>
@@ -38,13 +39,14 @@ void Choice(GameState &game){
 }
 
 void StageZero(GameState &game){
-    char choice = 'n';
+    int opt = 0;
     Enemy enemy = Dummy();
 
-    cout << "Do you want to play the tutorial? y/n?\n\n- ";
-    cin >> choice;
-    Ignore();
-    if(choice == 'y'){
+    cout << "Do you want to play the tutorial?\n";
+    cout << "1. Yes\n2. No\n\n- ";
+    NumInput(opt);
+
+    if(opt == 1){
         cout << "\nTUTORIAL\n\n";
         Battle(game, enemy);
     }
@@ -109,7 +111,23 @@ void StageTwo(GameState &game) {
     if(!IsRunning(game.GetStatus())) return;
     
     game.GetStage()++;
-    
+}
+
+void StageThree(GameState &game){
+    int opt = 0;
+    Enemy enemy1;
+
+    cout << "As you continue going deeper into the dungeon, you saw a dim light in the distance...\n";
+    cout << "An old shack lies in front of you with a sign hanging from the side, [SHOP]. Do you want to go in?\n";
+    cout << "1. Yes\n2. No\n\n- ";
+    NumInput(opt);
+
+    if(opt == 1) {
+        cout << "\nYou decided to go in the shack...\n";
+        ShopFunction(game.GetPlayer(), ShopConfigOne());
+    }
+    else cout << "\nYou decided to ignore the shack and continue with your journey...\n";
+        
     // Temporary
     if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
 }

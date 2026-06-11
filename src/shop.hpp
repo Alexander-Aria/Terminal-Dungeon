@@ -1,6 +1,7 @@
 #pragma once
 
 #include "inventory.hpp"
+#include "player.hpp"
 
 class Shop{
     private:
@@ -12,11 +13,9 @@ class Shop{
         Inventory &GetInventory() {return shopitems;}
 };
 
-void ShopOne();
+void ShopFunction(Player &player, const Shop &cponfig);
 
-inline Shop ShopConfigOne() {return Shop(Inventory(ShopConsumablesOne()));}
-
-inline vector<Consumables> ShopConsumablesOne() {return {
+inline const vector<Consumables> ShopConsumablesOne(){return {
     SmallPotion(), 
     SmallPotion(),
     SmallPotion(),
@@ -24,3 +23,4 @@ inline vector<Consumables> ShopConsumablesOne() {return {
     PowerStone(),
     ArmorStone()
 };}
+inline Shop ShopConfigOne() {return Shop(Inventory(ShopConsumablesOne()));}

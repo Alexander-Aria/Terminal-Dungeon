@@ -16,10 +16,6 @@ void Battle(GameState &game, Enemy &enemy){
     cout << enemy.GetName() << " appeared!\n";
     cout << "Description : " << enemy.GetDescription() << "\n";
     while(battlestatus == 0){
-        cout << "__________________________\n";
-        cout << "Player Health : " << game.GetPlayer().GetStats().GetHealth() << "\n";
-        cout << enemy.GetName() << " Health : " << enemy.GetStats().GetHealth() << "\n\n";
-
         PlayerTurn(game.GetPlayer(), enemy, playerdefend, enemydefend);
         battlestatus = StatusCheck(game.GetPlayer().GetStats(), enemy.GetStats());
         if(battlestatus != 0) break;
@@ -52,6 +48,9 @@ void PlayerTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydef
     bool finish = false;
 
     while(!finish){
+        cout << "__________________________\n";
+        cout << "Player Health : " << player.GetStats().GetHealth() << "\n";
+        cout << enemy.GetName() << " Health : " << enemy.GetStats().GetHealth() << "\n\n";
         cout << "1. Attack\n2. Defend\n3. Items\n4. Surrender\n\n- ";
         NumInput(opt);
 
@@ -119,12 +118,13 @@ void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefe
 
 int Slash(Stats &attackerstats, Stats &defenderstats, bool &defend){
     Random RNG;
-    double basedamage = 10.0 * attackerstats.GetStrength()/defenderstats.GetDefense();
+    int chance = RNG.Int(0,2);
+    double basedamage = 10.0 * (attackerstats.GetStrength() + attackerstats.GetStrengthBoost())/(defenderstats.GetDefense() + defenderstats.GetDefenseBoost());
     int damage; 
     
     if(defend){
         damage = static_cast<int>(round(0.5 * RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage))));
-        if(RNG.Int(0,2) == 0){
+        if(chance == 0 || chance == 1){
             cout << "The defense is broken!\n";
             defend = false;
         }
@@ -138,7 +138,7 @@ int Slash(Stats &attackerstats, Stats &defenderstats, bool &defend){
 
 int Stab(Stats &attackerstats, Stats &defenderstats, bool &defend){
     Random RNG;
-    double basedamage = 6.0 * attackerstats.GetStrength()/defenderstats.GetDefense();
+    double basedamage = 7.0 * (attackerstats.GetStrength() + attackerstats.GetStrengthBoost())/(defenderstats.GetDefense() + defenderstats.GetDefenseBoost());
     int damage; 
     
     damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
