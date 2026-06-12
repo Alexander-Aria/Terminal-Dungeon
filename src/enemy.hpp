@@ -5,8 +5,14 @@
 
 using std::string;
 
+enum class EnemyType{
+    REGULAR,
+    BANDITS
+};
+
 class Enemy{
     private:
+        EnemyType enemytype = EnemyType::REGULAR;
         Stats stats;
         string name = "Undefined Enemy";
         string description = "No Description";
@@ -17,15 +23,17 @@ class Enemy{
     public:
         Enemy(){}
         Enemy(
+            const EnemyType &type,
             const Stats &s, 
             const string &n, 
             const string &d,
             const int &greward,
             const int &ereward,
-            const int &dc,
-            const int &ac
-        ) : stats(s), name(n), description(d), goldreward(greward), expreward(ereward), defchance(dc), attchance(ac) {}
+            const int &ac,
+            const int &dc
+        ) : enemytype(type), stats(s), name(n), description(d), goldreward(greward), expreward(ereward), attchance(ac), defchance(dc) {}
 
+        EnemyType &GetEnemyType(){return enemytype;}
         Stats &GetStats(){return stats;}
         string &GetName(){return name;}
         string &GetDescription(){return description;}
@@ -36,6 +44,7 @@ class Enemy{
 };
 
 inline Enemy Dummy() {return Enemy(
+    EnemyType::REGULAR,
     Stats(200, 200, 0, 5),
     "Dummy",
     "A practice dummy.",
@@ -45,7 +54,30 @@ inline Enemy Dummy() {return Enemy(
     0
 );}
 
+inline Enemy Bat() {return Enemy(
+    EnemyType::REGULAR,
+    Stats(50, 50, 8, 5), 
+    "Bat", 
+    "An agressive and territorial bat.", 
+    30, 
+    50,
+    80,
+    20
+);}
+
+inline Enemy AlphaBat() { return Enemy(
+    EnemyType::REGULAR,
+    Stats(80, 80, 10, 5), 
+    "Alpha Bat", 
+    "The leader of the bats.", 
+    50, 
+    80,
+    40,
+    60
+);}
+
 inline Enemy WolfCub() {return Enemy(
+    EnemyType::REGULAR,
     Stats(60, 60, 10, 6), 
     "Wolf Cub", 
     "A young wolf cub.", 
@@ -56,32 +88,35 @@ inline Enemy WolfCub() {return Enemy(
 );}
 
 inline Enemy FemaleWolf() {return Enemy(
+    EnemyType::REGULAR,
     Stats(120, 120, 15, 8),
     "Female Wolf",
     "A female wolf and a grieving mother of a wolf cub.",
     50,
     150,
-    40,
-    60
+    60,
+    40
 );}
 
 inline Enemy MaleWolf() {return Enemy(
+    EnemyType::REGULAR,
     Stats(150, 150, 18, 10),
     "Male Wolf",
     "A male wolf and a furious father of a wolf cub.",
     80,
     200,
-    40,
-    60
+    60,
+    40
 );}
 
-inline Enemy Bat() {return Enemy(
-    Stats(50, 50, 8, 5), 
-    "Bat", 
-    "An agressive and territorial bat.", 
-    30, 
-    50,
-    20,
-    80
+inline Enemy Bandit() {return Enemy(
+    EnemyType::BANDITS,
+    Stats(100, 100, 15, 6), 
+    "Bandit", 
+    "A hunting bandit. Possibly one of many living in the dungeon.", 
+    100, 
+    75,
+    70,
+    30
 );}
 

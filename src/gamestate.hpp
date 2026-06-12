@@ -15,7 +15,13 @@ class GameState{
         Status status = Status::ONGOING;
         Player player;
     public:
-        GameState(){};
+        GameState(bool developermode){
+            if(developermode){
+                player.GetGold() = 10000;
+                player.GetInventory() = Inventory(AllItems());
+                player.GetStats() = {10000, 10000, 10000, 10000};
+            }
+        }
 
         int &GetStage(){return stage;}
         Status &GetStatus(){return status;}

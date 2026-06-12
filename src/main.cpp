@@ -8,7 +8,7 @@ using std::cout;
 using std::cin;
 
 void Game(bool developermode){
-    GameState game;
+    GameState game(developermode);
     bool loop = true;
     int devstage = 0;
 
@@ -17,7 +17,6 @@ void Game(bool developermode){
         cout << "DEVELOPER MODE\n\n";
         cout << "Choose stage (0-10) : ";
         NumInput(devstage);
-        game.GetPlayer() = Player(true);
         game.GetStage() = devstage;
     }
 

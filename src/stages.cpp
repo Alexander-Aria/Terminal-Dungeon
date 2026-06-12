@@ -76,7 +76,29 @@ void StageOne(GameState &game){
     Battle(game, enemy2);
     if(!IsRunning(game.GetStatus())) return;
 
+    cout << "You found the entrance to the next floor. Do you still want to explore this floor?\n";
+    if(YesorNo()) StageOneExtra(game);
+    if(!IsRunning(game.GetStatus())) return;
+
     game.GetStage()++;
+}
+
+void StageOneExtra(GameState &game){
+    Enemy enemy1 = AlphaBat();
+
+    cout << "You decided to continue exploring the first floor before you head to the second floor.\n";
+    cout << "You see a bat nest up ahead. A bat, seemingly larger and more powerful is guarding the nest.\n";
+    cout << "Behind the nest is a chest.\n";
+    Choice(game);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "You charge towards the large bat!\n";
+    Battle(game, enemy1);
+    if(!IsRunning(game.GetStatus())) return;
+
+    game.GetPlayer().GetInventory().GetConsumables().push_back(LargePotion());
+    cout << "You opened the chest...\n";
+    cout << "You got a Large Potion!\n\n";
 }
 
 void StageTwo(GameState &game) {
@@ -114,20 +136,29 @@ void StageTwo(GameState &game) {
 }
 
 void StageThree(GameState &game){
-    int opt = 0;
-    Enemy enemy1;
+    Enemy enemy1 = Bandit();
 
+    cout << "\nFLOOR 3\n\n";
     cout << "As you continue going deeper into the dungeon, you saw a dim light in the distance...\n";
     cout << "An old shack lies in front of you with a sign hanging from the side, [SHOP]. Do you want to go in?\n";
-    cout << "1. Yes\n2. No\n\n- ";
-    NumInput(opt);
-
-    if(opt == 1) {
+    if(YesorNo()) {
         cout << "\nYou decided to go in the shack...\n";
         ShopFunction(game.GetPlayer(), ShopConfigOne());
     }
     else cout << "\nYou decided to ignore the shack and continue with your journey...\n";
-        
+    
+    Choice(game);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "As you continue, you have a subtle feeling that someone is watching you...\n";
+    cout << "You turned your back and dodged just in time as a bandit tries to attack you from behind!\n";
+    Battle(game, enemy1);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "After defeating the bandit and the old shack, you came to the realization that you aren't the only human in this dungeon.\n";
+    cout << "You wonder if there are actually a settlement inside...\n";
+    game.GetStage()++;
+
     // Temporary
     if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
 }

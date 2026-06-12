@@ -30,3 +30,12 @@ inline void NumInput(T &num){
         cout << "Try again : ";
     }
 }
+
+inline bool YesorNo(){
+    int opt = 0;
+
+    cout << "1. Yes\n2. No\n\n- ";
+    NumInput(opt);
+    if(opt == 1) return true;
+    else return false;
+}

@@ -19,13 +19,6 @@ class Player{
         int gold = 0;
     public:
         Player(){}
-        Player(bool dev){
-            if(dev){
-                gold = 10000;
-                inventory = Inventory(AllItems());
-                stats = {10000, 10000, 10000, 10000};
-            }
-        }
 
         Stats &GetStats(){return stats;}
         Inventory &GetInventory(){return inventory;}
@@ -40,7 +33,7 @@ class Player{
                 stats.GetHealth() = stats.GetMaxHealth();
                 stats.GetDefense() += 2;
                 stats.GetStrength() += 2;
-                exp -= 300;
+                exp -= 250;
                 std::cout << "you leveled up to level " << level << "!\n\n";
             }
         }

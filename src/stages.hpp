@@ -2,8 +2,16 @@
 
 class GameState;
 
+bool ChoiceExtra();
 void Choice(GameState &game);
+
 void StageZero(GameState &game);
+
 void StageOne(GameState &game);
+void StageOneExtra(GameState &game);
+
 void StageTwo(GameState &game);
+void StageTwoExtra(GameState &game);
+
 void StageThree(GameState &game);
+void StageThreeExtra(GameState &game);

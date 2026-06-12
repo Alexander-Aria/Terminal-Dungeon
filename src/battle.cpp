@@ -95,11 +95,13 @@ void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefe
     int RNGnum = RNG.Int(1,100);
     int choice = 0;
 
-    if(enemydefend == true) choice = 1;
-    else{
+    if(enemy.GetEnemyType() == EnemyType::BANDITS && playerdefend) choice = 3;
+
+    else if(enemydefend != true) {
         if(RNGnum <= enemy.GetAttChance()) choice = 1;
         else if(RNGnum > 100 - enemy.GetDefChance()) choice = 2;
     }
+    else choice = 1;
 
     // 0 = Nothing, 1 = Attack, 2 = Defend
     switch(choice){
@@ -110,6 +112,10 @@ void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefe
         case 2:
             enemydefend = true;
             cout << enemy.GetName() << " is defending!\n\n";
+            break;
+        case 3:
+            cout << enemy.GetName() << " stabbed you!\n";
+            player.GetStats().GetHealth() -= Stab(enemy.GetStats(), player.GetStats(), playerdefend);
             break;
         default:
             cout << enemy.GetName() << " does nothing!\n\n";
