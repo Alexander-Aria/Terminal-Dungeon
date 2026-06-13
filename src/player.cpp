@@ -12,6 +12,7 @@ bool InventoryAccess(Player &player, const BattleState &state){
 
     while(true){
         cout << "Gold : " << player.GetGold() << "\n";
+        ShowEquipment(player.GetInventory(), false);
         ShowInventory(player.GetInventory(), false);
         cout << "\n0 to come back.\n\n- ";
         NumInput(opt);
@@ -39,6 +40,6 @@ void StatsCheck(Stats &playerstats){
     cout << "STATS\n";
     cout << "Health = " << playerstats.GetHealth() << "\n";
     cout << "Max Health = " << playerstats.GetMaxHealth() << "\n";
-    cout << "Strength = " << playerstats.GetStrength() << "\n";
-    cout << "Defense = " << playerstats.GetDefense() << "\n\n";
+    cout << "Strength = " << playerstats.GetRawStrength() << " + " << playerstats.GetStrengthBuff() << "\n";
+    cout << "Defense = " << playerstats.GetRawDefense() << " + " << playerstats.GetDefenseBuff() << "\n\n";
 }

@@ -13,7 +13,9 @@ class Shop{
         Inventory &GetInventory() {return shopitems;}
 };
 
-void ShopFunction(Player &player, const Shop &cponfig);
+void ShopFunction(Player &player, const Shop &config);
+void Buy(Player &player, Shop &shop);
+void Sell(Player &player, Shop &shop);
 
 inline const vector<Consumables> ShopConsumablesOne(){return {
     SmallPotion(), 
@@ -23,4 +25,4 @@ inline const vector<Consumables> ShopConsumablesOne(){return {
     PowerStone(),
     ArmorStone()
 };}
-inline Shop ShopConfigOne() {return Shop(Inventory(ShopConsumablesOne()));}
+inline Shop ShopConfigOne() {return Shop(Inventory(ShopConsumablesOne(), LongSword(), LightChainmailArmor()));}

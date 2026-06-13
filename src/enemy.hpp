@@ -33,14 +33,14 @@ class Enemy{
             const int &dc
         ) : enemytype(type), stats(s), name(n), description(d), goldreward(greward), expreward(ereward), attchance(ac), defchance(dc) {}
 
-        EnemyType &GetEnemyType(){return enemytype;}
-        Stats &GetStats(){return stats;}
-        string &GetName(){return name;}
-        string &GetDescription(){return description;}
-        int &GetGoldReward(){return goldreward;}
-        int &GetExpReward(){return expreward;}
-        int &GetAttChance(){return attchance;}
-        int &GetDefChance(){return defchance;}
+        const EnemyType &GetEnemyType() const {return enemytype;}
+        Stats &GetStats() {return stats;}
+        const string &GetName() const {return name;}
+        const string &GetDescription() const {return description;}
+        const int &GetGoldReward() const {return goldreward;}
+        const int &GetExpReward() const {return expreward;}
+        const int &GetAttChance() const {return attchance;}
+        const int &GetDefChance() const {return defchance;}
 };
 
 inline Enemy Dummy() {return Enemy(

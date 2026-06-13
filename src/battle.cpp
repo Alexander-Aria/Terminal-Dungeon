@@ -125,7 +125,7 @@ void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefe
 int Slash(Stats &attackerstats, Stats &defenderstats, bool &defend){
     Random RNG;
     int chance = RNG.Int(0,2);
-    double basedamage = 10.0 * (attackerstats.GetStrength() + attackerstats.GetStrengthBoost())/(defenderstats.GetDefense() + defenderstats.GetDefenseBoost());
+    double basedamage = 10.0 * (attackerstats.GetRawStrength() + attackerstats.GetStrengthBuff() + attackerstats.GetStrengthBoost())/(defenderstats.GetRawDefense() + defenderstats.GetDefenseBoost() + defenderstats.GetDefenseBoost());
     int damage; 
     
     if(defend){
@@ -144,7 +144,7 @@ int Slash(Stats &attackerstats, Stats &defenderstats, bool &defend){
 
 int Stab(Stats &attackerstats, Stats &defenderstats, bool &defend){
     Random RNG;
-    double basedamage = 7.0 * (attackerstats.GetStrength() + attackerstats.GetStrengthBoost())/(defenderstats.GetDefense() + defenderstats.GetDefenseBoost());
+    double basedamage = 7.0 * (attackerstats.GetRawStrength() + attackerstats.GetStrengthBuff() + attackerstats.GetStrengthBoost())/(defenderstats.GetRawDefense() + defenderstats.GetDefenseBoost() + defenderstats.GetDefenseBoost());
     int damage; 
     
     damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));

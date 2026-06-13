@@ -55,7 +55,6 @@ void StageZero(GameState &game){
 }
 
 void StageOne(GameState &game){
-    int opt = 0;
     Enemy enemy1 = Bat(), enemy2 = Bat();
 
     game.GetPlayer().GetInventory().GetConsumables().push_back(SmallPotion());
@@ -101,8 +100,7 @@ void StageOneExtra(GameState &game){
     cout << "You got a Large Potion!\n\n";
 }
 
-void StageTwo(GameState &game) {
-    int opt = 0;
+void StageTwo(GameState &game){
     Enemy enemy1 = WolfCub(), enemy2 = FemaleWolf(), enemy3 = MaleWolf();
 
     game.GetPlayer().GetInventory().GetConsumables().push_back(SmallPotion());
@@ -127,12 +125,28 @@ void StageTwo(GameState &game) {
     Battle(game, enemy2);
     if(!IsRunning(game.GetStatus())) return;
 
-    cout << "The mother wolf cried one last time before it perished.\n";
-    cout << "That last cry brought the father into the room. It looks like you're in trouble...\n\n";
-    Battle(game, enemy3);
+    cout << "You found the entrance to the next floor. Do you still want to explore this floor?\n";
+    if(YesorNo()) StageOneExtra(game);
     if(!IsRunning(game.GetStatus())) return;
     
     game.GetStage()++;
+}
+
+void StageTwoExtra(GameState &game){
+    Enemy enemy1 = MaleWolf();
+
+    cout << "You decided to continue exploring the first floor before you head to the third floor.\n";
+    cout << "You found a wolf den, inside lies a male wolf guarding the den.\n";
+    cout << "Inside the den lies seemingly a magical stone you might be able to use.\n";
+    Choice(game);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "After preparing yourself, you charge into the den!\n";
+    Battle(game, enemy1);
+    if(!IsRunning(game.GetStatus())) return;
+
+    game.GetPlayer().GetInventory().GetConsumables().push_back(PowerStone());
+    cout << "You got a Power Stone!\n\n";
 }
 
 void StageThree(GameState &game){

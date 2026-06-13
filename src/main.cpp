@@ -56,7 +56,7 @@ void Game(bool developermode){
 }
 
 int main(){
-    int opt, status = 0;
+    int opt;
 
     while(true){
         cout << "______________________________\n";

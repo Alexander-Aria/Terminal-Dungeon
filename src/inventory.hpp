@@ -51,17 +51,75 @@ class Consumables : public Items{
         const int &GetDefenseBoost() const {return effect.defboost;}
 };
 
-class Inventory{
+class Weapon : public Items{
     private:
-        vector<Consumables> consumables;
+        int attackbuff = 0;
     public:
-        Inventory(){}
-        Inventory(vector<Consumables> cons) : consumables(cons) {}
+        Weapon(
+            const string &name, 
+            const string &description, 
+            const int &value, 
+            const int &attbuff
+        ) : Items(name, description, value), attackbuff(attbuff) {}
 
-        vector<Consumables> &GetConsumables(){return consumables;}
+        const int &GetStrengthBuff() const {return attackbuff;}
 };
 
-void ShowInventory(Inventory &inventory, bool shop);
+class Armor : public Items{
+    private:
+        int defensebuff = 0;
+    public:
+        Armor(
+            const string &name, 
+            const string &description, 
+            const int &value, 
+            const int &defbuff
+        ) : Items(name, description, value), defensebuff(defbuff) {}
+
+        const int &GetDefenseBuff() const {return defensebuff;}
+};
+
+inline Weapon NoWeapon() {return Weapon(
+    "SOLD OUT",
+    "This weapon is sold out.",
+    0,
+    0
+);}
+
+inline Weapon IronSword() {return Weapon(
+    "Iron Sword",
+    "A simple but reliable sword (+0 Strength).",
+    0,
+    0
+);}
+
+inline Weapon LongSword() {return Weapon(
+    "Long Sword",
+    "A heavy and hard hitting long sword (+3 Strength).",
+    400,
+    3
+);}
+
+inline Armor NoArmor() {return Armor(
+    "SOLD OUT",
+    "This Armor is sold out.",
+    0,
+    0
+);}
+
+inline Armor LeatherArmor() {return Armor(
+    "Leather Armor",
+    "A regular adventurer's armor (+0 Defense).",
+    0,
+    0
+);}
+
+inline Armor LightChainmailArmor() {return Armor(
+    "Light Chainmail Armor",
+    "A military grade light chainmail armor (+3 Defense).",
+    400,
+    3
+);}
 
 inline Consumables SmallPotion() {return Consumables(
     "Small Potion", 
@@ -99,7 +157,6 @@ inline Consumables ArmorStone() {return Consumables(
     3
 );}
 
-
 inline vector<Consumables> AllItems() {return {
     SmallPotion(),
     SmallPotion(),
@@ -114,3 +171,20 @@ inline vector<Consumables> AllItems() {return {
     ArmorStone(),
     ArmorStone()
 };}
+
+class Inventory{
+    private:
+        vector<Consumables> consumables;
+        Weapon weapon = NoWeapon();
+        Armor armor = NoArmor();
+    public:
+        Inventory() {}
+        Inventory(const vector<Consumables> &cons, const Weapon &w, const Armor &a) : consumables(cons), weapon(w), armor(a) {}
+
+        vector<Consumables> &GetConsumables() {return consumables;}
+        Weapon &GetWeapon() {return weapon;}
+        Armor &GetArmor() {return armor;}
+};
+
+void ShowInventory(Inventory &inventory, bool shop);
+void ShowEquipment(Inventory &inventory, bool showvalue);

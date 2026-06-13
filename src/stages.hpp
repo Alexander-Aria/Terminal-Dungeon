@@ -2,7 +2,6 @@
 
 class GameState;
 
-bool ChoiceExtra();
 void Choice(GameState &game);
 
 void StageZero(GameState &game);

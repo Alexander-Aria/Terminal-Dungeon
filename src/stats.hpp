@@ -4,10 +4,14 @@ class Stats{
     private:
         int health = 100;
         int maxhealth = 100;
-        int strength = 10;
-        int defense = 10;
-        int strboost = 0;
-        int defboost = 0;
+
+        int rawstrength = 10;
+        int strbuff = 0;
+        int tempstrboost = 0;
+
+        int rawdefense = 10;
+        int defbuff = 0;
+        int tempdefboost = 0;
     public:
         Stats(){}
         Stats(
@@ -15,12 +19,17 @@ class Stats{
             const int &mh, 
             const int &str, 
             const int &def
-        ) : health(h), maxhealth(mh), strength(str), defense(def) {}
+        ) : health(h), maxhealth(mh), rawstrength(str), rawdefense(def) {}
 
         int &GetHealth(){return health;}
         int &GetMaxHealth(){return maxhealth;}
-        int &GetStrength(){return strength;}
-        int &GetDefense(){return defense;}
-        int &GetStrengthBoost(){return strboost;}
-        int &GetDefenseBoost(){return defboost;}
+
+        int &GetRawStrength(){return rawstrength;}
+        int &GetStrengthBuff(){return strbuff;}
+        int &GetStrengthBoost(){return tempstrboost;}
+
+        int &GetRawDefense(){return rawdefense;}
+        int &GetDefenseBuff(){return defbuff;}
+        int &GetDefenseBoost(){return tempdefboost;}
+        
 };

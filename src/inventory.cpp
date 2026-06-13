@@ -3,7 +3,7 @@
 #include <iostream>
 using std::cout;
 
-void ShowInventory(Inventory &inventory, bool shop){
+void ShowInventory(Inventory &inventory, bool showvalue){
     int itemnum = 1;
 
     if(size(inventory.GetConsumables()) == 0) cout << "You don't have any items!\n";
@@ -14,9 +14,20 @@ void ShowInventory(Inventory &inventory, bool shop){
 
         for(auto &i : inventory.GetConsumables()){
             cout << itemnum << ". " << i.GetName() << " | " << i.GetDescription();
-            if(shop) cout << "| Price : " << i.GetValue();
+            if(showvalue) cout << "| Price : " << i.GetValue();
             cout << "\n";
             itemnum++;
         }
     }
+}
+
+void ShowEquipment(Inventory &inventory, bool showvalue){
+    cout << "_______________________\n";
+    cout << "EQUIPMENTS\n";
+    cout << "Weapon : " << inventory.GetWeapon().GetName() << " | " << inventory.GetWeapon().GetDescription();
+    if(showvalue) cout << " | Value : " << inventory.GetWeapon().GetValue();
+    cout << "\n";
+    cout << "Armor : " << inventory.GetArmor().GetName() << " | " << inventory.GetArmor().GetDescription();
+    if(showvalue) cout << " | Value : " << inventory.GetArmor().GetValue();
+    cout << "\n";
 }

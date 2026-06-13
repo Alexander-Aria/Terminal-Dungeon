@@ -31,11 +31,16 @@ class Player{
                 level++;
                 stats.GetMaxHealth() += 20;
                 stats.GetHealth() = stats.GetMaxHealth();
-                stats.GetDefense() += 2;
-                stats.GetStrength() += 2;
+                stats.GetRawDefense() += 2;
+                stats.GetRawStrength() += 2;
                 exp -= 250;
                 std::cout << "you leveled up to level " << level << "!\n\n";
             }
+        }
+
+        void BuffUpdate(){
+            stats.GetDefenseBuff() = inventory.GetArmor().GetDefenseBuff();
+            stats.GetStrengthBuff() = inventory.GetWeapon().GetStrengthBuff();
         }
 };
 

@@ -18,8 +18,11 @@ class GameState{
         GameState(bool developermode){
             if(developermode){
                 player.GetGold() = 10000;
-                player.GetInventory() = Inventory(AllItems());
+                player.GetInventory() = Inventory(AllItems(), LongSword(), LightChainmailArmor());
                 player.GetStats() = {10000, 10000, 10000, 10000};
+            }
+            else{
+                player.GetInventory() = Inventory({}, IronSword(), LeatherArmor());
             }
         }
 
