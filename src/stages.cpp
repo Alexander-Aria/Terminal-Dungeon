@@ -126,7 +126,7 @@ void StageTwo(GameState &game){
     if(!IsRunning(game.GetStatus())) return;
 
     cout << "You found the entrance to the next floor. Do you still want to explore this floor?\n";
-    if(YesorNo()) StageOneExtra(game);
+    if(YesorNo()) StageTwoExtra(game);
     if(!IsRunning(game.GetStatus())) return;
     
     game.GetStage()++;
@@ -170,9 +170,17 @@ void StageThree(GameState &game){
     if(!IsRunning(game.GetStatus())) return;
 
     cout << "After defeating the bandit and the old shack, you came to the realization that you aren't the only human in this dungeon.\n";
-    cout << "You wonder if there are actually a settlement inside...\n";
+    cout << "You wonder if there are actually a settlement inside...\n\n";
+
+    cout << "You found the entrance to the next floor. Do you still want to explore this floor?\n";
+    if(YesorNo()) StageThreeExtra(game);
+    if(!IsRunning(game.GetStatus())) return;
     game.GetStage()++;
 
     // Temporary
     if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
+}
+
+void StageThreeExtra(GameState &game){
+    
 }

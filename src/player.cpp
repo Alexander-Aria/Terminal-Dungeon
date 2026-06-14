@@ -7,6 +7,18 @@
 
 using std::cout;
 
+void Player::LevelUp(){
+    while(exp >= 250){
+        level++;
+        GetStats().GetMaxHealth() += 20;
+        GetStats().GetHealth() = GetStats().GetMaxHealth();
+        GetStats().GetRawDefense() += 2;
+        GetStats().GetRawStrength() += 2;
+        exp -= 250;
+        std::cout << "you leveled up to level " << level << "!\n\n";
+    }
+}
+
 bool InventoryAccess(Player &player, const BattleState &state){
     int opt = 0;   
 
@@ -19,8 +31,8 @@ bool InventoryAccess(Player &player, const BattleState &state){
 
         if(opt > 0 && opt <= size(player.GetInventory().GetConsumables())){
             player.GetStats().GetHealth() += player.GetInventory().GetConsumables()[opt-1].GetHealthGain();
-            player.GetStats().GetStrengthBoost() += player.GetInventory().GetConsumables()[opt-1].GetStrengthBoost();
-            player.GetStats().GetDefenseBoost() += player.GetInventory().GetConsumables()[opt-1].GetDefenseBoost();
+            player.GetStats().GetTempStrengthBoost() += player.GetInventory().GetConsumables()[opt-1].GetTempStrengthBoost();
+            player.GetStats().GetTempDefenseBoost() += player.GetInventory().GetConsumables()[opt-1].GetTempDefenseBoost();
             cout << "You consumed " << player.GetInventory().GetConsumables()[opt-1].GetName() << "\n";
 
             player.GetInventory().GetConsumables().erase(player.GetInventory().GetConsumables().begin() + opt - 1);

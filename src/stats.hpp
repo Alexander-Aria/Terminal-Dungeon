@@ -26,10 +26,9 @@ class Stats{
 
         int &GetRawStrength(){return rawstrength;}
         int &GetStrengthBuff(){return strbuff;}
-        int &GetStrengthBoost(){return tempstrboost;}
+        int &GetTempStrengthBoost(){return tempstrboost;}
 
         int &GetRawDefense(){return rawdefense;}
         int &GetDefenseBuff(){return defbuff;}
-        int &GetDefenseBoost(){return tempdefboost;}
-        
+        int &GetTempDefenseBoost(){return tempdefboost;}
 };

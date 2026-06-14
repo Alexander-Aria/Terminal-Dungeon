@@ -53,18 +53,18 @@ void Buy(Player &player, Shop &shop){
         else if(opt == -1){
             if(shop.GetInventory().GetArmor().GetValue() <= player.GetGold()){
                 cout << "You bought " << shop.GetInventory().GetArmor().GetName() << ".\n\n";
-                player.GetInventory().GetArmor() = shop.GetInventory().GetArmor();
+                player.GetGold() -= shop.GetInventory().GetArmor().GetValue();
+                player.ChangeEquipment(shop.GetInventory().GetArmor());
                 shop.GetInventory().GetArmor() = NoArmor();
-                player.BuffUpdate();
             }
             else cout << "You don't have enough gold!\n";
         }
         else if(opt == -2){
             if(shop.GetInventory().GetWeapon().GetValue() <= player.GetGold()){
                 cout << "You bought " << shop.GetInventory().GetWeapon().GetName() << ".\n\n";
-                player.GetInventory().GetWeapon() = shop.GetInventory().GetWeapon();
+                player.GetGold() -= shop.GetInventory().GetWeapon().GetValue();
+                player.ChangeEquipment(shop.GetInventory().GetWeapon());
                 shop.GetInventory().GetWeapon() = NoWeapon();
-                player.BuffUpdate();
             }
             else cout << "You don't have enough gold!\n";
         }
@@ -83,10 +83,10 @@ void Sell(Player &player, Shop &shop){
         NumInput(opt);
 
         if(opt > 0 && opt <= size(player.GetInventory().GetConsumables())){
+            cout << player.GetInventory().GetConsumables()[opt-1].GetName() << " was sold for " << player.GetInventory().GetConsumables()[opt-1].GetValue() << ".\n\n";
             player.GetGold() += player.GetInventory().GetConsumables()[opt-1].GetValue();
             shop.GetInventory().GetConsumables().push_back(player.GetInventory().GetConsumables()[opt-1]);
             player.GetInventory().GetConsumables().erase(player.GetInventory().GetConsumables().begin() + opt-1);
-            cout << player.GetInventory().GetConsumables()[opt-1].GetName() << " was sold for " << player.GetInventory().GetConsumables()[opt-1].GetValue() << ".\n\n";
         }
         else if(opt == 0) return;
         else cout << "Invalid Input!\n";

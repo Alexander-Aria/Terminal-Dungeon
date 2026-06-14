@@ -17,11 +17,11 @@ void Battle(GameState &game, Enemy &enemy){
     cout << "Description : " << enemy.GetDescription() << "\n";
     while(battlestatus == 0){
         PlayerTurn(game.GetPlayer(), enemy, playerdefend, enemydefend);
-        battlestatus = StatusCheck(game.GetPlayer().GetStats(), enemy.GetStats());
+        battlestatus = StatusCheck(game.GetPlayer(), enemy);
         if(battlestatus != 0) break;
 
         EnemyTurn(game.GetPlayer(), enemy, playerdefend, enemydefend);
-        battlestatus = StatusCheck(game.GetPlayer().GetStats(), enemy.GetStats());
+        battlestatus = StatusCheck(game.GetPlayer(), enemy);
         if(battlestatus != 0) break;
     }
     if(battlestatus == -1){
@@ -37,9 +37,9 @@ void Battle(GameState &game, Enemy &enemy){
     game.BattleStateReset();
 }
 
-int StatusCheck(Stats &playerstats, Stats &enemystats){
-    if(playerstats.GetHealth() <= 0) return -1;
-    else if(enemystats.GetHealth() <= 0) return 1;
+int StatusCheck(Player &player, Enemy &enemy){
+    if(player.IsDead()) return -1;
+    else if(enemy.IsDead()) return 1;
     else return 0;
 }
 
@@ -125,7 +125,7 @@ void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefe
 int Slash(Stats &attackerstats, Stats &defenderstats, bool &defend){
     Random RNG;
     int chance = RNG.Int(0,2);
-    double basedamage = 10.0 * (attackerstats.GetRawStrength() + attackerstats.GetStrengthBuff() + attackerstats.GetStrengthBoost())/(defenderstats.GetRawDefense() + defenderstats.GetDefenseBoost() + defenderstats.GetDefenseBoost());
+    double basedamage = 10.0 * (attackerstats.GetRawStrength() + attackerstats.GetStrengthBuff() + attackerstats.GetTempStrengthBoost())/(defenderstats.GetRawDefense() + defenderstats.GetDefenseBuff() + defenderstats.GetTempDefenseBoost());
     int damage; 
     
     if(defend){
@@ -144,7 +144,7 @@ int Slash(Stats &attackerstats, Stats &defenderstats, bool &defend){
 
 int Stab(Stats &attackerstats, Stats &defenderstats, bool &defend){
     Random RNG;
-    double basedamage = 7.0 * (attackerstats.GetRawStrength() + attackerstats.GetStrengthBuff() + attackerstats.GetStrengthBoost())/(defenderstats.GetRawDefense() + defenderstats.GetDefenseBoost() + defenderstats.GetDefenseBoost());
+    double basedamage = 7.0 * (attackerstats.GetRawStrength() + attackerstats.GetStrengthBuff() + attackerstats.GetTempStrengthBoost())/(defenderstats.GetRawDefense() + defenderstats.GetDefenseBuff() + defenderstats.GetTempDefenseBoost());
     int damage; 
     
     damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));

@@ -31,8 +31,8 @@ class GameState{
         Player &GetPlayer(){return player;}
 
         void BattleStateReset(){
-            player.GetStats().GetStrengthBoost() = 0;
-            player.GetStats().GetDefenseBoost() = 0;
+            player.GetStats().GetTempStrengthBoost() = 0;
+            player.GetStats().GetTempDefenseBoost() = 0;
         }
 };
 

@@ -28,8 +28,8 @@ class Consumables : public Items{
     private:
         struct{
         int healthgain = 0;
-        int strboost = 0;
-        int defboost = 0;
+        int tempstrboost = 0;
+        int tempdefboost = 0;
         } effect;
     public:
         Consumables(){}
@@ -42,13 +42,13 @@ class Consumables : public Items{
             const int &def
         ) : Items(name, description, value) {
             effect.healthgain = health;
-            effect.strboost = str;
-            effect.defboost = def;
+            effect.tempstrboost = str;
+            effect.tempdefboost = def;
         }
 
         const int &GetHealthGain() const {return effect.healthgain;}
-        const int &GetStrengthBoost() const {return effect.strboost;}
-        const int &GetDefenseBoost() const {return effect.defboost;}
+        const int &GetTempStrengthBoost() const {return effect.tempstrboost;}
+        const int &GetTempDefenseBoost() const {return effect.tempdefboost;}
 };
 
 class Weapon : public Items{

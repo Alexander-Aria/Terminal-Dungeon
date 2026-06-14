@@ -1,6 +1,6 @@
 #pragma once
 
-#include "stats.hpp"
+#include "entity.hpp"
 #include <string>
 
 using std::string;
@@ -10,18 +10,17 @@ enum class EnemyType{
     BANDITS
 };
 
-class Enemy{
+class Enemy : public Entity{
     private:
         EnemyType enemytype = EnemyType::REGULAR;
-        Stats stats;
         string name = "Undefined Enemy";
         string description = "No Description";
         int goldreward = 0;
         int expreward = 0;
-        int attchance = 50;
-        int defchance = 50;
+        int attchance = 0;
+        int defchance = 0;
     public:
-        Enemy(){}
+        Enemy() {}
         Enemy(
             const EnemyType &type,
             const Stats &s, 
@@ -31,10 +30,9 @@ class Enemy{
             const int &ereward,
             const int &ac,
             const int &dc
-        ) : enemytype(type), stats(s), name(n), description(d), goldreward(greward), expreward(ereward), attchance(ac), defchance(dc) {}
+        ) : enemytype(type), Entity(s), name(n), description(d), goldreward(greward), expreward(ereward), attchance(ac), defchance(dc) {}
 
         const EnemyType &GetEnemyType() const {return enemytype;}
-        Stats &GetStats() {return stats;}
         const string &GetName() const {return name;}
         const string &GetDescription() const {return description;}
         const int &GetGoldReward() const {return goldreward;}
