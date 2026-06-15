@@ -15,15 +15,11 @@ class Entity{
         Stats &GetStats() {return stats;}
         Inventory &GetInventory() {return inventory;}
 
-        void ChangeEquipment(const Armor &armor){
-            inventory.GetArmor() = armor;
-            stats.GetDefenseBuff() = inventory.GetArmor().GetDefenseBuff();
-        }
-
-        void ChangeEquipment(const Weapon &weapon){
-            inventory.GetWeapon() = weapon;
-            stats.GetStrengthBuff() = inventory.GetWeapon().GetStrengthBuff();
-        }
+        void ChangeEquipment(const Armor &armor);
+        void ChangeEquipment(const Weapon &weapon);
+        int Slash(Stats &attackerstats, Stats &defenderstats, bool &defend);
+        int Stab(Stats &attackerstats, Stats &defenderstats, bool &defend);
+        bool Defend() {return true;}
 
         bool IsDead() {return stats.GetHealth() <= 0;}
 };

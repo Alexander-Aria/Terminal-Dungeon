@@ -19,25 +19,25 @@ void Player::LevelUp(){
     }
 }
 
-bool InventoryAccess(Player &player, const BattleState &state){
+bool Player::InventoryAccess(const BattleState &state){
     int opt = 0;   
 
     while(true){
-        cout << "Gold : " << player.GetGold() << "\n";
-        ShowEquipment(player.GetInventory(), false);
-        ShowInventory(player.GetInventory(), false);
+        cout << "Gold : " << GetGold() << "\n";
+        ShowEquipment(GetInventory(), false);
+        ShowInventory(GetInventory(), false);
         cout << "\n0 to come back.\n\n- ";
         NumInput(opt);
 
-        if(opt > 0 && opt <= size(player.GetInventory().GetConsumables())){
-            player.GetStats().GetHealth() += player.GetInventory().GetConsumables()[opt-1].GetHealthGain();
-            player.GetStats().GetTempStrengthBoost() += player.GetInventory().GetConsumables()[opt-1].GetTempStrengthBoost();
-            player.GetStats().GetTempDefenseBoost() += player.GetInventory().GetConsumables()[opt-1].GetTempDefenseBoost();
-            cout << "You consumed " << player.GetInventory().GetConsumables()[opt-1].GetName() << "\n";
+        if(opt > 0 && opt <= size(GetInventory().GetConsumables())){
+            GetStats().GetHealth() += GetInventory().GetConsumables()[opt-1].GetHealthGain();
+            GetStats().GetTempStrengthBoost() += GetInventory().GetConsumables()[opt-1].GetTempStrengthBoost();
+            GetStats().GetTempDefenseBoost() += GetInventory().GetConsumables()[opt-1].GetTempDefenseBoost();
+            cout << "You consumed " << GetInventory().GetConsumables()[opt-1].GetName() << "\n";
 
-            player.GetInventory().GetConsumables().erase(player.GetInventory().GetConsumables().begin() + opt - 1);
+            GetInventory().GetConsumables().erase(GetInventory().GetConsumables().begin() + opt - 1);
 
-            if(player.GetStats().GetHealth() > player.GetStats().GetMaxHealth()) player.GetStats().GetHealth() = player.GetStats().GetMaxHealth();
+            if(GetStats().GetHealth() > GetStats().GetMaxHealth()) GetStats().GetHealth() = GetStats().GetMaxHealth();
             if(state == BattleState::INBATTLE) return true;
         }
 
@@ -47,11 +47,11 @@ bool InventoryAccess(Player &player, const BattleState &state){
     return false;
 }
 
-void StatsCheck(Stats &playerstats){
+void Player::StatsCheck(){
     cout << "\n_____________________________________________\n";
     cout << "STATS\n";
-    cout << "Health = " << playerstats.GetHealth() << "\n";
-    cout << "Max Health = " << playerstats.GetMaxHealth() << "\n";
-    cout << "Strength = " << playerstats.GetRawStrength() << " + " << playerstats.GetStrengthBuff() << "\n";
-    cout << "Defense = " << playerstats.GetRawDefense() << " + " << playerstats.GetDefenseBuff() << "\n\n";
+    cout << "Health = " << GetStats().GetHealth() << "\n";
+    cout << "Max Health = " << GetStats().GetMaxHealth() << "\n";
+    cout << "Strength = " << GetStats().GetRawStrength() << " + " << GetStats().GetStrengthBuff() << "\n";
+    cout << "Defense = " << GetStats().GetRawDefense() << " + " << GetStats().GetDefenseBuff() << "\n\n";
 }

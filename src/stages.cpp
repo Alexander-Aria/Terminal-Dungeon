@@ -6,9 +6,12 @@
 #include "utility.hpp"
 
 #include <iostream>
+#include <memory>
 
 using std::cout;
 using std::cin;
+using std::unique_ptr;
+using std::make_unique;
 
 void Choice(GameState &game){
     bool done = false;
@@ -29,10 +32,10 @@ void Choice(GameState &game){
                 done = true;
                 break;
             case 2:
-                StatsCheck(game.GetPlayer().GetStats());
+                game.GetPlayer().StatsCheck();
                 break;
             case 3:
-                InventoryAccess(game.GetPlayer(), BattleState::OUTBATTLE);
+                game.GetPlayer().InventoryAccess(BattleState::OUTBATTLE);
                 break;
         }
     }
@@ -55,7 +58,7 @@ void StageZero(GameState &game){
 }
 
 void StageOne(GameState &game){
-    Enemy enemy1 = Bat(), enemy2 = Bat();
+    auto enemy1 = make_unique<BatEnemy>(Bat()), enemy2 = make_unique<BatEnemy>(Bat());
 
     game.GetPlayer().GetInventory().GetConsumables().push_back(SmallPotion());
     game.GetPlayer().GetGold() = 100;
@@ -68,11 +71,11 @@ void StageOne(GameState &game){
     
     cout << "Entering the dungeon, you encountered a few teritorial bats.\n";
     cout << "A bat attacks!\n\n";
-    Battle(game, enemy1);
+    Battle(game, *enemy1);
     if(!IsRunning(game.GetStatus())) return;
 
     cout << "Before you can recover, another bat attacks!\n\n";
-    Battle(game, enemy2);
+    Battle(game, *enemy2);
     if(!IsRunning(game.GetStatus())) return;
 
     cout << "You found the entrance to the next floor. Do you still want to explore this floor?\n";
@@ -83,7 +86,7 @@ void StageOne(GameState &game){
 }
 
 void StageOneExtra(GameState &game){
-    Enemy enemy1 = AlphaBat();
+    auto enemy1 = make_unique<BatEnemy>(AlphaBat());
 
     cout << "You decided to continue exploring the first floor before you head to the second floor.\n";
     cout << "You see a bat nest up ahead. A bat, seemingly larger and more powerful is guarding the nest.\n";
@@ -92,7 +95,7 @@ void StageOneExtra(GameState &game){
     if(!IsRunning(game.GetStatus())) return;
 
     cout << "You charge towards the large bat!\n";
-    Battle(game, enemy1);
+    Battle(game, *enemy1);
     if(!IsRunning(game.GetStatus())) return;
 
     game.GetPlayer().GetInventory().GetConsumables().push_back(LargePotion());
@@ -101,7 +104,7 @@ void StageOneExtra(GameState &game){
 }
 
 void StageTwo(GameState &game){
-    Enemy enemy1 = WolfCub(), enemy2 = FemaleWolf(), enemy3 = MaleWolf();
+    auto enemy1 = make_unique<WolfEnemy>(WolfCub()), enemy2 = make_unique<WolfEnemy>(FemaleWolf());
 
     game.GetPlayer().GetInventory().GetConsumables().push_back(SmallPotion());
 
@@ -112,7 +115,7 @@ void StageTwo(GameState &game){
     if(!IsRunning(game.GetStatus())) return;
 
     cout << "Suddenly, a wolf cub jumps at you!\n\n";
-    Battle(game, enemy1);
+    Battle(game, *enemy1);
     if(!IsRunning(game.GetStatus())) return;
 
     cout << "You easily beat the wolf cub. However, it is the least of your worries.\n";
@@ -122,7 +125,7 @@ void StageTwo(GameState &game){
     if(!IsRunning(game.GetStatus())) return;
 
     cout << "\nAfter seeing the dead wolf cub, the female wolf immediately jumps at you!\n\n";
-    Battle(game, enemy2);
+    Battle(game, *enemy2);
     if(!IsRunning(game.GetStatus())) return;
 
     cout << "You found the entrance to the next floor. Do you still want to explore this floor?\n";
@@ -133,7 +136,7 @@ void StageTwo(GameState &game){
 }
 
 void StageTwoExtra(GameState &game){
-    Enemy enemy1 = MaleWolf();
+    auto enemy1 = make_unique<WolfEnemy>(MaleWolf());
 
     cout << "You decided to continue exploring the first floor before you head to the third floor.\n";
     cout << "You found a wolf den, inside lies a male wolf guarding the den.\n";
@@ -142,7 +145,7 @@ void StageTwoExtra(GameState &game){
     if(!IsRunning(game.GetStatus())) return;
 
     cout << "After preparing yourself, you charge into the den!\n";
-    Battle(game, enemy1);
+    Battle(game, *enemy1);
     if(!IsRunning(game.GetStatus())) return;
 
     game.GetPlayer().GetInventory().GetConsumables().push_back(PowerStone());
@@ -150,7 +153,7 @@ void StageTwoExtra(GameState &game){
 }
 
 void StageThree(GameState &game){
-    Enemy enemy1 = Bandit();
+    auto enemy1 = make_unique<BanditEnemy>(Bandit());
 
     cout << "\nFLOOR 3\n\n";
     cout << "As you continue going deeper into the dungeon, you saw a dim light in the distance...\n";
@@ -166,7 +169,7 @@ void StageThree(GameState &game){
 
     cout << "As you continue, you have a subtle feeling that someone is watching you...\n";
     cout << "You turned your back and dodged just in time as a bandit tries to attack you from behind!\n";
-    Battle(game, enemy1);
+    Battle(game, *enemy1);
     if(!IsRunning(game.GetStatus())) return;
 
     cout << "After defeating the bandit and the old shack, you came to the realization that you aren't the only human in this dungeon.\n";

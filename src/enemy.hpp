@@ -1,59 +1,105 @@
 #pragma once
 
 #include "entity.hpp"
+#include "player.hpp"
 #include <string>
 
 using std::string;
 
-enum class EnemyType{
-    REGULAR,
-    BANDITS
+enum class Choice{
+    NOTHING,
+    SLASH,
+    STAB,
+    DEFEND
 };
 
 class Enemy : public Entity{
     private:
-        EnemyType enemytype = EnemyType::REGULAR;
         string name = "Undefined Enemy";
         string description = "No Description";
         int goldreward = 0;
         int expreward = 0;
-        int attchance = 0;
-        int defchance = 0;
     public:
         Enemy() {}
         Enemy(
-            const EnemyType &type,
+            const Stats &s, 
+            const string &n, 
+            const string &d,
+            const int &greward,
+            const int &ereward
+        ) : Entity(s), name(n), description(d), goldreward(greward), expreward(ereward) {}
+
+        const string &GetName() const {return name;}
+        const string &GetDescription() const {return description;}
+        const int &GetGoldReward() const {return goldreward;}
+        const int &GetExpReward() const {return expreward;}
+
+        virtual void Turn(Player &player, bool &playerdefend, bool &enemydefend);
+};
+
+class BatEnemy : public Enemy{
+    private:
+        int slashchance = 80;
+        int defendchance = 20;
+    public:
+        BatEnemy(
             const Stats &s, 
             const string &n, 
             const string &d,
             const int &greward,
             const int &ereward,
-            const int &ac,
-            const int &dc
-        ) : enemytype(type), Entity(s), name(n), description(d), goldreward(greward), expreward(ereward), attchance(ac), defchance(dc) {}
+            const int &slash,
+            const int &def
+        ) : Enemy(s, n, d, greward, ereward), slashchance(slash), defendchance(def){}
 
-        const EnemyType &GetEnemyType() const {return enemytype;}
-        const string &GetName() const {return name;}
-        const string &GetDescription() const {return description;}
-        const int &GetGoldReward() const {return goldreward;}
-        const int &GetExpReward() const {return expreward;}
-        const int &GetAttChance() const {return attchance;}
-        const int &GetDefChance() const {return defchance;}
+        void Turn(Player &player, bool &playerdefend, bool &enemydefend) override;
+};
+
+class WolfEnemy : public Enemy{
+    private:
+        int slashchance = 60;
+        int defendchance = 20;
+    public:
+        WolfEnemy(
+            const Stats &s, 
+            const string &n, 
+            const string &d,
+            const int &greward,
+            const int &ereward,
+            const int &slash,
+            const int &def
+        ) : Enemy(s, n, d, greward, ereward), slashchance(slash), defendchance(def){}
+
+        void Turn(Player &player, bool &playerdefend, bool &enemydefend) override;
+};
+
+class BanditEnemy : public Enemy{
+    private:
+        int slashchance = 0;
+        int defendchance = 0;
+    public:
+        BanditEnemy(
+            const Stats &s, 
+            const string &n, 
+            const string &d,
+            const int &greward,
+            const int &ereward,
+            const int &slash,
+            const int &def
+        ) : Enemy(s, n, d, greward, ereward), slashchance(slash), defendchance(def){}
+
+        void Turn(Player &player, bool &playerdefend, bool &enemydefend) override;
 };
 
 inline Enemy Dummy() {return Enemy(
-    EnemyType::REGULAR,
     Stats(200, 200, 0, 5),
     "Dummy",
     "A practice dummy.",
     0,
-    0,
-    0,
     0
 );}
 
-inline Enemy Bat() {return Enemy(
-    EnemyType::REGULAR,
+inline BatEnemy Bat() {return BatEnemy(
     Stats(50, 50, 8, 5), 
     "Bat", 
     "An agressive and territorial bat.", 
@@ -63,8 +109,7 @@ inline Enemy Bat() {return Enemy(
     20
 );}
 
-inline Enemy AlphaBat() { return Enemy(
-    EnemyType::REGULAR,
+inline BatEnemy AlphaBat() { return BatEnemy(
     Stats(80, 80, 10, 5), 
     "Alpha Bat", 
     "The leader of the bats.", 
@@ -74,8 +119,7 @@ inline Enemy AlphaBat() { return Enemy(
     60
 );}
 
-inline Enemy WolfCub() {return Enemy(
-    EnemyType::REGULAR,
+inline WolfEnemy WolfCub() {return WolfEnemy(
     Stats(60, 60, 10, 6), 
     "Wolf Cub", 
     "A young wolf cub.", 
@@ -85,8 +129,7 @@ inline Enemy WolfCub() {return Enemy(
     50
 );}
 
-inline Enemy FemaleWolf() {return Enemy(
-    EnemyType::REGULAR,
+inline WolfEnemy FemaleWolf() {return WolfEnemy(
     Stats(120, 120, 15, 8),
     "Female Wolf",
     "A female wolf and a grieving mother of a wolf cub.",
@@ -96,8 +139,7 @@ inline Enemy FemaleWolf() {return Enemy(
     40
 );}
 
-inline Enemy MaleWolf() {return Enemy(
-    EnemyType::REGULAR,
+inline WolfEnemy MaleWolf() {return WolfEnemy(
     Stats(150, 150, 18, 10),
     "Male Wolf",
     "A male wolf and a furious father of a wolf cub.",
@@ -107,8 +149,7 @@ inline Enemy MaleWolf() {return Enemy(
     40
 );}
 
-inline Enemy Bandit() {return Enemy(
-    EnemyType::BANDITS,
+inline BanditEnemy Bandit() {return BanditEnemy(
     Stats(100, 100, 15, 6), 
     "Bandit", 
     "A hunting bandit. Possibly one of many living in the dungeon.", 

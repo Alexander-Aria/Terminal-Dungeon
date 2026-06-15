@@ -62,12 +62,12 @@ void PlayerTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydef
                 switch(opt){
                     case 1:
                         cout << "You slashed the enemy!\n";
-                        enemy.GetStats().GetHealth() -= Slash(player.GetStats(), enemy.GetStats(), enemydefend);
+                        enemy.GetStats().GetHealth() -= player.Slash(player.GetStats(), enemy.GetStats(), enemydefend);
                         finish = true;
                         break;
                     case 2:
                         cout << "You stabbed the enemy!\n";
-                        enemy.GetStats().GetHealth() -= Stab(player.GetStats(), enemy.GetStats(), enemydefend);
+                        enemy.GetStats().GetHealth() -= player.Stab(player.GetStats(), enemy.GetStats(), enemydefend);
                         finish = true;
                         break;
                 }
@@ -78,7 +78,7 @@ void PlayerTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydef
                 finish = true;
                 break;
             case 3:
-                if(InventoryAccess(player, BattleState::INBATTLE)) finish = true;
+                if(player.InventoryAccess(BattleState::INBATTLE)) finish = true;
                 break;
             case 4:
                 player.GetStats().GetHealth() = 0;
@@ -90,69 +90,5 @@ void PlayerTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydef
     }
 }
 
-void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefend){
-    Random RNG;
-    int RNGnum = RNG.Int(1,100);
-    int choice = 0;
+void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefend) {enemy.Turn(player, playerdefend, enemydefend);}
 
-    if(enemy.GetEnemyType() == EnemyType::BANDITS && playerdefend) choice = 3;
-
-    else if(enemydefend != true) {
-        if(RNGnum <= enemy.GetAttChance()) choice = 1;
-        else if(RNGnum > 100 - enemy.GetDefChance()) choice = 2;
-    }
-    else choice = 1;
-
-    // 0 = Nothing, 1 = Attack, 2 = Defend
-    switch(choice){
-        case 1:
-            cout << enemy.GetName() << " attacks!\n";
-            player.GetStats().GetHealth() -= Slash(enemy.GetStats(), player.GetStats(), playerdefend);
-            break;
-        case 2:
-            enemydefend = true;
-            cout << enemy.GetName() << " is defending!\n\n";
-            break;
-        case 3:
-            cout << enemy.GetName() << " stabbed you!\n";
-            player.GetStats().GetHealth() -= Stab(enemy.GetStats(), player.GetStats(), playerdefend);
-            break;
-        default:
-            cout << enemy.GetName() << " does nothing!\n\n";
-    }
-}
-
-int Slash(Stats &attackerstats, Stats &defenderstats, bool &defend){
-    Random RNG;
-    int chance = RNG.Int(0,2);
-    double basedamage = 10.0 * (attackerstats.GetRawStrength() + attackerstats.GetStrengthBuff() + attackerstats.GetTempStrengthBoost())/(defenderstats.GetRawDefense() + defenderstats.GetDefenseBuff() + defenderstats.GetTempDefenseBoost());
-    int damage; 
-    
-    if(defend){
-        damage = static_cast<int>(round(0.5 * RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage))));
-        if(chance == 0 || chance == 1){
-            cout << "The defense is broken!\n";
-            defend = false;
-        }
-        else cout << "The defenders defense held strong!\n";
-    }
-    else damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
-
-    cout << "The attacker dealt " << damage << " damage!\n\n";
-    return damage;
-}
-
-int Stab(Stats &attackerstats, Stats &defenderstats, bool &defend){
-    Random RNG;
-    double basedamage = 7.0 * (attackerstats.GetRawStrength() + attackerstats.GetStrengthBuff() + attackerstats.GetTempStrengthBoost())/(defenderstats.GetRawDefense() + defenderstats.GetDefenseBuff() + defenderstats.GetTempDefenseBoost());
-    int damage; 
-    
-    damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
-    if(defend) {
-        cout << "The defense is broken!\n";
-        defend = false;
-    }
-
-    cout << "The attacker dealt " << damage << " damage!\n\n";
-    return damage;
-}

@@ -22,7 +22,6 @@ class Player : public Entity{
         int &GetGold(){return gold;}
 
         void LevelUp();
+        void StatsCheck();
+        bool InventoryAccess(const BattleState &state);
 };
-
-bool InventoryAccess(Player &player, const BattleState &state);
-void StatsCheck(Stats &playerstats);

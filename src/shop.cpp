@@ -20,10 +20,10 @@ void ShopFunction(Player &player, const Shop &config){
                 cout << "\nBest of luck for your adventure!\n\n";
                 return;
             case 1:
-                Buy(player, shop);
+                shop.Buy(player);
                 break;
             case 2:
-                Sell(player, shop);
+                shop.Sell(player);
                 break;
             default:
                 cout << "Invalid Input!\n";
@@ -31,40 +31,40 @@ void ShopFunction(Player &player, const Shop &config){
     }
 }
 
-void Buy(Player &player, Shop &shop){
+void Shop::Buy(Player &player){
     int opt = 0;
 
     while(true){
         cout << "Gold : " << player.GetGold() << "\n";
-        ShowEquipment(shop.GetInventory(), true);
-        ShowInventory(shop.GetInventory(), true);
+        ShowEquipment(GetInventory(), true);
+        ShowInventory(GetInventory(), true);
         cout << "\n-2 to buy weapon.\n-1 to buy armor.\n0 to finish.\n\n- ";
         NumInput(opt);
 
-        if(opt > 0 && opt <= size(shop.GetInventory().GetConsumables())){
-            if(shop.GetInventory().GetConsumables()[opt-1].GetValue() <= player.GetGold()){
-                player.GetGold() -= shop.GetInventory().GetConsumables()[opt-1].GetValue();
-                player.GetInventory().GetConsumables().push_back(shop.GetInventory().GetConsumables()[opt-1]);
-                cout << "You bought " << shop.GetInventory().GetConsumables()[opt-1].GetName() << ".\n\n";
-                shop.GetInventory().GetConsumables().erase(shop.GetInventory().GetConsumables().begin() + opt-1);
+        if(opt > 0 && opt <= size(GetInventory().GetConsumables())){
+            if(GetInventory().GetConsumables()[opt-1].GetValue() <= player.GetGold()){
+                player.GetGold() -= GetInventory().GetConsumables()[opt-1].GetValue();
+                player.GetInventory().GetConsumables().push_back(GetInventory().GetConsumables()[opt-1]);
+                cout << "You bought " << GetInventory().GetConsumables()[opt-1].GetName() << ".\n\n";
+                GetInventory().GetConsumables().erase(GetInventory().GetConsumables().begin() + opt-1);
             }
             else cout << "You don't have enough gold!\n";
         }
         else if(opt == -1){
-            if(shop.GetInventory().GetArmor().GetValue() <= player.GetGold()){
-                cout << "You bought " << shop.GetInventory().GetArmor().GetName() << ".\n\n";
-                player.GetGold() -= shop.GetInventory().GetArmor().GetValue();
-                player.ChangeEquipment(shop.GetInventory().GetArmor());
-                shop.GetInventory().GetArmor() = NoArmor();
+            if(GetInventory().GetArmor().GetValue() <= player.GetGold()){
+                cout << "You bought " << GetInventory().GetArmor().GetName() << ".\n\n";
+                player.GetGold() -= GetInventory().GetArmor().GetValue();
+                player.ChangeEquipment(GetInventory().GetArmor());
+                GetInventory().GetArmor() = NoArmor();
             }
             else cout << "You don't have enough gold!\n";
         }
         else if(opt == -2){
-            if(shop.GetInventory().GetWeapon().GetValue() <= player.GetGold()){
-                cout << "You bought " << shop.GetInventory().GetWeapon().GetName() << ".\n\n";
-                player.GetGold() -= shop.GetInventory().GetWeapon().GetValue();
-                player.ChangeEquipment(shop.GetInventory().GetWeapon());
-                shop.GetInventory().GetWeapon() = NoWeapon();
+            if(GetInventory().GetWeapon().GetValue() <= player.GetGold()){
+                cout << "You bought " << GetInventory().GetWeapon().GetName() << ".\n\n";
+                player.GetGold() -= GetInventory().GetWeapon().GetValue();
+                player.ChangeEquipment(GetInventory().GetWeapon());
+                GetInventory().GetWeapon() = NoWeapon();
             }
             else cout << "You don't have enough gold!\n";
         }
@@ -73,7 +73,7 @@ void Buy(Player &player, Shop &shop){
     }
 }
 
-void Sell(Player &player, Shop &shop){
+void Shop::Sell(Player &player){
     int opt = 0;
 
     while(true){
@@ -85,7 +85,7 @@ void Sell(Player &player, Shop &shop){
         if(opt > 0 && opt <= size(player.GetInventory().GetConsumables())){
             cout << player.GetInventory().GetConsumables()[opt-1].GetName() << " was sold for " << player.GetInventory().GetConsumables()[opt-1].GetValue() << ".\n\n";
             player.GetGold() += player.GetInventory().GetConsumables()[opt-1].GetValue();
-            shop.GetInventory().GetConsumables().push_back(player.GetInventory().GetConsumables()[opt-1]);
+            GetInventory().GetConsumables().push_back(player.GetInventory().GetConsumables()[opt-1]);
             player.GetInventory().GetConsumables().erase(player.GetInventory().GetConsumables().begin() + opt-1);
         }
         else if(opt == 0) return;
