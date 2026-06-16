@@ -17,8 +17,9 @@ class Entity{
 
         void ChangeEquipment(const Armor &armor);
         void ChangeEquipment(const Weapon &weapon);
-        int Slash(Stats &attackerstats, Stats &defenderstats, bool &defend);
-        int Stab(Stats &attackerstats, Stats &defenderstats, bool &defend);
+        void Slash(Stats &attackerstats, Stats &defenderstats, bool &defend);
+        void Stab(Stats &attackerstats, Stats &defenderstats, bool &defend);
+        void Howl(Stats &defenderstats);
         bool Defend() {return true;}
 
         bool IsDead() {return stats.GetHealth() <= 0;}

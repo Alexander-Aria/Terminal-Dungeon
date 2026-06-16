@@ -10,6 +10,7 @@ enum class Choice{
     NOTHING,
     SLASH,
     STAB,
+    HOWL,
     DEFEND
 };
 
@@ -57,8 +58,9 @@ class BatEnemy : public Enemy{
 
 class WolfEnemy : public Enemy{
     private:
-        int slashchance = 60;
-        int defendchance = 20;
+        int slashchance = 50;
+        int defendchance = 50;
+        int howlchance = 0;
     public:
         WolfEnemy(
             const Stats &s, 
@@ -67,8 +69,9 @@ class WolfEnemy : public Enemy{
             const int &greward,
             const int &ereward,
             const int &slash,
-            const int &def
-        ) : Enemy(s, n, d, greward, ereward), slashchance(slash), defendchance(def){}
+            const int &def,
+            const int &howl
+        ) : Enemy(s, n, d, greward, ereward), slashchance(slash), defendchance(def), howlchance(howl) {}
 
         void Turn(Player &player, bool &playerdefend, bool &enemydefend) override;
 };
@@ -126,7 +129,8 @@ inline WolfEnemy WolfCub() {return WolfEnemy(
     20, 
     30,
     50,
-    50
+    50,
+    0
 );}
 
 inline WolfEnemy FemaleWolf() {return WolfEnemy(
@@ -135,8 +139,9 @@ inline WolfEnemy FemaleWolf() {return WolfEnemy(
     "A female wolf and a grieving mother of a wolf cub.",
     50,
     150,
-    60,
-    40
+    70,
+    30,
+    0
 );}
 
 inline WolfEnemy MaleWolf() {return WolfEnemy(
@@ -145,8 +150,9 @@ inline WolfEnemy MaleWolf() {return WolfEnemy(
     "A male wolf and a furious father of a wolf cub.",
     80,
     200,
-    60,
-    40
+    50,
+    20,
+    30
 );}
 
 inline BanditEnemy Bandit() {return BanditEnemy(

@@ -37,7 +37,7 @@ void Shop::Buy(Player &player){
     while(true){
         cout << "Gold : " << player.GetGold() << "\n";
         ShowEquipment(GetInventory(), true);
-        ShowInventory(GetInventory(), true);
+        ShowConsumables(GetInventory(), true);
         cout << "\n-2 to buy weapon.\n-1 to buy armor.\n0 to finish.\n\n- ";
         NumInput(opt);
 
@@ -78,7 +78,7 @@ void Shop::Sell(Player &player){
 
     while(true){
         cout << "Gold : " << player.GetGold() << "\n";
-        ShowInventory(player.GetInventory(), true);
+        ShowConsumables(player.GetInventory(), true);
         cout << "\n0 to finish.\n\n- ";
         NumInput(opt);
 

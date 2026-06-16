@@ -185,5 +185,9 @@ void StageThree(GameState &game){
 }
 
 void StageThreeExtra(GameState &game){
-    
+    cout << "You decided to continue exploring the first floor before you head to the fourth floor.\n";
+    cout << "You found an empty camp. The previous bandit must have camped here.\n";
+    cout << "You rummaged the camp and found 100 gold!\n";
+
+    game.GetPlayer().GetGold() += 100;
 }

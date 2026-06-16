@@ -14,12 +14,12 @@ void BatEnemy::Turn(Player &player, bool &playerdefend, bool &enemydefend){
 
     switch(choice){
         case Choice::SLASH:
-            player.GetStats().GetHealth() -= Slash(GetStats(), player.GetStats(), playerdefend);
             cout << GetName() << " attacks!\n";
+            Slash(GetStats(), player.GetStats(), playerdefend);
             break;
         case Choice::DEFEND:
-            enemydefend = true;
             cout << GetName() << " is defending!\n\n";
+            enemydefend = true;
             break;
         default:
             cout << GetName() << " does nothing!\n\n";
@@ -31,17 +31,23 @@ void WolfEnemy::Turn(Player &player, bool &playerdefend, bool &enemydefend){
     int RNGnum = RNG.Int(1,100);
     Choice choice = Choice::NOTHING;
 
+
     if(RNGnum <= slashchance) choice = Choice::SLASH;
-    else if(RNGnum >= 100 - defendchance) choice = Choice::DEFEND;
+    else if(RNGnum > 100 - (defendchance + howlchance) && RNGnum <= 100 - howlchance) choice = Choice::DEFEND;
+    else if(RNGnum > 100 - howlchance) choice = Choice::HOWL;
 
     switch(choice){
         case Choice::SLASH:
-            player.GetStats().GetHealth() -= Slash(GetStats(), player.GetStats(), playerdefend);
             cout << GetName() << " attacks!\n";
+            Slash(GetStats(), player.GetStats(), playerdefend);
             break;
         case Choice::DEFEND:
-            enemydefend = true;
             cout << GetName() << " is defending!\n\n";
+            enemydefend = true;
+            break;
+        case Choice::HOWL:
+            cout << GetName() << " howls!\n";
+            Howl(player.GetStats());
             break;
         default:
             cout << GetName() << " does nothing!\n\n";
@@ -59,16 +65,16 @@ void BanditEnemy::Turn(Player &player, bool &playerdefend, bool &enemydefend){
 
     switch(choice){
         case Choice::SLASH:
-            player.GetStats().GetHealth() -= Slash(GetStats(), player.GetStats(), playerdefend);
             cout << GetName() << " attacks!\n";
+            Slash(GetStats(), player.GetStats(), playerdefend);
             break;
         case Choice::STAB:
-            player.GetStats().GetHealth() -= Stab(GetStats(), player.GetStats(), playerdefend);
             cout << GetName() << " stabs!\n";
+            Stab(GetStats(), player.GetStats(), playerdefend);
             break;
         case Choice::DEFEND:
-            enemydefend = true;
             cout << GetName() << " is defending!\n\n";
+            enemydefend = true;
             break;
         default:
             cout << GetName() << " does nothing!\n\n";

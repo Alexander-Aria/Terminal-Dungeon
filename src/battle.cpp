@@ -62,12 +62,12 @@ void PlayerTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydef
                 switch(opt){
                     case 1:
                         cout << "You slashed the enemy!\n";
-                        enemy.GetStats().GetHealth() -= player.Slash(player.GetStats(), enemy.GetStats(), enemydefend);
+                        player.Slash(player.GetStats(), enemy.GetStats(), enemydefend);
                         finish = true;
                         break;
                     case 2:
                         cout << "You stabbed the enemy!\n";
-                        enemy.GetStats().GetHealth() -= player.Stab(player.GetStats(), enemy.GetStats(), enemydefend);
+                        player.Stab(player.GetStats(), enemy.GetStats(), enemydefend);
                         finish = true;
                         break;
                 }

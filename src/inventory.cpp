@@ -3,7 +3,7 @@
 #include <iostream>
 using std::cout;
 
-void ShowInventory(Inventory &inventory, bool showvalue){
+void ShowConsumables(Inventory &inventory, bool showvalue){
     int itemnum = 1;
 
     if(size(inventory.GetConsumables()) == 0) cout << "You don't have any items!\n";

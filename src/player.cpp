@@ -25,7 +25,7 @@ bool Player::InventoryAccess(const BattleState &state){
     while(true){
         cout << "Gold : " << GetGold() << "\n";
         ShowEquipment(GetInventory(), false);
-        ShowInventory(GetInventory(), false);
+        ShowConsumables(GetInventory(), false);
         cout << "\n0 to come back.\n\n- ";
         NumInput(opt);
 

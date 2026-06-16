@@ -13,7 +13,7 @@ void Entity::ChangeEquipment(const Weapon &weapon){
     stats.GetStrengthBuff() = inventory.GetWeapon().GetStrengthBuff();
 }
 
-int Entity::Slash(Stats &attackerstats, Stats &defenderstats, bool &defend){
+void Entity::Slash(Stats &attackerstats, Stats &defenderstats, bool &defend){
     Random RNG;
     int chance = RNG.Int(0,2);
     double basedamage = 10.0 * (attackerstats.GetRawStrength() + attackerstats.GetStrengthBuff() + attackerstats.GetTempStrengthBoost())/(defenderstats.GetRawDefense() + defenderstats.GetDefenseBuff() + defenderstats.GetTempDefenseBoost());
@@ -29,11 +29,11 @@ int Entity::Slash(Stats &attackerstats, Stats &defenderstats, bool &defend){
     }
     else damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
 
+    defenderstats.GetHealth() -= damage;
     cout << "The attacker dealt " << damage << " damage!\n\n";
-    return damage;
 }
 
-int Entity::Stab(Stats &attackerstats, Stats &defenderstats, bool &defend){
+void Entity::Stab(Stats &attackerstats, Stats &defenderstats, bool &defend){
     Random RNG;
     double basedamage = 7.0 * (attackerstats.GetRawStrength() + attackerstats.GetStrengthBuff() + attackerstats.GetTempStrengthBoost())/(defenderstats.GetRawDefense() + defenderstats.GetDefenseBuff() + defenderstats.GetTempDefenseBoost());
     int damage; 
@@ -44,6 +44,11 @@ int Entity::Stab(Stats &attackerstats, Stats &defenderstats, bool &defend){
         defend = false;
     }
 
+    defenderstats.GetHealth() -= damage;
     cout << "The attacker dealt " << damage << " damage!\n\n";
-    return damage;
+}
+
+void Entity::Howl(Stats &defenderstats){
+    defenderstats.GetTempStrengthBoost() -= 1;
+    cout << "Your attack went down by 1!\n";
 }

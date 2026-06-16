@@ -186,5 +186,5 @@ class Inventory{
         Armor &GetArmor() {return armor;}
 };
 
-void ShowInventory(Inventory &inventory, bool shop);
+void ShowConsumables(Inventory &inventory, bool shop);
 void ShowEquipment(Inventory &inventory, bool showvalue);
