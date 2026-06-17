@@ -15,7 +15,7 @@ void Player::LevelUp(){
         GetStats().GetRawDefense() += 2;
         GetStats().GetRawStrength() += 2;
         exp -= 250;
-        std::cout << "you leveled up to level " << level << "!\n\n";
+        cout << "you leveled up to level " << level << "!\n\n";
     }
 }
 
@@ -24,9 +24,14 @@ bool Player::InventoryAccess(const BattleState &state){
 
     while(true){
         cout << "Gold : " << GetGold() << "\n";
+
         ShowEquipment(GetInventory(), false);
+        if(GetUsingWeapon() == WeaponType::MELEE) cout << "Using : Melee Weapon\n";
+        else if(GetUsingWeapon() == WeaponType::RANGED) cout << "Using : Ranged Weapon\n";
+
         ShowConsumables(GetInventory(), false);
-        cout << "\n0 to come back.\n\n- ";
+        cout << "\n-1 to switch weapon\n";
+        cout << "0 to come back.\n\n- ";
         NumInput(opt);
 
         if(opt > 0 && opt <= size(GetInventory().GetConsumables())){
@@ -42,6 +47,7 @@ bool Player::InventoryAccess(const BattleState &state){
         }
 
         else if(opt == 0) break;
+        else if(opt == -1) SwitchWeapon();
         else cout << "Invalid Input!\n";
     }
     return false;

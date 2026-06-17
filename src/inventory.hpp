@@ -65,6 +65,31 @@ class Weapon : public Items{
         const int &GetStrengthBuff() const {return attackbuff;}
 };
 
+class Melee : public Weapon{
+    public:
+    Melee(
+        const string &name, 
+        const string &description, 
+        const int &value, 
+        const int &attbuff
+    ) : Weapon(name, description, value, attbuff) {}
+};
+
+class Ranged : public Weapon{
+    private:
+        int ammoamount = 5;
+    public:
+        Ranged(
+        const string &name, 
+        const string &description, 
+        const int &value, 
+        const int &attbuff,
+        const int &ammo
+    ) : Weapon(name, description, value, attbuff), ammoamount(ammo) {}
+
+    int &GetAmmoAmount() {return ammoamount;}
+};
+
 class Armor : public Items{
     private:
         int defensebuff = 0;
@@ -79,25 +104,41 @@ class Armor : public Items{
         const int &GetDefenseBuff() const {return defensebuff;}
 };
 
-inline Weapon NoWeapon() {return Weapon(
+inline Melee NoMelee() {return Melee(
     "SOLD OUT",
     "This weapon is sold out.",
     0,
     0
 );}
 
-inline Weapon IronSword() {return Weapon(
+inline Melee IronSword() {return Melee(
     "Iron Sword",
     "A simple but reliable sword (+0 Strength).",
     0,
     0
 );}
 
-inline Weapon LongSword() {return Weapon(
+inline Melee LongSword() {return Melee(
     "Long Sword",
     "A heavy and hard hitting long sword (+3 Strength).",
     400,
     3
+);}
+
+inline Ranged NoRanged() {return Ranged(
+    "SOLD OUT",
+    "This weapon is sold out.",
+    0,
+    0,
+    0
+);}
+
+inline Ranged Crossbow() {return Ranged(
+    "Crossbow",
+    "A quick and powerful crossbow (+3 Strength, 5 arrows/battle).",
+    500,
+    3,
+    5
 );}
 
 inline Armor NoArmor() {return Armor(
@@ -175,14 +216,16 @@ inline vector<Consumables> AllItems() {return {
 class Inventory{
     private:
         vector<Consumables> consumables;
-        Weapon weapon = NoWeapon();
+        Melee melee = NoMelee();
+        Ranged ranged = NoRanged();
         Armor armor = NoArmor();
     public:
         Inventory() {}
-        Inventory(const vector<Consumables> &cons, const Weapon &w, const Armor &a) : consumables(cons), weapon(w), armor(a) {}
+        Inventory(const vector<Consumables> &cons, const Melee &m, const Ranged &r, const Armor &a) : consumables(cons), melee(m), ranged(r), armor(a) {}
 
         vector<Consumables> &GetConsumables() {return consumables;}
-        Weapon &GetWeapon() {return weapon;}
+        Melee &GetMelee() {return melee;}
+        Ranged &GetRanged() {return ranged;}
         Armor &GetArmor() {return armor;}
 };
 

@@ -11,16 +11,16 @@ using std::cout;
 void Battle(GameState &game, Enemy &enemy){
     Random RNG;
     int battlestatus = 0;
-    bool playerdefend = false, enemydefend = false;
+    bool playerblock = false, enemyblock = false;
 
     cout << enemy.GetName() << " appeared!\n";
     cout << "Description : " << enemy.GetDescription() << "\n";
     while(battlestatus == 0){
-        PlayerTurn(game.GetPlayer(), enemy, playerdefend, enemydefend);
+        PlayerTurn(game.GetPlayer(), enemy, playerblock, enemyblock);
         battlestatus = StatusCheck(game.GetPlayer(), enemy);
         if(battlestatus != 0) break;
 
-        EnemyTurn(game.GetPlayer(), enemy, playerdefend, enemydefend);
+        EnemyTurn(game.GetPlayer(), enemy, playerblock, enemyblock);
         battlestatus = StatusCheck(game.GetPlayer(), enemy);
         if(battlestatus != 0) break;
     }
@@ -43,7 +43,7 @@ int StatusCheck(Player &player, Enemy &enemy){
     else return 0;
 }
 
-void PlayerTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefend){
+void PlayerTurn(Player &player, Enemy &enemy, bool &playerblock, bool &enemyblock){
     int opt = 0;
     bool finish = false;
 
@@ -62,19 +62,19 @@ void PlayerTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydef
                 switch(opt){
                     case 1:
                         cout << "You slashed the enemy!\n";
-                        player.Slash(player.GetStats(), enemy.GetStats(), enemydefend);
+                        player.Slash(player.GetStats(), enemy.GetStats(), enemyblock);
                         finish = true;
                         break;
                     case 2:
                         cout << "You stabbed the enemy!\n";
-                        player.Stab(player.GetStats(), enemy.GetStats(), enemydefend);
+                        player.Stab(player.GetStats(), enemy.GetStats(), enemyblock);
                         finish = true;
                         break;
                 }
                 break;
             case 2:
-                cout << "You are defending!\n\n";
-                playerdefend = true;
+                cout << "You are blocking!\n\n";
+                playerblock = player.Block();
                 finish = true;
                 break;
             case 3:
@@ -90,5 +90,5 @@ void PlayerTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydef
     }
 }
 
-void EnemyTurn(Player &player, Enemy &enemy, bool &playerdefend, bool &enemydefend) {enemy.Turn(player, playerdefend, enemydefend);}
+void EnemyTurn(Player &player, Enemy &enemy, bool &playerblock, bool &enemyblock) {enemy.Turn(player, playerblock, enemyblock);}
 

@@ -6,14 +6,6 @@
 
 using std::string;
 
-enum class Choice{
-    NOTHING,
-    SLASH,
-    STAB,
-    HOWL,
-    DEFEND
-};
-
 class Enemy : public Entity{
     private:
         string name = "Undefined Enemy";
@@ -35,13 +27,13 @@ class Enemy : public Entity{
         const int &GetGoldReward() const {return goldreward;}
         const int &GetExpReward() const {return expreward;}
 
-        virtual void Turn(Player &player, bool &playerdefend, bool &enemydefend);
+        virtual void Turn(Player &player, bool &playerblock, bool &enemyblock);
 };
 
 class BatEnemy : public Enemy{
     private:
         int slashchance = 80;
-        int defendchance = 20;
+        int blockchance = 20;
     public:
         BatEnemy(
             const Stats &s, 
@@ -50,16 +42,16 @@ class BatEnemy : public Enemy{
             const int &greward,
             const int &ereward,
             const int &slash,
-            const int &def
-        ) : Enemy(s, n, d, greward, ereward), slashchance(slash), defendchance(def){}
+            const int &block
+        ) : Enemy(s, n, d, greward, ereward), slashchance(slash), blockchance(block){}
 
-        void Turn(Player &player, bool &playerdefend, bool &enemydefend) override;
+        void Turn(Player &player, bool &playerblock, bool &enemyblock) override;
 };
 
 class WolfEnemy : public Enemy{
     private:
         int slashchance = 50;
-        int defendchance = 50;
+        int blockchance = 50;
         int howlchance = 0;
     public:
         WolfEnemy(
@@ -69,17 +61,17 @@ class WolfEnemy : public Enemy{
             const int &greward,
             const int &ereward,
             const int &slash,
-            const int &def,
+            const int &block,
             const int &howl
-        ) : Enemy(s, n, d, greward, ereward), slashchance(slash), defendchance(def), howlchance(howl) {}
+        ) : Enemy(s, n, d, greward, ereward), slashchance(slash), blockchance(block), howlchance(howl) {}
 
-        void Turn(Player &player, bool &playerdefend, bool &enemydefend) override;
+        void Turn(Player &player, bool &playerblock, bool &enemyblock) override;
 };
 
 class BanditEnemy : public Enemy{
     private:
         int slashchance = 0;
-        int defendchance = 0;
+        int blockchance = 0;
     public:
         BanditEnemy(
             const Stats &s, 
@@ -88,10 +80,10 @@ class BanditEnemy : public Enemy{
             const int &greward,
             const int &ereward,
             const int &slash,
-            const int &def
-        ) : Enemy(s, n, d, greward, ereward), slashchance(slash), defendchance(def){}
+            const int &block
+        ) : Enemy(s, n, d, greward, ereward), slashchance(slash), blockchance(block){}
 
-        void Turn(Player &player, bool &playerdefend, bool &enemydefend) override;
+        void Turn(Player &player, bool &playerblock, bool &enemyblock) override;
 };
 
 inline Enemy Dummy() {return Enemy(
@@ -158,10 +150,19 @@ inline WolfEnemy MaleWolf() {return WolfEnemy(
 inline BanditEnemy Bandit() {return BanditEnemy(
     Stats(100, 100, 15, 6), 
     "Bandit", 
-    "A hunting bandit. Possibly one of many living in the dungeon.", 
+    "A bandit. Possibly one of many living in the dungeon.", 
     100, 
     75,
     70,
     30
 );}
 
+inline BanditEnemy BanditLeader() {return BanditEnemy(
+    Stats(150, 150, 15, 8), 
+    "Bandit Leader", 
+    "One of the leader of the bandits. He is armed with a powerful crossbow and a sharp dagger.", 
+    250, 
+    150,
+    70,
+    30
+);}

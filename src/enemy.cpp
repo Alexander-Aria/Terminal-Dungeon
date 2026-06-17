@@ -2,48 +2,48 @@
 #include "player.hpp"
 #include "utility.hpp"
 
-void Enemy::Turn(Player &player, bool &playerdefend, bool &enemydefend){cout << GetName() << " does nothing!\n\n";}
+void Enemy::Turn(Player &player, bool &playerblock, bool &enemyblock){cout << GetName() << " does nothing!\n\n";}
 
-void BatEnemy::Turn(Player &player, bool &playerdefend, bool &enemydefend){
+void BatEnemy::Turn(Player &player, bool &playerblock, bool &enemyblock){
     Random RNG;
     int RNGnum = RNG.Int(1,100);
     Choice choice = Choice::NOTHING;
 
     if(RNGnum <= slashchance) choice = Choice::SLASH;
-    else if(RNGnum >= 100 - defendchance) choice = Choice::DEFEND;
+    else if(RNGnum >= 100 - blockchance) choice = Choice::BLOCK;
 
     switch(choice){
         case Choice::SLASH:
             cout << GetName() << " attacks!\n";
-            Slash(GetStats(), player.GetStats(), playerdefend);
+            Slash(GetStats(), player.GetStats(), playerblock);
             break;
-        case Choice::DEFEND:
-            cout << GetName() << " is defending!\n\n";
-            enemydefend = true;
+        case Choice::BLOCK:
+            cout << GetName() << " is blocking!\n\n";
+            enemyblock = true;
             break;
         default:
             cout << GetName() << " does nothing!\n\n";
     }
 }
 
-void WolfEnemy::Turn(Player &player, bool &playerdefend, bool &enemydefend){
+void WolfEnemy::Turn(Player &player, bool &playerblock, bool &enemyblock){
     Random RNG;
     int RNGnum = RNG.Int(1,100);
     Choice choice = Choice::NOTHING;
 
 
     if(RNGnum <= slashchance) choice = Choice::SLASH;
-    else if(RNGnum > 100 - (defendchance + howlchance) && RNGnum <= 100 - howlchance) choice = Choice::DEFEND;
+    else if(RNGnum > 100 - (blockchance + howlchance) && RNGnum <= 100 - howlchance) choice = Choice::BLOCK;
     else if(RNGnum > 100 - howlchance) choice = Choice::HOWL;
 
     switch(choice){
         case Choice::SLASH:
             cout << GetName() << " attacks!\n";
-            Slash(GetStats(), player.GetStats(), playerdefend);
+            Slash(GetStats(), player.GetStats(), playerblock);
             break;
-        case Choice::DEFEND:
-            cout << GetName() << " is defending!\n\n";
-            enemydefend = true;
+        case Choice::BLOCK:
+            cout << GetName() << " is blocking!\n\n";
+            enemyblock = true;
             break;
         case Choice::HOWL:
             cout << GetName() << " howls!\n";
@@ -54,27 +54,34 @@ void WolfEnemy::Turn(Player &player, bool &playerdefend, bool &enemydefend){
     }
 }
 
-void BanditEnemy::Turn(Player &player, bool &playerdefend, bool &enemydefend){
+void BanditEnemy::Turn(Player &player, bool &playerblock, bool &enemyblock){
     Random RNG;
     int RNGnum = RNG.Int(1,100);
     Choice choice = Choice::NOTHING;
 
-    if(playerdefend) choice = Choice::STAB;
+    if(playerblock){
+        if(GetName() == "Bandit Leader") choice = Choice::DOUBLESHOT;
+        else choice = Choice::STAB;
+    }
     else if(RNGnum <= slashchance) choice = Choice::SLASH;
-    else if(RNGnum >= 100 - defendchance) choice = Choice::DEFEND;
+    else if(RNGnum >= 100 - blockchance) choice = Choice::BLOCK;
 
     switch(choice){
         case Choice::SLASH:
             cout << GetName() << " attacks!\n";
-            Slash(GetStats(), player.GetStats(), playerdefend);
+            Slash(GetStats(), player.GetStats(), playerblock);
             break;
         case Choice::STAB:
             cout << GetName() << " stabs!\n";
-            Stab(GetStats(), player.GetStats(), playerdefend);
+            Stab(GetStats(), player.GetStats(), playerblock);
             break;
-        case Choice::DEFEND:
-            cout << GetName() << " is defending!\n\n";
-            enemydefend = true;
+        case Choice::DOUBLESHOT:
+            cout << GetName() << "shot you twice with a crossbow!\n";
+            DoubleShot(GetStats(), player.GetStats(), playerblock);
+            break;
+        case Choice::BLOCK:
+            cout << GetName() << " is blocking!\n\n";
+            enemyblock = true;
             break;
         default:
             cout << GetName() << " does nothing!\n\n";

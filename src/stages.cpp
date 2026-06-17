@@ -179,9 +179,6 @@ void StageThree(GameState &game){
     if(YesorNo()) StageThreeExtra(game);
     if(!IsRunning(game.GetStatus())) return;
     game.GetStage()++;
-
-    // Temporary
-    if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
 }
 
 void StageThreeExtra(GameState &game){
@@ -190,4 +187,33 @@ void StageThreeExtra(GameState &game){
     cout << "You rummaged the camp and found 100 gold!\n";
 
     game.GetPlayer().GetGold() += 100;
+}
+
+void StageFour(GameState &game){
+    auto enemy1 = make_unique<BanditEnemy>(Bandit()), enemy2 = make_unique<BanditEnemy>(BanditLeader());
+
+    cout << "As you continue down into level four, you run across bandit camp int the way.\n";
+    cout << "There lies two bandits. One of them is a regular bandit and the other one is different.\n";
+    cout << "He seems tougher and with better equipments. A shiny crossbow in his left hand catches your attention.\n";
+
+    Choice(game);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "The regular bandit notices you and attacks first!\n";
+    Battle(game, *enemy1);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "The leader bandit watch as his henchman fall. He decided to play a bit more carefully and intelligently.\n";
+    Battle(game, *enemy2);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "You got a crossbow!\n";
+    game.GetPlayer().ChangeEquipment(Crossbow());
+
+    // Temporary
+    if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
+}
+
+void StageFourExtra(GameState &game){
+
 }

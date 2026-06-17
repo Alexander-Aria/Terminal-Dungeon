@@ -25,4 +25,4 @@ inline const vector<Consumables> ShopConsumablesOne(){return {
     PowerStone(),
     ArmorStone()
 };}
-inline Shop ShopConfigOne() {return Shop(Inventory(ShopConsumablesOne(), LongSword(), LightChainmailArmor()));}
+inline Shop ShopConfigOne() {return Shop(Inventory(ShopConsumablesOne(), LongSword(), NoRanged(), LightChainmailArmor()));}

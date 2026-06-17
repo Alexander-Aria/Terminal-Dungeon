@@ -38,7 +38,7 @@ void Shop::Buy(Player &player){
         cout << "Gold : " << player.GetGold() << "\n";
         ShowEquipment(GetInventory(), true);
         ShowConsumables(GetInventory(), true);
-        cout << "\n-2 to buy weapon.\n-1 to buy armor.\n0 to finish.\n\n- ";
+        cout << "\n-3 to buy ranged weapon\n-2 to buy melee weapon.\n-1 to buy armor.\n0 to finish.\n\n- ";
         NumInput(opt);
 
         if(opt > 0 && opt <= size(GetInventory().GetConsumables())){
@@ -51,21 +51,39 @@ void Shop::Buy(Player &player){
             else cout << "You don't have enough gold!\n";
         }
         else if(opt == -1){
+            if(GetInventory().GetArmor().GetName() == "SOLD OUT") cout << "The equipment is sold out!\n";
+
             if(GetInventory().GetArmor().GetValue() <= player.GetGold()){
                 cout << "You bought " << GetInventory().GetArmor().GetName() << ".\n\n";
                 player.GetGold() -= GetInventory().GetArmor().GetValue();
                 player.ChangeEquipment(GetInventory().GetArmor());
                 GetInventory().GetArmor() = NoArmor();
             }
+
             else cout << "You don't have enough gold!\n";
         }
         else if(opt == -2){
-            if(GetInventory().GetWeapon().GetValue() <= player.GetGold()){
-                cout << "You bought " << GetInventory().GetWeapon().GetName() << ".\n\n";
-                player.GetGold() -= GetInventory().GetWeapon().GetValue();
-                player.ChangeEquipment(GetInventory().GetWeapon());
-                GetInventory().GetWeapon() = NoWeapon();
+            if(GetInventory().GetMelee().GetName() == "SOLD OUT") cout << "The equipment is sold out!\n";
+
+            if(GetInventory().GetMelee().GetValue() <= player.GetGold()){
+                cout << "You bought " << GetInventory().GetMelee().GetName() << ".\n\n";
+                player.GetGold() -= GetInventory().GetMelee().GetValue();
+                player.ChangeEquipment(GetInventory().GetMelee());
+                GetInventory().GetMelee() = NoMelee();
             }
+
+            else cout << "You don't have enough gold!\n";
+        }
+        else if(opt == -3){
+            if(GetInventory().GetRanged().GetName() == "SOLD OUT") cout << "The equipment is sold out!\n";
+
+            else if(GetInventory().GetRanged().GetValue() <= player.GetGold()){
+                cout << "You bought " << GetInventory().GetRanged().GetName() << ".\n\n";
+                player.GetGold() -= GetInventory().GetRanged().GetValue();
+                player.ChangeEquipment(GetInventory().GetRanged());
+                GetInventory().GetRanged() = NoRanged();
+            }
+
             else cout << "You don't have enough gold!\n";
         }
         else if(opt == 0) return;

@@ -24,9 +24,15 @@ void ShowConsumables(Inventory &inventory, bool showvalue){
 void ShowEquipment(Inventory &inventory, bool showvalue){
     cout << "_______________________\n";
     cout << "EQUIPMENTS\n";
-    cout << "Weapon : " << inventory.GetWeapon().GetName() << " | " << inventory.GetWeapon().GetDescription();
-    if(showvalue) cout << " | Value : " << inventory.GetWeapon().GetValue();
+
+    cout << "Melee : " << inventory.GetMelee().GetName() << " | " << inventory.GetMelee().GetDescription();
+    if(showvalue) cout << " | Value : " << inventory.GetMelee().GetValue();
     cout << "\n";
+
+    cout << "Ranged : " << inventory.GetRanged().GetName() << " | " << inventory.GetRanged().GetDescription();
+    if(showvalue) cout << " | Value : " << inventory.GetRanged().GetValue();
+    cout << "\n";
+    
     cout << "Armor : " << inventory.GetArmor().GetName() << " | " << inventory.GetArmor().GetDescription();
     if(showvalue) cout << " | Value : " << inventory.GetArmor().GetValue();
     cout << "\n";
