@@ -2,6 +2,7 @@
 #include "utility.hpp"
 
 #include <iostream>
+#include <memory>
 
 void Entity::UpdateBuff(){
     stats.GetDefenseBuff() = inventory.GetArmor().GetDefenseBuff();
@@ -10,8 +11,9 @@ void Entity::UpdateBuff(){
 }
 
 void Entity::SwitchWeapon(){
-    if(usingweapon == WeaponType::MELEE) usingweapon = WeaponType::RANGED;
-    else if(usingweapon == WeaponType::RANGED) usingweapon = WeaponType::MELEE;
+    if(usingweapon == WeaponType::MELEE && inventory.GetRanged() != "SOLD OUT") usingweapon = WeaponType::RANGED;
+    else if(usingweapon == WeaponType::RANGED && inventory.GetMelee() != "SOLD OUT") usingweapon = WeaponType::MELEE;
+    else std::cout << "Unable to switch weapons!\n";
     UpdateBuff();
 }
 

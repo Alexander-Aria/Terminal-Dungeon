@@ -210,6 +210,10 @@ void StageFour(GameState &game){
     cout << "You got a crossbow!\n";
     game.GetPlayer().ChangeEquipment(Crossbow());
 
+    cout << "You found the entrance to the next floor. Do you still want to explore this floor?\n";
+    if(YesorNo()) StageFourExtra(game);
+    if(!IsRunning(game.GetStatus())) return;
+
     // Temporary
     if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
 }

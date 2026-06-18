@@ -25,7 +25,9 @@ class Entity{
     public:
         Entity() {}
         Entity(const Stats &s) : stats(s) {}
-        Entity(const Stats &s, const Inventory &i) : stats(s), inventory(i) {}
+        Entity(const Stats &s, const Inventory &i) : stats(s), inventory(i) {
+            UpdateBuff();
+        }
 
         WeaponType &GetUsingWeapon() {return usingweapon;}
         Stats &GetStats() {return stats;}

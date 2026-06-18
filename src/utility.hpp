@@ -39,3 +39,13 @@ inline bool YesorNo(){
     if(opt == 1) return true;
     else return false;
 }
+
+inline bool operator==(const Items &item, const string &name){
+    if(item.GetName() == name) return true;
+    else return false;
+}
+
+inline bool operator!=(const Items &item, const string &name){
+    if(item.GetName() == name) return false;
+    else return true;
+}

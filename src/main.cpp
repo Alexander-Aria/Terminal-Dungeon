@@ -34,6 +34,9 @@ void Game(bool developermode){
             case 3:
                 StageThree(game);
                 break;
+            case 4:
+                StageFour(game);
+                break;
             default:
                 cout << "Error : Out of the stage range!\n";
                 return;
