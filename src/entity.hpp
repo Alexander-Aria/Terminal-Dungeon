@@ -22,6 +22,8 @@ class Entity{
         WeaponType usingweapon = WeaponType::MELEE;
         Stats stats;
         Inventory inventory;
+        bool block = false;
+        int charge = 0;
     public:
         Entity() {}
         Entity(const Stats &s) : stats(s) {}
@@ -32,6 +34,8 @@ class Entity{
         WeaponType &GetUsingWeapon() {return usingweapon;}
         Stats &GetStats() {return stats;}
         Inventory &GetInventory() {return inventory;}
+        bool &GetBlock() {return block;}
+        int &GetCharge() {return charge;}
 
         void UpdateBuff();
         bool SwitchWeapon();
@@ -39,12 +43,12 @@ class Entity{
         void ChangeEquipment(const Melee &melee);
         void ChangeEquipment(const Ranged &ranged);
 
-        void Slash(Stats &attackerstats, Stats &defenderstats, bool &defend);
-        void Stab(Stats &attackerstats, Stats &defenderstats, bool &defend);
-        void Shoot(Entity &attacker, Stats &defenderstats, bool &defend, int &charge);
+        void Slash(Entity &defender);
+        void Stab(Entity &defender);
+        void Shoot(Entity &defender);
         void Charge(int &charge);
         void Howl(Stats &defenderstats);
-        void DoubleShot(Stats &attackerstats, Stats &defenderstats, bool &defend);
+        void DoubleShot(Entity &defender);
         bool Block() {return true;}
 
         bool IsDead() {return stats.GetHealth() <= 0;}

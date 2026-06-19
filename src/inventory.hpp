@@ -89,6 +89,7 @@ class Ranged : public Weapon{
         const int &ammo
     ) : Weapon(name, description, value, attbuff), maxammo(maxammo), ammoamount(ammo) {}
 
+    const int &GetMaxAmmo() const {return maxammo;}
     int &GetAmmoAmount() {return ammoamount;}
 };
 

@@ -8,7 +8,7 @@
 
 using std::cout;
 
-void Player::MeleeOption(Player &player, Enemy &enemy, bool &playerblock, bool &enemyblock){
+void Player::MeleeOption(Player &player, Enemy &enemy){
     int opt = 0;
     bool finish = false;
 
@@ -27,19 +27,19 @@ void Player::MeleeOption(Player &player, Enemy &enemy, bool &playerblock, bool &
                 switch(opt){
                     case 1:
                         cout << "You slashed the enemy!\n";
-                        player.Slash(player.GetStats(), enemy.GetStats(), enemyblock);
+                        player.Slash(enemy);
                         finish = true;
                         break;
                     case 2:
                         cout << "You stabbed the enemy!\n";
-                        player.Stab(player.GetStats(), enemy.GetStats(), enemyblock);
+                        player.Stab(enemy);
                         finish = true;
                         break;
                 }
                 break;
             case 2:
                 cout << "You are blocking!\n\n";
-                playerblock = player.Block();
+                player.GetBlock() = player.Block();
                 finish = true;
                 break;
             case 3:
@@ -55,7 +55,7 @@ void Player::MeleeOption(Player &player, Enemy &enemy, bool &playerblock, bool &
     }
 }
 
-void Player::RangedOption(Player &player, Enemy &enemy, bool &playerblock, bool &enemyblock, int &charge){
+void Player::RangedOption(Player &player, Enemy &enemy){
     int opt = 0;
     bool finish = false;
 
@@ -68,14 +68,14 @@ void Player::RangedOption(Player &player, Enemy &enemy, bool &playerblock, bool 
 
         switch(opt){
             case 1:
-                if(charge == 0) cout << "You shoot the enemy!\n";
+                if(player.GetCharge() == 0) cout << "You shoot the enemy!\n";
                 else cout << "You released your charge into the enemy!\n";
-                player.Shoot(player, enemy.GetStats(), enemyblock, charge);
+                player.Shoot(enemy);
                 finish = true;
                 break;
             case 2:
                 cout << "You charged your weapon!\n";
-                player.Charge(charge);
+                player.Charge(player.GetCharge());
                 finish = true;
                 break;
             case 3:

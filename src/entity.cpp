@@ -43,56 +43,59 @@ void Entity::ChangeEquipment(const Ranged &ranged){
     UpdateBuff();
 }
 
-void Entity::Slash(Stats &attackerstats, Stats &defenderstats, bool &defend){
+void Entity::Slash(Entity &defender){
     Random RNG;
     int chance = RNG.Int(0,2);
-    double basedamage = 10.0 * (attackerstats.GetRawStrength() + attackerstats.GetStrengthBuff() + attackerstats.GetTempStrengthBoost())/(defenderstats.GetRawDefense() + defenderstats.GetDefenseBuff() + defenderstats.GetTempDefenseBoost());
+    double basedamage = 10.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
     int damage; 
     
-    if(defend){
+    if(defender.GetBlock()){
         damage = static_cast<int>(round(0.5 * RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage))));
         if(chance == 0){
             cout << "The defense is broken!\n";
-            defend = false;
+            defender.GetBlock() = false;
         }
         else cout << "The defenders defense held strong!\n";
     }
     else damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
 
-    defenderstats.GetHealth() -= damage;
+    defender.GetStats().GetHealth() -= damage;
+    defender.GetCharge() = 0;
     cout << "The attacker dealt " << damage << " damage!\n\n";
 }
 
-void Entity::Stab(Stats &attackerstats, Stats &defenderstats, bool &defend){
+void Entity::Stab(Entity &defender){
     Random RNG;
-    double basedamage = 7.0 * (attackerstats.GetRawStrength() + attackerstats.GetStrengthBuff() + attackerstats.GetTempStrengthBoost())/(defenderstats.GetRawDefense() + defenderstats.GetDefenseBuff() + defenderstats.GetTempDefenseBoost());
+    double basedamage = 7.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
     int damage; 
     
     damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
-    if(defend) {
+    if(defender.GetBlock()) {
         cout << "The defense is broken!\n";
-        defend = false;
+        defender.GetBlock() = false;
     }
 
-    defenderstats.GetHealth() -= damage;
+    defender.GetStats().GetHealth() -= damage;
+    defender.GetCharge() = 0;
     cout << "The attacker dealt " << damage << " damage!\n\n";
 }
 
-void Entity::Shoot(Entity &attacker, Stats &defenderstats, bool &defend, int &charge){
+void Entity::Shoot(Entity &defender){
     Random RNG;
-    double basedamage = 8.0 * (attacker.GetStats().GetRawStrength() + attacker.GetStats().GetStrengthBuff() + attacker.GetStats().GetTempStrengthBoost())/(defenderstats.GetRawDefense() + defenderstats.GetDefenseBuff() + defenderstats.GetTempDefenseBoost());
+    double basedamage = 8.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
     int damage, multiplieddamage; 
     
     damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
     multiplieddamage = damage * pow(3, charge);
-    if(defend) {
+    if(defender.GetBlock()) {
         cout << "The defense is broken!\n";
-        defend = false;
+        defender.GetBlock() = false;
     }
 
-    defenderstats.GetHealth() -= multiplieddamage;
+    defender.GetStats().GetHealth() -= multiplieddamage;
     cout << "The attacker dealt " << multiplieddamage << " damage!\n\n";
     charge = 0;
+    GetInventory().GetRanged().GetAmmoAmount()--;
 }
 
 void Entity::Charge(int &charge){
@@ -108,20 +111,21 @@ void Entity::Howl(Stats &defenderstats){
     else cout << "You are unaffected!\n";
 }
 
-void Entity::DoubleShot(Stats &attackerstats, Stats &defenderstats, bool &defend){
+void Entity::DoubleShot(Entity &defender){
     Random RNG;
-    double basedamage = 5.0 * (attackerstats.GetRawStrength() + attackerstats.GetStrengthBuff() + attackerstats.GetTempStrengthBoost())/(defenderstats.GetRawDefense() + defenderstats.GetDefenseBuff() + defenderstats.GetTempDefenseBoost());
+    double basedamage = 5.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
     int damage1, damage2;
 
     damage1 = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
     damage2 = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
 
-    if(defend){
+    if(defender.GetBlock()){
         cout << "The defense is broken!\n";
-        defend = false;
+        defender.GetBlock() = false;
     }
 
-    defenderstats.GetHealth() -= damage1 + damage2;
+    defender.GetStats().GetHealth() -= damage1 + damage2;
+    defender.GetCharge() = 0;
     cout << "The attacker dealt " << damage1 << " damage!\n\n";
     cout << "The attacker dealt " << damage2 << " damage!\n\n";
 }

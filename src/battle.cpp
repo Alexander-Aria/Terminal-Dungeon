@@ -11,17 +11,15 @@ using std::cout;
 void Battle(GameState &game, Enemy &enemy){
     Random RNG;
     int battlestatus = 0;
-    int playercharge = 0;
-    bool playerblock = false, enemyblock = false;
 
     cout << enemy.GetName() << " appeared!\n";
     cout << "Description : " << enemy.GetDescription() << "\n";
     while(battlestatus == 0){
-        PlayerTurn(game.GetPlayer(), enemy, playerblock, enemyblock, playercharge);
+        PlayerTurn(game.GetPlayer(), enemy);
         battlestatus = StatusCheck(game.GetPlayer(), enemy);
         if(battlestatus != 0) break;
 
-        EnemyTurn(game.GetPlayer(), enemy, playerblock, enemyblock);
+        EnemyTurn(game.GetPlayer(), enemy);
         battlestatus = StatusCheck(game.GetPlayer(), enemy);
         if(battlestatus != 0) break;
     }
@@ -44,10 +42,10 @@ int StatusCheck(Player &player, Enemy &enemy){
     else return 0;
 }
 
-void PlayerTurn(Player &player, Enemy &enemy, bool &playerblock, bool &enemyblock, int &charge){
-    if(player.GetUsingWeapon() == WeaponType::MELEE) player.MeleeOption(player, enemy, playerblock, enemyblock);
-    else player.RangedOption(player, enemy, playerblock, enemyblock, charge);
+void PlayerTurn(Player &player, Enemy &enemy){
+    if(player.GetUsingWeapon() == WeaponType::MELEE) player.MeleeOption(player, enemy);
+    else player.RangedOption(player, enemy);
 }
 
-void EnemyTurn(Player &player, Enemy &enemy, bool &playerblock, bool &enemyblock) {enemy.Turn(player, playerblock, enemyblock);}
+void EnemyTurn(Player &player, Enemy &enemy) {enemy.Turn(player);}
 

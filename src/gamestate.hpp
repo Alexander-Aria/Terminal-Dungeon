@@ -33,6 +33,8 @@ class GameState{
         void BattleStateReset(){
             player.GetStats().GetTempStrengthBoost() = 0;
             player.GetStats().GetTempDefenseBoost() = 0;
+            player.GetBlock() = false;
+            player.GetInventory().GetRanged().GetAmmoAmount() = player.GetInventory().GetRanged().GetMaxAmmo();
         }
 };
 

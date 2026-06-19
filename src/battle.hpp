@@ -7,5 +7,5 @@ class Stats;
 
 void Battle(GameState &game, Enemy &enemy);
 int StatusCheck(Player &player, Enemy &enemy);
-void PlayerTurn(Player &player, Enemy &enemy, bool &playerblock, bool &enemyblock, int &charge);
-void EnemyTurn(Player &player, Enemy &enemy, bool &playerblock, bool &enemyblock);
+void PlayerTurn(Player &player, Enemy &enemy);
+void EnemyTurn(Player &player, Enemy &);

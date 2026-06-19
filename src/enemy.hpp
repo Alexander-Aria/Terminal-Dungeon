@@ -28,7 +28,7 @@ class Enemy : public Entity{
         const int &GetGoldReward() const {return goldreward;}
         const int &GetExpReward() const {return expreward;}
 
-        virtual void Turn(Player &player, bool &playerblock, bool &enemyblock);
+        virtual void Turn(Player &player);
 };
 
 class BatEnemy : public Enemy{
@@ -46,7 +46,7 @@ class BatEnemy : public Enemy{
             const int &block
         ) : Enemy(s, n, d, greward, ereward), slashchance(slash), blockchance(block){}
 
-        void Turn(Player &player, bool &playerblock, bool &enemyblock) override;
+        void Turn(Player &player) override;
 };
 
 class WolfEnemy : public Enemy{
@@ -66,7 +66,7 @@ class WolfEnemy : public Enemy{
             const int &howl
         ) : Enemy(s, n, d, greward, ereward), slashchance(slash), blockchance(block), howlchance(howl) {}
 
-        void Turn(Player &player, bool &playerblock, bool &enemyblock) override;
+        void Turn(Player &player) override;
 };
 
 class BanditEnemy : public Enemy{
@@ -84,7 +84,7 @@ class BanditEnemy : public Enemy{
             const int &block
         ) : Enemy(s, n, d, greward, ereward), slashchance(slash), blockchance(block){}
 
-        void Turn(Player &player, bool &playerblock, bool &enemyblock) override;
+        void Turn(Player &player) override;
 };
 
 inline Enemy Dummy() {return Enemy(
