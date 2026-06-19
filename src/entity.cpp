@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <memory>
+#include <cmath>
 
 void Entity::UpdateBuff(){
     stats.GetDefenseBuff() = inventory.GetArmor().GetDefenseBuff();
@@ -10,11 +11,21 @@ void Entity::UpdateBuff(){
     else if(usingweapon == WeaponType::RANGED) stats.GetStrengthBuff() = inventory.GetRanged().GetStrengthBuff();
 }
 
-void Entity::SwitchWeapon(){
-    if(usingweapon == WeaponType::MELEE && inventory.GetRanged() != "SOLD OUT") usingweapon = WeaponType::RANGED;
-    else if(usingweapon == WeaponType::RANGED && inventory.GetMelee() != "SOLD OUT") usingweapon = WeaponType::MELEE;
-    else std::cout << "Unable to switch weapons!\n";
+bool Entity::SwitchWeapon(){
+    if(usingweapon == WeaponType::MELEE && inventory.GetRanged() != "SOLD OUT"){
+        usingweapon = WeaponType::RANGED;
+        cout << "Switched to ranged!\n\n";
+    }
+    else if(usingweapon == WeaponType::RANGED && inventory.GetMelee() != "SOLD OUT"){
+        usingweapon = WeaponType::MELEE;
+        cout << "Switched to melee!\n\n";
+    }
+    else{
+        std::cout << "Unable to switch weapons!\n\n";
+        return false;
+    }
     UpdateBuff();
+    return true;
 }
 
 void Entity::ChangeEquipment(const Armor &armor){
@@ -40,7 +51,7 @@ void Entity::Slash(Stats &attackerstats, Stats &defenderstats, bool &defend){
     
     if(defend){
         damage = static_cast<int>(round(0.5 * RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage))));
-        if(chance == 0 || chance == 1){
+        if(chance == 0){
             cout << "The defense is broken!\n";
             defend = false;
         }
@@ -65,6 +76,28 @@ void Entity::Stab(Stats &attackerstats, Stats &defenderstats, bool &defend){
 
     defenderstats.GetHealth() -= damage;
     cout << "The attacker dealt " << damage << " damage!\n\n";
+}
+
+void Entity::Shoot(Entity &attacker, Stats &defenderstats, bool &defend, int &charge){
+    Random RNG;
+    double basedamage = 8.0 * (attacker.GetStats().GetRawStrength() + attacker.GetStats().GetStrengthBuff() + attacker.GetStats().GetTempStrengthBoost())/(defenderstats.GetRawDefense() + defenderstats.GetDefenseBuff() + defenderstats.GetTempDefenseBoost());
+    int damage, multiplieddamage; 
+    
+    damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
+    multiplieddamage = damage * pow(3, charge);
+    if(defend) {
+        cout << "The defense is broken!\n";
+        defend = false;
+    }
+
+    defenderstats.GetHealth() -= multiplieddamage;
+    cout << "The attacker dealt " << multiplieddamage << " damage!\n\n";
+    charge = 0;
+}
+
+void Entity::Charge(int &charge){
+    charge++;
+    cout << "Weapon Charge : " << charge << "(" << charge*3 << "x damage)\n\n";
 }
 
 void Entity::Howl(Stats &defenderstats){

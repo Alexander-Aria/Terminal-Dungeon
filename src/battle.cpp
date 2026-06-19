@@ -11,12 +11,13 @@ using std::cout;
 void Battle(GameState &game, Enemy &enemy){
     Random RNG;
     int battlestatus = 0;
+    int playercharge = 0;
     bool playerblock = false, enemyblock = false;
 
     cout << enemy.GetName() << " appeared!\n";
     cout << "Description : " << enemy.GetDescription() << "\n";
     while(battlestatus == 0){
-        PlayerTurn(game.GetPlayer(), enemy, playerblock, enemyblock);
+        PlayerTurn(game.GetPlayer(), enemy, playerblock, enemyblock, playercharge);
         battlestatus = StatusCheck(game.GetPlayer(), enemy);
         if(battlestatus != 0) break;
 
@@ -28,7 +29,7 @@ void Battle(GameState &game, Enemy &enemy){
         game.GetStatus() = Status::LOSE;
     }
     else if(battlestatus == 1){
-        cout << "\nYou won!\n";
+        cout << "You won!\n";
         game.GetPlayer().GetExp() += enemy.GetExpReward();
         game.GetPlayer().GetGold() += enemy.GetGoldReward();
         cout << "You gained " << enemy.GetExpReward() << " experience and " << enemy.GetGoldReward() << " gold!\n\n";
@@ -43,51 +44,9 @@ int StatusCheck(Player &player, Enemy &enemy){
     else return 0;
 }
 
-void PlayerTurn(Player &player, Enemy &enemy, bool &playerblock, bool &enemyblock){
-    int opt = 0;
-    bool finish = false;
-
-    while(!finish){
-        cout << "__________________________\n";
-        cout << "Player Health : " << player.GetStats().GetHealth() << "\n";
-        cout << enemy.GetName() << " Health : " << enemy.GetStats().GetHealth() << "\n\n";
-        cout << "1. Attack\n2. Defend\n3. Items\n4. Surrender\n\n- ";
-        NumInput(opt);
-
-        switch(opt){
-            case 1:
-                cout << "___________________________\n";
-                cout << "0. Back\n1. Slash | High Damage\n2. Stab  | Medium Damage, Piercing (breaks defense)\n\n- ";
-                NumInput(opt);
-                switch(opt){
-                    case 1:
-                        cout << "You slashed the enemy!\n";
-                        player.Slash(player.GetStats(), enemy.GetStats(), enemyblock);
-                        finish = true;
-                        break;
-                    case 2:
-                        cout << "You stabbed the enemy!\n";
-                        player.Stab(player.GetStats(), enemy.GetStats(), enemyblock);
-                        finish = true;
-                        break;
-                }
-                break;
-            case 2:
-                cout << "You are blocking!\n\n";
-                playerblock = player.Block();
-                finish = true;
-                break;
-            case 3:
-                if(player.InventoryAccess(BattleState::INBATTLE)) finish = true;
-                break;
-            case 4:
-                player.GetStats().GetHealth() = 0;
-                finish = true;
-                break;
-            default:
-                cout << "Invalid Input!\n\n";
-        }
-    }
+void PlayerTurn(Player &player, Enemy &enemy, bool &playerblock, bool &enemyblock, int &charge){
+    if(player.GetUsingWeapon() == WeaponType::MELEE) player.MeleeOption(player, enemy, playerblock, enemyblock);
+    else player.RangedOption(player, enemy, playerblock, enemyblock, charge);
 }
 
 void EnemyTurn(Player &player, Enemy &enemy, bool &playerblock, bool &enemyblock) {enemy.Turn(player, playerblock, enemyblock);}

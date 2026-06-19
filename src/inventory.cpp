@@ -8,7 +8,7 @@ using std::cout;
 void ShowConsumables(Inventory &inventory, bool showvalue){
     int itemnum = 1;
 
-    if(size(inventory.GetConsumables()) == 0) cout << "You don't have any items!\n";
+    if(size(inventory.GetConsumables()) == 0) cout << "There are no consumables!\n";
     else{
         cout << "_______________________\n";
         cout << "CONSUMABLES\n";
@@ -43,5 +43,5 @@ void ShowEquipment(Inventory &inventory, bool showvalue){
     
     cout << "Armor : " << inventory.GetArmor().GetName() << " | " << inventory.GetArmor().GetDescription();
     if(showvalue) cout << " | Value : " << inventory.GetArmor().GetValue();
-    cout << "\n";
+    cout << "\n\n";
 }

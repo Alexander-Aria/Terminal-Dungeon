@@ -34,13 +34,15 @@ class Entity{
         Inventory &GetInventory() {return inventory;}
 
         void UpdateBuff();
-        void SwitchWeapon();
+        bool SwitchWeapon();
         void ChangeEquipment(const Armor &armor);
         void ChangeEquipment(const Melee &melee);
         void ChangeEquipment(const Ranged &ranged);
 
         void Slash(Stats &attackerstats, Stats &defenderstats, bool &defend);
         void Stab(Stats &attackerstats, Stats &defenderstats, bool &defend);
+        void Shoot(Entity &attacker, Stats &defenderstats, bool &defend, int &charge);
+        void Charge(int &charge);
         void Howl(Stats &defenderstats);
         void DoubleShot(Stats &attackerstats, Stats &defenderstats, bool &defend);
         bool Block() {return true;}

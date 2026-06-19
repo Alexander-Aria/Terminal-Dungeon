@@ -77,6 +77,7 @@ class Melee : public Weapon{
 
 class Ranged : public Weapon{
     private:
+        int maxammo = 5;
         int ammoamount = 5;
     public:
         Ranged(
@@ -84,8 +85,9 @@ class Ranged : public Weapon{
         const string &description, 
         const int &value, 
         const int &attbuff,
+        const int &maxammo,
         const int &ammo
-    ) : Weapon(name, description, value, attbuff), ammoamount(ammo) {}
+    ) : Weapon(name, description, value, attbuff), maxammo(maxammo), ammoamount(ammo) {}
 
     int &GetAmmoAmount() {return ammoamount;}
 };
@@ -130,14 +132,16 @@ inline Ranged NoRanged() {return Ranged(
     "This weapon is sold out.",
     0,
     0,
+    0,
     0
 );}
 
 inline Ranged Crossbow() {return Ranged(
     "Crossbow",
-    "A quick and powerful crossbow (+3 Strength, 5 arrows/battle).",
+    "A quick and powerful crossbow (+2 Strength, 5 arrows/battle).",
     500,
-    3,
+    2,
+    5,
     5
 );}
 

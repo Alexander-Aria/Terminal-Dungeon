@@ -21,7 +21,7 @@ void Choice(GameState &game){
         cout << "_____________________________\n";
         cout << "Player Lv." << game.GetPlayer().GetLevel() << "\n";
         cout << "Player EXP : " << game.GetPlayer().GetExp() << "/250\n\n";
-        cout << "0. Turn Back\n1. Continue\n2. Check Stats\n3. Items\n\n-";
+        cout << "0. Turn Back (Give Up)\n1. Continue\n2. Check Stats\n3. Items\n\n- ";
         NumInput(opt);
         switch(opt){
             case 0:
@@ -65,7 +65,7 @@ void StageOne(GameState &game){
 
     cout << "\nFLOOR 1\n\n";
     cout << "You are a lone adventurer looking for treasures inside a dungeon.\n";
-    cout << "You entered a dungeon with a small potion and 100 gold.\n\n";
+    cout << "You entered the dungeon with a small potion and 100 gold.\n\n";
     Choice(game);
     if(!IsRunning(game.GetStatus())) return;
     
@@ -90,7 +90,7 @@ void StageOneExtra(GameState &game){
 
     cout << "You decided to continue exploring the first floor before you head to the second floor.\n";
     cout << "You see a bat nest up ahead. A bat, seemingly larger and more powerful is guarding the nest.\n";
-    cout << "Behind the nest is a chest.\n";
+    cout << "Behind the nest is a chest.\n\n";
     Choice(game);
     if(!IsRunning(game.GetStatus())) return;
 
@@ -110,7 +110,7 @@ void StageTwo(GameState &game){
 
     cout << "\nFLOOR 2\n\n";
     cout << "After you have beaten the bats, you continued.\n";
-    cout << "Exploring the first floor, you found a small potion.\n\n";
+    cout << "You found a small potion on the way.\n\n";
     Choice(game);
     if(!IsRunning(game.GetStatus())) return;
 
@@ -140,11 +140,11 @@ void StageTwoExtra(GameState &game){
 
     cout << "You decided to continue exploring the first floor before you head to the third floor.\n";
     cout << "You found a wolf den, inside lies a male wolf guarding the den.\n";
-    cout << "Inside the den lies seemingly a magical stone you might be able to use.\n";
+    cout << "Inside the den lies seemingly a magical stone you might be able to use.\n\n";
     Choice(game);
     if(!IsRunning(game.GetStatus())) return;
 
-    cout << "After preparing yourself, you charge into the den!\n";
+    cout << "\nAfter preparing yourself, you charge into the den!\n\n";
     Battle(game, *enemy1);
     if(!IsRunning(game.GetStatus())) return;
 
@@ -157,18 +157,18 @@ void StageThree(GameState &game){
 
     cout << "\nFLOOR 3\n\n";
     cout << "As you continue going deeper into the dungeon, you saw a dim light in the distance...\n";
-    cout << "An old shack lies in front of you with a sign hanging from the side, [SHOP]. Do you want to go in?\n";
+    cout << "An old shack lies in front of you with a sign hanging from the side, [SHOP]. Do you want to go in?\n\n";
     if(YesorNo()) {
         cout << "\nYou decided to go in the shack...\n";
         ShopFunction(game.GetPlayer(), ShopConfigOne());
     }
-    else cout << "\nYou decided to ignore the shack and continue with your journey...\n";
+    else cout << "\nYou decided to ignore the shack and continue with your journey...\n\n";
     
     Choice(game);
     if(!IsRunning(game.GetStatus())) return;
 
     cout << "As you continue, you have a subtle feeling that someone is watching you...\n";
-    cout << "You turned your back and dodged just in time as a bandit tries to attack you from behind!\n";
+    cout << "You turned your back and dodged just in time as a bandit tries to attack you from behind!\n\n";
     Battle(game, *enemy1);
     if(!IsRunning(game.GetStatus())) return;
 
@@ -184,7 +184,7 @@ void StageThree(GameState &game){
 void StageThreeExtra(GameState &game){
     cout << "You decided to continue exploring the first floor before you head to the fourth floor.\n";
     cout << "You found an empty camp. The previous bandit must have camped here.\n";
-    cout << "You rummaged the camp and found 100 gold!\n";
+    cout << "You rummaged the camp and found 100 gold!\n\n";
 
     game.GetPlayer().GetGold() += 100;
 }
@@ -194,20 +194,20 @@ void StageFour(GameState &game){
 
     cout << "As you continue down into level four, you run across bandit camp int the way.\n";
     cout << "There lies two bandits. One of them is a regular bandit and the other one is different.\n";
-    cout << "He seems tougher and with better equipments. A shiny crossbow in his left hand catches your attention.\n";
+    cout << "He seems tougher and with better equipments. A shiny crossbow in his left hand catches your attention.\n\n";
 
     Choice(game);
     if(!IsRunning(game.GetStatus())) return;
 
-    cout << "The regular bandit notices you and attacks first!\n";
+    cout << "\nThe regular bandit notices you and attacks first!\n\n";
     Battle(game, *enemy1);
     if(!IsRunning(game.GetStatus())) return;
 
-    cout << "The leader bandit watch as his henchman fall. He decided to play a bit more carefully and intelligently.\n";
+    cout << "\nThe leader bandit watch as his henchman fall. He decided to play a bit more carefully and intelligently.\n\n";
     Battle(game, *enemy2);
     if(!IsRunning(game.GetStatus())) return;
 
-    cout << "You got a crossbow!\n";
+    cout << "You got a crossbow!\n\n";
     game.GetPlayer().ChangeEquipment(Crossbow());
 
     cout << "You found the entrance to the next floor. Do you still want to explore this floor?\n";

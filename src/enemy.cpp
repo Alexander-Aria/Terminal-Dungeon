@@ -10,7 +10,8 @@ void BatEnemy::Turn(Player &player, bool &playerblock, bool &enemyblock){
     Choice choice = Choice::NOTHING;
 
     if(RNGnum <= slashchance) choice = Choice::SLASH;
-    else if(RNGnum >= 100 - blockchance) choice = Choice::BLOCK;
+    else if(RNGnum >= 100 - blockchance && !enemyblock) choice = Choice::BLOCK;
+    else choice = Choice::SLASH;
 
     switch(choice){
         case Choice::SLASH:
@@ -31,10 +32,10 @@ void WolfEnemy::Turn(Player &player, bool &playerblock, bool &enemyblock){
     int RNGnum = RNG.Int(1,100);
     Choice choice = Choice::NOTHING;
 
-
     if(RNGnum <= slashchance) choice = Choice::SLASH;
-    else if(RNGnum > 100 - (blockchance + howlchance) && RNGnum <= 100 - howlchance) choice = Choice::BLOCK;
+    else if(RNGnum > 100 - (blockchance + howlchance) && RNGnum <= 100 - howlchance && !enemyblock) choice = Choice::BLOCK;
     else if(RNGnum > 100 - howlchance) choice = Choice::HOWL;
+    else choice = Choice::SLASH;
 
     switch(choice){
         case Choice::SLASH:
@@ -64,7 +65,8 @@ void BanditEnemy::Turn(Player &player, bool &playerblock, bool &enemyblock){
         else choice = Choice::STAB;
     }
     else if(RNGnum <= slashchance) choice = Choice::SLASH;
-    else if(RNGnum >= 100 - blockchance) choice = Choice::BLOCK;
+    else if(RNGnum >= 100 - blockchance && !enemyblock) choice = Choice::BLOCK;
+    else choice = Choice::SLASH;
 
     switch(choice){
         case Choice::SLASH:

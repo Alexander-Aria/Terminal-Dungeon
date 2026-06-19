@@ -1,10 +1,11 @@
 #pragma once
 
 #include "entity.hpp"
-#include "player.hpp"
-#include <string>
 
+#include <string>
 using std::string;
+
+class Player;
 
 class Enemy : public Entity{
     private:

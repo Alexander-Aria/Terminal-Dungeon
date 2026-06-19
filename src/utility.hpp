@@ -46,6 +46,5 @@ inline bool operator==(const Items &item, const string &name){
 }
 
 inline bool operator!=(const Items &item, const string &name){
-    if(item.GetName() == name) return false;
-    else return true;
+    return !(item == name);
 }
