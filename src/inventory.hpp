@@ -123,9 +123,9 @@ inline Melee IronSword() {return Melee(
 
 inline Melee LongSword() {return Melee(
     "Long Sword",
-    "A heavy and hard hitting long sword (+3 Strength).",
-    400,
-    3
+    "A heavy and hard hitting long sword (+2 Strength).",
+    250,
+    2
 );}
 
 inline Ranged NoRanged() {return Ranged(
@@ -140,7 +140,7 @@ inline Ranged NoRanged() {return Ranged(
 inline Ranged Crossbow() {return Ranged(
     "Crossbow",
     "A quick and powerful crossbow (+2 Strength, 5 arrows/battle).",
-    500,
+    400,
     2,
     5,
     5
@@ -162,9 +162,9 @@ inline Armor LeatherArmor() {return Armor(
 
 inline Armor LightChainmailArmor() {return Armor(
     "Light Chainmail Armor",
-    "A military grade light chainmail armor (+3 Defense).",
-    400,
-    3
+    "A military grade light chainmail armor (+2 Defense).",
+    250,
+    2
 );}
 
 inline Consumables SmallPotion() {return Consumables(

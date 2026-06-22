@@ -20,7 +20,8 @@ void Choice(GameState &game){
     while(!done){
         cout << "_____________________________\n";
         cout << "Player Lv." << game.GetPlayer().GetLevel() << "\n";
-        cout << "Player EXP : " << game.GetPlayer().GetExp() << "/250\n\n";
+        cout << "Player EXP : " << game.GetPlayer().GetExp() << "/250\n";
+        cout << "Gold : " << game.GetPlayer().GetGold() << "\n\n";
         cout << "0. Turn Back (Give Up)\n1. Continue\n2. Check Stats\n3. Items\n\n- ";
         NumInput(opt);
         switch(opt){
@@ -114,7 +115,8 @@ void StageTwo(GameState &game){
     Choice(game);
     if(!IsRunning(game.GetStatus())) return;
 
-    cout << "Suddenly, a wolf cub jumps at you!\n\n";
+    cout << "You hear rustling behind you...\n";
+    cout << "A wolf cub jumps at you!\n\n";
     Battle(game, *enemy1);
     if(!IsRunning(game.GetStatus())) return;
 
@@ -192,7 +194,8 @@ void StageThreeExtra(GameState &game){
 void StageFour(GameState &game){
     auto enemy1 = make_unique<BanditEnemy>(Bandit()), enemy2 = make_unique<BanditEnemy>(BanditLeader());
 
-    cout << "As you continue down into level four, you run across bandit camp int the way.\n";
+    cout << "\nFLOOR 3\n\n";
+    cout << "As you continue down into level four, you run across bandit camp in the way.\n";
     cout << "There lies two bandits. One of them is a regular bandit and the other one is different.\n";
     cout << "He seems tougher and with better equipments. A shiny crossbow in his left hand catches your attention.\n\n";
 

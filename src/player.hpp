@@ -23,8 +23,8 @@ class Player : public Entity{
         int &GetExp(){return exp;}
         int &GetGold(){return gold;}
 
-        void MeleeOption(Player &player, Enemy &enemy);
-        void RangedOption(Player &player, Enemy &enemy);
+        void MeleeOption(Enemy &enemy);
+        void RangedOption(Enemy &enemy);
 
         void LevelUp();
         void StatsCheck();

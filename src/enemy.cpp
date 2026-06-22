@@ -34,7 +34,7 @@ void WolfEnemy::Turn(Player &player){
 
     if(RNGnum <= slashchance) choice = Choice::SLASH;
     else if(RNGnum > 100 - (blockchance + howlchance) && RNGnum <= 100 - howlchance && !GetBlock()) choice = Choice::BLOCK;
-    else if(RNGnum > 100 - howlchance) choice = Choice::HOWL;
+    else if(RNGnum > 100 - howlchance && player.GetStats().GetTempStrengthBoost() >= -5) choice = Choice::HOWL;
     else choice = Choice::SLASH;
 
     switch(choice){
@@ -78,7 +78,7 @@ void BanditEnemy::Turn(Player &player){
             Stab(player);
             break;
         case Choice::DOUBLESHOT:
-            cout << GetName() << "shot you twice with a crossbow!\n";
+            cout << GetName() << " shot you twice with a crossbow!\n";
             DoubleShot(player);
             break;
         case Choice::BLOCK:

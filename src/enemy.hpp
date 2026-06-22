@@ -88,7 +88,7 @@ class BanditEnemy : public Enemy{
 };
 
 inline Enemy Dummy() {return Enemy(
-    Stats(200, 200, 0, 5),
+    Stats(100, 100, 0, 5),
     "Dummy",
     "A practice dummy.",
     0,
@@ -140,12 +140,12 @@ inline WolfEnemy FemaleWolf() {return WolfEnemy(
 inline WolfEnemy MaleWolf() {return WolfEnemy(
     Stats(150, 150, 18, 10),
     "Male Wolf",
-    "A male wolf and a furious father of a wolf cub.",
+    "A male wolf and a father of a wolf cub.",
     80,
     200,
     50,
-    20,
-    30
+    30,
+    20
 );}
 
 inline BanditEnemy Bandit() {return BanditEnemy(
@@ -159,7 +159,7 @@ inline BanditEnemy Bandit() {return BanditEnemy(
 );}
 
 inline BanditEnemy BanditLeader() {return BanditEnemy(
-    Stats(150, 150, 15, 8), 
+    Stats(150, 150, 20, 8), 
     "Bandit Leader", 
     "One of the leader of the bandits. He is armed with a powerful crossbow and a sharp dagger.", 
     250, 

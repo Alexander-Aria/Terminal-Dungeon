@@ -113,7 +113,7 @@ void Entity::Howl(Stats &defenderstats){
 
 void Entity::DoubleShot(Entity &defender){
     Random RNG;
-    double basedamage = 5.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    double basedamage = 7.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
     int damage1, damage2;
 
     damage1 = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
@@ -126,6 +126,6 @@ void Entity::DoubleShot(Entity &defender){
 
     defender.GetStats().GetHealth() -= damage1 + damage2;
     defender.GetCharge() = 0;
-    cout << "The attacker dealt " << damage1 << " damage!\n\n";
+    cout << "The attacker dealt " << damage1 << " damage!\n";
     cout << "The attacker dealt " << damage2 << " damage!\n\n";
 }

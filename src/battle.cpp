@@ -43,8 +43,8 @@ int StatusCheck(Player &player, Enemy &enemy){
 }
 
 void PlayerTurn(Player &player, Enemy &enemy){
-    if(player.GetUsingWeapon() == WeaponType::MELEE) player.MeleeOption(player, enemy);
-    else player.RangedOption(player, enemy);
+    if(player.GetUsingWeapon() == WeaponType::MELEE) player.MeleeOption(enemy);
+    else player.RangedOption(enemy);
 }
 
 void EnemyTurn(Player &player, Enemy &enemy) {enemy.Turn(player);}
