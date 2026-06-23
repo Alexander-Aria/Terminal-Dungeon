@@ -11,46 +11,15 @@ void Entity::UpdateBuff(){
     else if(usingweapon == WeaponType::RANGED) stats.GetStrengthBuff() = inventory.GetRanged().GetStrengthBuff();
 }
 
-bool Entity::SwitchWeapon(){
-    if(usingweapon == WeaponType::MELEE && inventory.GetRanged() != "SOLD OUT"){
-        usingweapon = WeaponType::RANGED;
-        cout << "Switched to ranged!\n\n";
-    }
-    else if(usingweapon == WeaponType::RANGED && inventory.GetMelee() != "SOLD OUT"){
-        usingweapon = WeaponType::MELEE;
-        cout << "Switched to melee!\n\n";
-    }
-    else{
-        std::cout << "Unable to switch weapons!\n\n";
-        return false;
-    }
-    UpdateBuff();
-    return true;
-}
-
-void Entity::ChangeEquipment(const Armor &armor){
-    inventory.GetArmor() = armor;
-    UpdateBuff();
-}
-
-void Entity::ChangeEquipment(const Melee &melee){
-    inventory.GetMelee() = melee;
-    UpdateBuff();
-}
-
-void Entity::ChangeEquipment(const Ranged &ranged){
-    inventory.GetRanged() = ranged;
-    UpdateBuff();
-}
-
 void Entity::Slash(Entity &defender){
     Random RNG;
     int chance = RNG.Int(0,2);
     double basedamage = 10.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    double blockresist = 0.5;
     int damage; 
     
     if(defender.GetBlock()){
-        damage = static_cast<int>(round(0.5 * RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage))));
+        damage = static_cast<int>(round(blockresist * RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage))));
         if(chance == 0){
             cout << "The defense is broken!\n";
             defender.GetBlock() = false;
@@ -86,7 +55,9 @@ void Entity::Shoot(Entity &defender){
     int damage, multiplieddamage; 
     
     damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
-    multiplieddamage = damage * pow(3, charge);
+    if(charge > 0) multiplieddamage = damage * 3 * charge;
+    else multiplieddamage = damage;
+
     if(defender.GetBlock()) {
         cout << "The defense is broken!\n";
         defender.GetBlock() = false;
@@ -128,4 +99,48 @@ void Entity::DoubleShot(Entity &defender){
     defender.GetCharge() = 0;
     cout << "The attacker dealt " << damage1 << " damage!\n";
     cout << "The attacker dealt " << damage2 << " damage!\n\n";
+}
+
+void Entity::Bash(Entity &defender){
+    Random RNG;
+    int chance = RNG.Int(0,1);
+    double basedamage = 12.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    double blockresist = 0.7;
+    int damage; 
+    
+    if(defender.GetBlock()){
+        damage = static_cast<int>(round(blockresist * RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage))));
+        if(chance == 0){
+            cout << "The defense is broken!\n";
+            defender.GetBlock() = false;
+        }
+        else cout << "The defenders defense held strong!\n";
+    }
+    else damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
+
+    defender.GetStats().GetHealth() -= damage;
+    defender.GetCharge() = 0;
+    cout << "The attacker dealt " << damage << " damage!\n\n";
+}
+
+void Entity::RockThrow(Entity &defender){
+    Random RNG;
+    double basedamage = 8.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    double blockresist = 0.6;
+    int damage;
+    int chance;
+
+    for(int i = 0; i < 4; i++){
+        chance = RNG.Int(0,2);
+
+        if(chance == 0 || chance == 1){
+            if(defender.GetBlock()) damage = static_cast<int>(blockresist * RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
+            else damage = static_cast<int>(RNG.Int(round(0.8 * basedamage), round(1.2 * basedamage)));
+            defender.GetStats().GetHealth() -= damage;
+            defender.GetCharge() = 0;
+            cout << "The attacker dealt " << damage << " damage!\n";
+        }
+        else cout << "The attacker missed!\n";
+    }
+    cout << "\n";
 }

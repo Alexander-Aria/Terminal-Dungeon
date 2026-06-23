@@ -9,6 +9,8 @@ enum class Choice{
     STAB,
     HOWL,
     DOUBLESHOT,
+    BASH,
+    ROCKTHROW,
     BLOCK
 };
 
@@ -38,10 +40,6 @@ class Entity{
         int &GetCharge() {return charge;}
 
         void UpdateBuff();
-        bool SwitchWeapon();
-        void ChangeEquipment(const Armor &armor);
-        void ChangeEquipment(const Melee &melee);
-        void ChangeEquipment(const Ranged &ranged);
 
         void Slash(Entity &defender);
         void Stab(Entity &defender);
@@ -49,6 +47,8 @@ class Entity{
         void Charge(int &charge);
         void Howl(Stats &defenderstats);
         void DoubleShot(Entity &defender);
+        void Bash(Entity &defender);
+        void RockThrow(Entity &defender);
         bool Block() {return true;}
 
         bool IsDead() {return stats.GetHealth() <= 0;}

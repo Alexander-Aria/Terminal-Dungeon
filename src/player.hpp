@@ -23,10 +23,14 @@ class Player : public Entity{
         int &GetExp(){return exp;}
         int &GetGold(){return gold;}
 
-        void MeleeOption(Enemy &enemy);
-        void RangedOption(Enemy &enemy);
-
+        bool SwitchWeapon();
+        void ChangeEquipment(const Armor &armor);
+        void ChangeEquipment(const Melee &melee);
+        void ChangeEquipment(const Ranged &ranged);
         void LevelUp();
         void StatsCheck();
         bool InventoryAccess(const BattleState &state);
+
+        void MeleeOption(Enemy &enemy);
+        void RangedOption(Enemy &enemy);
 };

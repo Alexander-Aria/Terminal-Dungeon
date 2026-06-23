@@ -89,3 +89,28 @@ void BanditEnemy::Turn(Player &player){
             cout << GetName() << " does nothing!\n\n";
     }
 }
+
+void GolemEnemy::Turn(Player &player){
+    Random RNG;
+    int RNGnum = RNG.Int(1,100);
+    Choice choice = Choice::NOTHING;
+
+    if(RNGnum <= bashchance) choice = Choice::BASH;
+    else if(RNGnum >= 100 - magicchance){
+        if(golemtype == GolemType::ROCK) choice = Choice::ROCKTHROW;
+    }
+
+    switch(choice){
+        case Choice::BASH:
+            cout << GetName() << " attacks!\n";
+            Slash(player);
+            break;
+        case Choice::ROCKTHROW:
+            cout << GetName() << " uses rock throw!\n";
+            RockThrow(player);
+            break;
+        default:
+            if(GetName() == "Broken Golem") cout << GetName() << " is breaking down!\n\n";
+            else cout << GetName() << " does nothing!\n\n";
+    }
+}

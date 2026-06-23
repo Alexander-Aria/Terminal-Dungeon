@@ -23,3 +23,15 @@ void StageFiveExtra(GameState &game);
 
 void StageSix(GameState &game);
 void StageSixExtra(GameState &game);
+
+void StageSeven(GameState &game);
+void StageSevenExtra(GameState &game);
+
+void StageEight(GameState &game);
+void StageEightExtra(GameState &game);
+
+void StageNine(GameState &game);
+void StageNineExtra(GameState &game);
+
+void StageTen(GameState &game);
+void StageTenExtra(GameState &game);

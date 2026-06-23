@@ -194,7 +194,7 @@ void StageThreeExtra(GameState &game){
 void StageFour(GameState &game){
     auto enemy1 = make_unique<BanditEnemy>(Bandit()), enemy2 = make_unique<BanditEnemy>(BanditLeader());
 
-    cout << "\nFLOOR 3\n\n";
+    cout << "\nFLOOR 4\n\n";
     cout << "As you continue down into level four, you run across bandit camp in the way.\n";
     cout << "There lies two bandits. One of them is a regular bandit and the other one is different.\n";
     cout << "He seems tougher and with better equipments. A shiny crossbow in his left hand catches your attention.\n\n";
@@ -222,5 +222,69 @@ void StageFour(GameState &game){
 }
 
 void StageFourExtra(GameState &game){
+    auto enemy1 = make_unique<GolemEnemy>(BrokenGolem());
+
+    cout << "While exploring floor 4, you found an abandoned temple.\n";
+    cout << "In the front lies a couple of bandit corpses as well as a magical golem guarding the temple.\n";
+    cout << "The golem seems to be heavily damaged and vulnerable.\n";
+
+    Choice(game);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "\nAfter prepareing yourself, you charge into battle!\n\n";
+
+    Battle(game, *enemy1);
+    if(!IsRunning(game.GetStatus())) return;
+
+    game.GetPlayer().GetInventory().GetConsumables().push_back(ArmorStone());
+    game.GetPlayer().GetInventory().GetConsumables().push_back(LargePotion());
+    cout << "After defeating the broken golem, you rummaged the temple and found an armor stone and a large potion.\n\n";
+}
+
+void StageFive(GameState &game){
+
+}
+
+void StageFiveExtra(GameState &game){
+
+}
+
+void StageSix(GameState &game){
+
+}
+
+void StageSixExtra(GameState &game){
+    
+}
+
+void StageSeven(GameState &game){
+
+}
+
+void StageSevenExtra(GameState &game){
+
+}
+
+void StageEight(GameState &game){
+
+}
+
+void StageEightExtra(GameState &game){
+
+}
+
+void StageNine(GameState &game){
+
+}
+
+void StageNineExtra(GameState &game){
+    
+}
+
+void StageTen(GameState &game){
+
+}
+
+void StageTenExtra(GameState &game){
 
 }

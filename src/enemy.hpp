@@ -82,7 +82,33 @@ class BanditEnemy : public Enemy{
             const int &ereward,
             const int &slash,
             const int &block
-        ) : Enemy(s, n, d, greward, ereward), slashchance(slash), blockchance(block){}
+        ) : Enemy(s, n, d, greward, ereward), slashchance(slash), blockchance(block) {}
+
+        void Turn(Player &player) override;
+};
+
+enum class GolemType{
+    ROCK,
+    ICE,
+    FIRE
+};
+
+class GolemEnemy : public Enemy{
+    private:
+        GolemType golemtype;
+        int bashchance = 0;
+        int magicchance = 0;
+    public:
+        GolemEnemy(
+            const Stats &s, 
+            const string &n, 
+            const string &d,
+            const int &greward,
+            const int &ereward,
+            const int &bash,
+            const int &magic,
+            const GolemType &type
+        ) : Enemy(s, n, d, greward, ereward), bashchance(bash), magicchance(magic), golemtype(type) {}
 
         void Turn(Player &player) override;
 };
@@ -110,7 +136,7 @@ inline BatEnemy AlphaBat() { return BatEnemy(
     "Alpha Bat", 
     "The leader of the bats.", 
     50, 
-    80,
+    75,
     40,
     60
 );}
@@ -131,7 +157,7 @@ inline WolfEnemy FemaleWolf() {return WolfEnemy(
     "Female Wolf",
     "A female wolf and a grieving mother of a wolf cub.",
     50,
-    150,
+    100,
     70,
     30,
     0
@@ -142,7 +168,7 @@ inline WolfEnemy MaleWolf() {return WolfEnemy(
     "Male Wolf",
     "A male wolf and a father of a wolf cub.",
     80,
-    200,
+    125,
     50,
     30,
     20
@@ -153,7 +179,7 @@ inline BanditEnemy Bandit() {return BanditEnemy(
     "Bandit", 
     "A bandit. Possibly one of many living in the dungeon.", 
     100, 
-    75,
+    70,
     70,
     30
 );}
@@ -163,7 +189,18 @@ inline BanditEnemy BanditLeader() {return BanditEnemy(
     "Bandit Leader", 
     "One of the leader of the bandits. He is armed with a powerful crossbow and a sharp dagger.", 
     250, 
-    150,
+    100,
     70,
     30
+);}
+
+inline GolemEnemy BrokenGolem() {return GolemEnemy(
+    Stats(175, 400, 15, 20), 
+    "Broken Golem", 
+    "A guardian of a temple. It has been damaged by the bandits.", 
+    250, 
+    150,
+    50,
+    20,
+    GolemType::ROCK
 );}
