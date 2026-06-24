@@ -22,6 +22,14 @@ class Enemy : public Entity{
             const int &greward,
             const int &ereward
         ) : Entity(s), name(n), description(d), goldreward(greward), expreward(ereward) {}
+        Enemy(
+            const Stats &s,
+            const Inventory &i, 
+            const string &n, 
+            const string &d,
+            const int &greward,
+            const int &ereward
+        ) : Entity(s, i), name(n), description(d), goldreward(greward), expreward(ereward) {}
 
         const string &GetName() const {return name;}
         const string &GetDescription() const {return description;}
@@ -113,6 +121,32 @@ class GolemEnemy : public Enemy{
         void Turn(Player &player) override;
 };
 
+enum class GuardType{
+    PATROL,
+    ROYALGUARD
+};
+
+class GuardEnemy : public Enemy{
+    private:
+        GuardType guardtype;
+        int slashchance = 0;
+        int shieldchance = 0;
+    public:
+        GuardEnemy(
+            const Stats &s, 
+            const Inventory &i,
+            const string &n, 
+            const string &d,
+            const int &greward,
+            const int &ereward,
+            const int &slash,
+            const int &shield,
+            const GuardType &type
+        ) : Enemy(s, i, n, d, greward, ereward), slashchance(slash), shieldchance(shield), guardtype(type) {}
+
+        void Turn(Player &player) override;
+};
+
 inline Enemy Dummy() {return Enemy(
     Stats(100, 100, 0, 5),
     "Dummy",
@@ -195,12 +229,24 @@ inline BanditEnemy BanditLeader() {return BanditEnemy(
 );}
 
 inline GolemEnemy BrokenGolem() {return GolemEnemy(
-    Stats(175, 400, 15, 20), 
+    Stats(175, 400, 12, 20), 
     "Broken Golem", 
     "A guardian of a temple. It has been damaged by the bandits.", 
-    250, 
+    300, 
     150,
     50,
     20,
     GolemType::ROCK
+);}
+
+inline GuardEnemy PatrolGuard() {return GuardEnemy(
+    Stats(200, 200, 12, 12), 
+    Inventory({}, Shield(), NoRanged(), LightChainmailArmor()),
+    "Patroling Guard", 
+    "A patroling guard of an unknown clan. He carries a sword and a shield.", 
+    200,
+    100,
+    40,
+    60,
+    GuardType::PATROL
 );}

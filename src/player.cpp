@@ -108,7 +108,7 @@ void Player::MeleeOption(Enemy &enemy){
         else if(GetStats().GetTempDefenseBoost() < 0) cout << " (DEF " << GetStats().GetTempDefenseBoost() << ")";
         cout  << "\n";
 
-        cout << enemy.GetName() << " Health : " << enemy.GetStats().GetHealth()<< "/" << enemy.GetStats().GetMaxHealth();
+        cout << enemy.GetName() << " Health : " << enemy.GetStats().GetHealth() << "/" << enemy.GetStats().GetMaxHealth();
         if(enemy.GetStats().GetTempStrengthBoost() > 0) cout << " (STR +" << enemy.GetStats().GetTempStrengthBoost() << ")";
         else if(enemy.GetStats().GetTempStrengthBoost() < 0) cout << " (STR " << enemy.GetStats().GetTempStrengthBoost() << ")";
         if(enemy.GetStats().GetTempDefenseBoost() > 0) cout << " (DEF +" << enemy.GetStats().GetTempDefenseBoost() << ")";
@@ -160,18 +160,18 @@ void Player::RangedOption(Enemy &enemy){
 
     while(!finish){
         cout << "__________________________\n";
-        cout << "Player Health : " << GetStats().GetHealth();
-        if(GetStats().GetTempStrengthBoost() > 0) cout << "(STR +" << GetStats().GetTempStrengthBoost() << ")";
-        else if(GetStats().GetTempStrengthBoost() < 0) cout << "(STR " << GetStats().GetTempStrengthBoost() << ")";
-        if(GetStats().GetTempDefenseBoost() > 0) cout << "(DEF +" << GetStats().GetTempDefenseBoost() << ")";
-        else if(GetStats().GetTempDefenseBoost() < 0) cout << "(DEF " << GetStats().GetTempDefenseBoost() << ")";
+        cout << "Player Health : " << GetStats().GetHealth() << "/" << GetStats().GetMaxHealth();
+        if(GetStats().GetTempStrengthBoost() > 0) cout << " (STR +" << GetStats().GetTempStrengthBoost() << ")";
+        else if(GetStats().GetTempStrengthBoost() < 0) cout << " (STR " << GetStats().GetTempStrengthBoost() << ")";
+        if(GetStats().GetTempDefenseBoost() > 0) cout << " (DEF +" << GetStats().GetTempDefenseBoost() << ")";
+        else if(GetStats().GetTempDefenseBoost() < 0) cout << " (DEF " << GetStats().GetTempDefenseBoost() << ")";
         cout  << "\n";
 
-        cout << enemy.GetName() << " Health : " << enemy.GetStats().GetHealth();
-        if(enemy.GetStats().GetTempStrengthBoost() > 0) cout << "(STR +" << enemy.GetStats().GetTempStrengthBoost() << ")";
-        else if(enemy.GetStats().GetTempStrengthBoost() < 0) cout << "(STR " << enemy.GetStats().GetTempStrengthBoost() << ")";
-        if(enemy.GetStats().GetTempDefenseBoost() > 0) cout << "(DEF +" << enemy.GetStats().GetTempDefenseBoost() << ")";
-        else if(enemy.GetStats().GetTempDefenseBoost() < 0) cout << "(DEF " << enemy.GetStats().GetTempDefenseBoost() << ")";
+        cout << enemy.GetName() << " Health : " << enemy.GetStats().GetHealth() << "/" << enemy.GetStats().GetMaxHealth();
+        if(enemy.GetStats().GetTempStrengthBoost() > 0) cout << " (STR +" << enemy.GetStats().GetTempStrengthBoost() << ")";
+        else if(enemy.GetStats().GetTempStrengthBoost() < 0) cout << " (STR " << enemy.GetStats().GetTempStrengthBoost() << ")";
+        if(enemy.GetStats().GetTempDefenseBoost() > 0) cout << " (DEF +" << enemy.GetStats().GetTempDefenseBoost() << ")";
+        else if(enemy.GetStats().GetTempDefenseBoost() < 0) cout << " (DEF " << enemy.GetStats().GetTempDefenseBoost() << ")";
         cout  << "\n\n";
 
         cout << "Ammo count : " << GetInventory().GetRanged().GetAmmoAmount() << "/" << GetInventory().GetRanged().GetMaxAmmo() << "\n";

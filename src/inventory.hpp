@@ -66,13 +66,18 @@ class Weapon : public Items{
 };
 
 class Melee : public Weapon{
+    private:
+        bool shieldeffect = false;
     public:
-    Melee(
-        const string &name, 
-        const string &description, 
-        const int &value, 
-        const int &attbuff
-    ) : Weapon(name, description, value, attbuff) {}
+        Melee(
+            const string &name, 
+            const string &description, 
+            const int &value, 
+            const int &attbuff,
+            const bool &shield
+        ) : Weapon(name, description, value, attbuff), shieldeffect(shield) {}
+
+        const bool &GetShieldEffect() const {return shieldeffect;}
 };
 
 class Ranged : public Weapon{
@@ -111,21 +116,32 @@ inline Melee NoMelee() {return Melee(
     "SOLD OUT",
     "This weapon is sold out.",
     0,
-    0
+    0,
+    false
 );}
 
 inline Melee IronSword() {return Melee(
     "Iron Sword",
     "A simple but reliable sword (+0 Strength).",
     0,
-    0
+    0,
+    false
 );}
 
 inline Melee LongSword() {return Melee(
     "Long Sword",
     "A heavy and hard hitting long sword (+2 Strength).",
     250,
-    2
+    2,
+    false
+);}
+
+inline Melee Shield() {return Melee(
+    "Long Sword",
+    "A heavy and hard hitting long sword (+2 Strength).",
+    300,
+    0,
+    true
 );}
 
 inline Ranged NoRanged() {return Ranged(
@@ -180,7 +196,7 @@ inline Consumables LargePotion() {return Consumables(
     "Large Potion", 
     "A large potion that heals a considerable amount of health (100 HP).", 
     250, 
-    80, 
+    100, 
     0, 
     0
 );}

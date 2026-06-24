@@ -64,7 +64,7 @@ void StageOne(GameState &game){
     game.GetPlayer().GetInventory().GetConsumables().push_back(SmallPotion());
     game.GetPlayer().GetGold() = 100;
 
-    cout << "\nFLOOR 1\n\n";
+    cout << "\nAREA 1\n\n";
     cout << "You are a lone adventurer looking for treasures inside a dungeon.\n";
     cout << "You entered the dungeon with a small potion and 100 gold.\n\n";
     Choice(game);
@@ -79,7 +79,7 @@ void StageOne(GameState &game){
     Battle(game, *enemy2);
     if(!IsRunning(game.GetStatus())) return;
 
-    cout << "You found the entrance to the next floor. Do you still want to explore this floor?\n";
+    cout << "You found the entrance to the next area. Do you still want to explore this area?\n";
     if(YesorNo()) StageOneExtra(game);
     if(!IsRunning(game.GetStatus())) return;
 
@@ -89,7 +89,7 @@ void StageOne(GameState &game){
 void StageOneExtra(GameState &game){
     auto enemy1 = make_unique<BatEnemy>(AlphaBat());
 
-    cout << "You decided to continue exploring the first floor before you head to the second floor.\n";
+    cout << "You decided to continue exploring area 1 before you head to area 2.\n";
     cout << "You see a bat nest up ahead. A bat, seemingly larger and more powerful is guarding the nest.\n";
     cout << "Behind the nest is a chest.\n\n";
     Choice(game);
@@ -109,7 +109,7 @@ void StageTwo(GameState &game){
 
     game.GetPlayer().GetInventory().GetConsumables().push_back(SmallPotion());
 
-    cout << "\nFLOOR 2\n\n";
+    cout << "\nAREA 2\n\n";
     cout << "After you have beaten the bats, you continued.\n";
     cout << "You found a small potion on the way.\n\n";
     Choice(game);
@@ -130,7 +130,7 @@ void StageTwo(GameState &game){
     Battle(game, *enemy2);
     if(!IsRunning(game.GetStatus())) return;
 
-    cout << "You found the entrance to the next floor. Do you still want to explore this floor?\n";
+    cout << "You found the entrance to the next area. Do you still want to explore this Area?\n";
     if(YesorNo()) StageTwoExtra(game);
     if(!IsRunning(game.GetStatus())) return;
     
@@ -140,7 +140,7 @@ void StageTwo(GameState &game){
 void StageTwoExtra(GameState &game){
     auto enemy1 = make_unique<WolfEnemy>(MaleWolf());
 
-    cout << "You decided to continue exploring the first floor before you head to the third floor.\n";
+    cout << "You decided to continue exploring area 2 before you head to area 3.\n";
     cout << "You found a wolf den, inside lies a male wolf guarding the den.\n";
     cout << "Inside the den lies seemingly a magical stone you might be able to use.\n\n";
     Choice(game);
@@ -157,7 +157,7 @@ void StageTwoExtra(GameState &game){
 void StageThree(GameState &game){
     auto enemy1 = make_unique<BanditEnemy>(Bandit());
 
-    cout << "\nFLOOR 3\n\n";
+    cout << "\nAREA 3\n\n";
     cout << "As you continue going deeper into the dungeon, you saw a dim light in the distance...\n";
     cout << "An old shack lies in front of you with a sign hanging from the side, [SHOP]. Do you want to go in?\n\n";
     if(YesorNo()) {
@@ -174,17 +174,17 @@ void StageThree(GameState &game){
     Battle(game, *enemy1);
     if(!IsRunning(game.GetStatus())) return;
 
-    cout << "After defeating the bandit and the old shack, you came to the realization that you aren't the only human in this dungeon.\n";
+    cout << "After running into the bandit and finding the old shop, you came to the realization that you aren't the only human in this dungeon.\n";
     cout << "You wonder if there are actually a settlement inside...\n\n";
 
-    cout << "You found the entrance to the next floor. Do you still want to explore this floor?\n";
+    cout << "You found the entrance to the next area. Do you still want to explore this Area?\n";
     if(YesorNo()) StageThreeExtra(game);
     if(!IsRunning(game.GetStatus())) return;
     game.GetStage()++;
 }
 
 void StageThreeExtra(GameState &game){
-    cout << "You decided to continue exploring the first floor before you head to the fourth floor.\n";
+    cout << "You decided to continue exploring area 3 before you head to the area 4.\n";
     cout << "You found an empty camp. The previous bandit must have camped here.\n";
     cout << "You rummaged the camp and found 100 gold!\n\n";
 
@@ -194,8 +194,8 @@ void StageThreeExtra(GameState &game){
 void StageFour(GameState &game){
     auto enemy1 = make_unique<BanditEnemy>(Bandit()), enemy2 = make_unique<BanditEnemy>(BanditLeader());
 
-    cout << "\nFLOOR 4\n\n";
-    cout << "As you continue down into level four, you run across bandit camp in the way.\n";
+    cout << "\nAREA 4\n\n";
+    cout << "As you continue down into area 4, you run across bandit camp in the way.\n";
     cout << "There lies two bandits. One of them is a regular bandit and the other one is different.\n";
     cout << "He seems tougher and with better equipments. A shiny crossbow in his left hand catches your attention.\n\n";
 
@@ -206,32 +206,29 @@ void StageFour(GameState &game){
     Battle(game, *enemy1);
     if(!IsRunning(game.GetStatus())) return;
 
-    cout << "\nThe leader bandit watch as his henchman fall. He decided to play a bit more carefully and intelligently.\n\n";
+    cout << "\nAfter the leader bandit watch as his henchman fall, he decided to play a bit more carefully and intelligently.\n\n";
     Battle(game, *enemy2);
     if(!IsRunning(game.GetStatus())) return;
 
     cout << "You got a crossbow!\n\n";
     game.GetPlayer().ChangeEquipment(Crossbow());
 
-    cout << "You found the entrance to the next floor. Do you still want to explore this floor?\n";
+    cout << "You found the entrance to the next area. Do you still want to explore this area?\n";
     if(YesorNo()) StageFourExtra(game);
     if(!IsRunning(game.GetStatus())) return;
-
-    // Temporary
-    if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
 }
 
 void StageFourExtra(GameState &game){
     auto enemy1 = make_unique<GolemEnemy>(BrokenGolem());
 
-    cout << "While exploring floor 4, you found an abandoned temple.\n";
+    cout << "While exploring area 4, you found an abandoned temple.\n";
     cout << "In the front lies a couple of bandit corpses as well as a magical golem guarding the temple.\n";
     cout << "The golem seems to be heavily damaged and vulnerable.\n";
 
     Choice(game);
     if(!IsRunning(game.GetStatus())) return;
 
-    cout << "\nAfter prepareing yourself, you charge into battle!\n\n";
+    cout << "\nAfter preparing yourself, you charge into battle!\n\n";
 
     Battle(game, *enemy1);
     if(!IsRunning(game.GetStatus())) return;
@@ -242,7 +239,38 @@ void StageFourExtra(GameState &game){
 }
 
 void StageFive(GameState &game){
+    auto enemy1 = make_unique<GuardEnemy>(PatrolGuard()), enemy2 = make_unique<GuardEnemy>(PatrolGuard());
 
+    cout << "\nAREA 5\n\n";
+    cout << "Area 5 is unlike the previous ones. \n";
+    cout << "A few lanterns are standing. On the side of the lanterns hangs an unfamiliar flag.\n";
+    cout << "A path leads the way.\n";
+    cout << "Before you continue, you decided to take a break.\n\n";
+
+    Choice(game);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "As you go down the path, two patrolling guards block your path.\n";
+    cout << "They are not the bandits. Their uniforms are strikingly similar to the flag on the lanterns.\n";
+    cout << "Before you can interact with them, they immediately raised their sword towards you! Do they think you're a part of the bandits?\n";
+    cout << "You tried to reason with them but they don't seem to understand what you said.\n";
+    cout << "You don't have any other choice but to fight them.\n\n";
+
+    Battle(game, *enemy1);
+    if(!IsRunning(game.GetStatus())) return;
+
+    Battle(game, *enemy2);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "You did not want to fight them. You still don't understand why they are so agressive.\n";
+    cout << "Still puzzled, you continued forward.\n\n";
+
+    cout << "You found the entrance to the next area. Do you still want to explore this area?\n";
+    if(YesorNo()) StageFiveExtra(game);
+    if(!IsRunning(game.GetStatus())) return;
+
+    // Temporary
+    if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
 }
 
 void StageFiveExtra(GameState &game){

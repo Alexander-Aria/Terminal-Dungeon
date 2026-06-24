@@ -102,12 +102,42 @@ void GolemEnemy::Turn(Player &player){
 
     switch(choice){
         case Choice::BASH:
-            cout << GetName() << " attacks!\n";
-            Slash(player);
+            cout << GetName() << " bashes!\n";
+            Bash(player);
             break;
         case Choice::ROCKTHROW:
             cout << GetName() << " uses rock throw!\n";
             RockThrow(player);
+            break;
+        default:
+            if(GetName() == "Broken Golem") cout << GetName() << " is breaking down!\n\n";
+            else cout << GetName() << " does nothing!\n\n";
+    }
+}
+
+void GuardEnemy::Turn(Player &player){
+    Random RNG;
+    int RNGnum = RNG.Int(1,100);
+    Choice choice = Choice::NOTHING;
+
+    if(RNGnum <= slashchance) choice = Choice::SLASH;
+    else if(RNGnum >= 100 - shieldchance && GetBlock() == false){
+        if(guardtype == GuardType::PATROL) choice = Choice::BLOCK;
+        else if(guardtype == GuardType::ROYALGUARD) choice = Choice::SHIELDCHARGE;
+    }
+    else choice = Choice::SLASH;
+
+    switch(choice){
+        case Choice::SLASH:
+            cout << GetName() << " slashes!\n";
+            Slash(player);
+            break;
+        case Choice::BLOCK:
+            cout << GetName() << " is blocking!\n";
+            GetBlock() = Block();
+            break;
+        case Choice::SHIELDCHARGE:
+            cout << GetName() << " charges with their shield!\n";
             break;
         default:
             if(GetName() == "Broken Golem") cout << GetName() << " is breaking down!\n\n";
