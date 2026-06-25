@@ -17,9 +17,7 @@ class GameState{
     public:
         GameState(bool developermode){
             if(developermode){
-                player.GetGold() = 10000;
-                player.GetInventory() = Inventory(AllItems(), LongSword(), Crossbow(), LightChainmailArmor());
-                player.GetStats() = {10000, 10000, 10000, 10000};
+                DeveloperMode();
             }
             else{
                 player.GetInventory() = Inventory({}, IronSword(), NoRanged(), LeatherArmor());
@@ -30,12 +28,8 @@ class GameState{
         Status &GetStatus(){return status;}
         Player &GetPlayer(){return player;}
 
-        void BattleStateReset(){
-            player.GetStats().GetTempStrengthBoost() = 0;
-            player.GetStats().GetTempDefenseBoost() = 0;
-            player.GetBlock() = false;
-            player.GetInventory().GetRanged().GetAmmoAmount() = player.GetInventory().GetRanged().GetMaxAmmo();
-        }
+        void BattleStateReset();
+        void DeveloperMode();
 };
 
 void Game(bool developermode);

@@ -239,6 +239,17 @@ inline GolemEnemy BrokenGolem() {return GolemEnemy(
     GolemType::ROCK
 );}
 
+inline GolemEnemy IceGolem() {return GolemEnemy(
+    Stats(400, 400, 20, 12), 
+    "Ice Golem", 
+    "A powerful but fragile golem. The weakest of it's kind.", 
+    300, 
+    150,
+    50,
+    50,
+    GolemType::ICE
+);}
+
 inline GuardEnemy PatrolGuard() {return GuardEnemy(
     Stats(200, 200, 12, 12), 
     Inventory({}, Shield(), NoRanged(), LightChainmailArmor()),

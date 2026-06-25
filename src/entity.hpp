@@ -11,6 +11,7 @@ enum class Choice{
     DOUBLESHOT,
     BASH,
     ROCKTHROW,
+    ICEBEAM,
     SHIELDCHARGE,
     BLOCK
 };
@@ -41,6 +42,8 @@ class Entity{
         int &GetCharge() {return charge;}
 
         void UpdateBuff();
+        void MaxHealthCheck();
+        bool IsDead() {return stats.GetHealth() <= 0;}
 
         void Slash(Entity &defender);
         void Stab(Entity &defender);
@@ -50,8 +53,7 @@ class Entity{
         void DoubleShot(Entity &defender);
         void Bash(Entity &defender);
         void RockThrow(Entity &defender);
+        void IceBeam(Entity &defender);
         void ShieldCharge(Entity &defender);
         bool Block() {return true;}
-
-        bool IsDead() {return stats.GetHealth() <= 0;}
 };

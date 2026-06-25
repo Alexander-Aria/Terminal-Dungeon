@@ -11,6 +11,10 @@ void Entity::UpdateBuff(){
     else if(usingweapon == WeaponType::RANGED) stats.GetStrengthBuff() = inventory.GetRanged().GetStrengthBuff();
 }
 
+void Entity::MaxHealthCheck(){
+    if(stats.GetHealth() > stats.GetMaxHealth()) stats.GetHealth() = stats.GetMaxHealth();
+}
+
 void Entity::Slash(Entity &defender){
     Random RNG;
     int chance = RNG.Int(0,2);
@@ -162,6 +166,21 @@ void Entity::RockThrow(Entity &defender){
         else cout << "The attacker missed!\n";
     }
     cout << "\n";
+}
+
+void Entity::IceBeam(Entity &defender){
+    Random RNG;
+    double basedamage = 10.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    double blockresist = 0.2;
+    double range[2] = {0.9, 1.1};
+    int damage;
+    int chance;
+
+    if(defender.GetBlock()) damage = static_cast<int>(blockresist * RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage)));
+    else damage = static_cast<int>(RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage)));
+    defender.GetStats().GetHealth() -= damage;
+    defender.GetCharge() = 0;
+    cout << "The attacker dealt " << damage << " damage!\n";
 }
 
 void Entity::ShieldCharge(Entity &defender){

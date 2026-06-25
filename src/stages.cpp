@@ -274,7 +274,28 @@ void StageFive(GameState &game){
 }
 
 void StageFiveExtra(GameState &game){
+    auto enemy1 = make_unique<GolemEnemy>(IceGolem());
 
+    cout << "As you continue exploring area 5, the path is becoming whiter and the air colder...\n";
+    cout << "Soon enough, you are surrounded by ice and snow. In front of you lies a cave.\n";
+    cout << "A subtle thumping sound can be heard inside the cave. You prepare yourself.\n\n";
+
+    Choice(game);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "As you were about to go in, strong freezing wind blew towards you.\n";
+    cout << "The freezing cold is making it hard to defend yourself.\n";
+    game.GetPlayer().GetStats().GetTempDefenseBoost() = -2;
+
+    Battle(game, *enemy1);
+    if(!IsRunning(game.GetStatus())) return;
+
+    game.GetPlayer().GetInventory().GetConsumables().push_back(LifeStone());
+    cout << "The ice golem dropped a life stone!\n\n";
+
+    cout << "After defeating the ice golem, you peeked into the cave.\n";
+    cout << "The cave seems very deep and cold.\n";
+    cout << "Trembling from the cold, you decided that it's not worth exploring the cave.\n\n";
 }
 
 void StageSix(GameState &game){

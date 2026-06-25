@@ -73,8 +73,8 @@ bool Player::InventoryAccess(const BattleState &state){
             cout << "\nYou consumed a " << GetInventory().GetConsumables()[opt-1].GetName() << ".\n\n";
 
             GetInventory().GetConsumables().erase(GetInventory().GetConsumables().begin() + opt - 1);
-
-            if(GetStats().GetHealth() > GetStats().GetMaxHealth()) GetStats().GetHealth() = GetStats().GetMaxHealth();
+            MaxHealthCheck();
+            
             if(state == BattleState::INBATTLE) return true;
         }
 

@@ -55,6 +55,7 @@ class Weapon : public Items{
     private:
         int attackbuff = 0;
     public:
+        Weapon() {}
         Weapon(
             const string &name, 
             const string &description, 
@@ -69,6 +70,7 @@ class Melee : public Weapon{
     private:
         bool shieldeffect = false;
     public:
+        Melee() {}
         Melee(
             const string &name, 
             const string &description, 
@@ -85,6 +87,7 @@ class Ranged : public Weapon{
         int maxammo = 5;
         int ammoamount = 5;
     public:
+        Ranged() {}
         Ranged(
         const string &name, 
         const string &description, 
@@ -102,6 +105,7 @@ class Armor : public Items{
     private:
         int defensebuff = 0;
     public:
+        Armor() {}
         Armor(
             const string &name, 
             const string &description, 
@@ -219,6 +223,15 @@ inline Consumables ArmorStone() {return Consumables(
     3
 );}
 
+inline Consumables LifeStone() {return Consumables(
+    "Life Stone",
+    "A magical stone that heals you completely.",
+    500,
+    10000,
+    0,
+    0
+);}
+
 inline vector<Consumables> AllItems() {return {
     SmallPotion(),
     SmallPotion(),
@@ -226,6 +239,9 @@ inline vector<Consumables> AllItems() {return {
     LargePotion(),
     LargePotion(),
     LargePotion(),
+    LifeStone(),
+    LifeStone(),
+    LifeStone(),
     PowerStone(),
     PowerStone(),
     PowerStone(),
