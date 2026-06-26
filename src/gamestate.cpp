@@ -21,7 +21,7 @@ void GameState::DeveloperMode(){
     cout << "Set Gold : ";
     NumInput(player.GetGold());
     cout << "Set Melee : \n";
-    cout << "1. Iron Sword\n2. Long Sword\n3. Shield\n\n- ";
+    cout << "1. Iron Sword\n2. Long Sword\n3. Dragon Slayer\n4. Shield\n\n- ";
     NumInput(opt);
 
     switch(opt){
@@ -32,6 +32,9 @@ void GameState::DeveloperMode(){
             melee = LongSword();
             break;
         case 3:
+            melee = DragonSlayer();
+            break;
+        case 4:
             melee = Shield();
             break;
         default:
@@ -39,19 +42,22 @@ void GameState::DeveloperMode(){
     }
 
     cout << "Set Ranged : \n";
-    cout << "1. Crossbow\n\n- ";
+    cout << "1. Crossbow\n2. Short Bow\n\n- ";
     NumInput(opt);
 
     switch(opt){
         case 1:
             ranged = Crossbow();
             break;
+        case 2:
+            ranged = ShortBow();
+            break;
         default:
             ranged = NoRanged();
     }
 
-    cout << "Set Ranged : \n";
-    cout << "1. Leather Armor\n2. Light Chainmail Armor\n\n- ";
+    cout << "Set Armor : \n";
+    cout << "1. Leather Armor\n2. Light Chainmail Armor\n3. Dragon Scale Armor\n\n- ";
     NumInput(opt);
 
     switch(opt){
@@ -60,6 +66,9 @@ void GameState::DeveloperMode(){
             break;
         case 2:
             armor = LightChainmailArmor();
+            break;
+        case 3:
+            armor = DragonScaleArmor();
             break;
         default:
             armor = NoArmor();

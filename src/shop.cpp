@@ -10,14 +10,11 @@ void ShopFunction(Player &player, const Shop &config){
 
     while(true){
         cout << "\n_____________________________________________\n";
-        cout << "Welcome Traveler!\n";
-        cout << "Care to look at my wares?\n\n";
         cout << "0. Finish\n1. Buy\n2. Sell\n\n- ";
         NumInput(opt);
 
         switch(opt){
             case 0:
-                cout << "\nBest of luck for your adventure!\n\n";
                 return;
             case 1:
                 shop.Buy(player);

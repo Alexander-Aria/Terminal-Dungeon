@@ -26,3 +26,14 @@ inline const vector<Consumables> ShopConsumablesOne(){return {
     ArmorStone()
 };}
 inline Shop ShopConfigOne() {return Shop(Inventory(ShopConsumablesOne(), LongSword(), NoRanged(), LightChainmailArmor()));}
+
+inline const vector<Consumables> ShopConsumablesTwo(){return {
+    SmallPotion(), 
+    SmallPotion(),
+    LargePotion(),
+    LargePotion(),
+    LifeStone(),
+    PowerStone(),
+    ArmorStone()
+};}
+inline Shop ShopConfigTwo() {return Shop(Inventory(ShopConsumablesTwo(), DragonSlayer(), NoRanged(), DragonScaleArmor()));}

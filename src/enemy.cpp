@@ -61,7 +61,7 @@ void BanditEnemy::Turn(Player &player){
     Choice choice = Choice::NOTHING;
 
     if(player.GetBlock()){
-        if(GetName() == "Bandit Leader") choice = Choice::DOUBLESHOT;
+        if(bandittype == BanditType::LEADER) choice = Choice::DOUBLESHOT;
         else choice = Choice::STAB;
     }
     else if(RNGnum <= slashchance) choice = Choice::SLASH;
@@ -143,6 +143,34 @@ void GuardEnemy::Turn(Player &player){
             break;
         case Choice::SHIELDCHARGE:
             cout << GetName() << " charges with their shield!\n";
+            break;
+        default:
+            if(GetName() == "Broken Golem") cout << GetName() << " is breaking down!\n\n";
+            else cout << GetName() << " does nothing!\n\n";
+    }
+}
+
+void ArcherEnemy::Turn(Player &player){
+    Random RNG;
+    int RNGnum = RNG.Int(1,100);
+    Choice choice = Choice::NOTHING;
+    
+    if(RNGnum <= shootchance && GetInventory().GetRanged().GetAmmoAmount() > 0) choice = Choice::SHOOT;
+    else if(RNGnum >= 100 - chargechance && GetInventory().GetRanged().GetAmmoAmount() > 0) choice = Choice::CHARGE;
+    else choice = Choice::CLOSECOMBAT;
+
+    switch(choice){
+        case Choice::SHOOT:
+            cout << GetName() << " shoots!\n";
+            Shoot(player);
+            break;
+        case Choice::CHARGE:
+            cout << GetName() << " charges!\n";
+            Charge(GetCharge());
+            break;
+        case Choice::CLOSECOMBAT:
+            cout << GetName() << " uses close combat!\n";
+            CloseCombat(player);
             break;
         default:
             if(GetName() == "Broken Golem") cout << GetName() << " is breaking down!\n\n";

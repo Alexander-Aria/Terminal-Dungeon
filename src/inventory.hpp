@@ -140,9 +140,17 @@ inline Melee LongSword() {return Melee(
     false
 );}
 
+inline Melee DragonSlayer() {return Melee(
+    "Dragon Slayer",
+    "A carefully forged sword designed to slay dragons (+5 Strength).",
+    700,
+    5,
+    false
+);}
+
 inline Melee Shield() {return Melee(
-    "Long Sword",
-    "A heavy and hard hitting long sword (+2 Strength).",
+    "Shield",
+    "A standard military shield (+0 Strength).",
     300,
     0,
     true
@@ -166,6 +174,15 @@ inline Ranged Crossbow() {return Ranged(
     5
 );}
 
+inline Ranged ShortBow() {return Ranged(
+    "Short Bow",
+    "A reliable short bow. A standard for military archers. (+4 Strength, 6 arrows/battle).",
+    400,
+    4,
+    6,
+    6
+);}
+
 inline Armor NoArmor() {return Armor(
     "SOLD OUT",
     "This Armor is sold out.",
@@ -185,6 +202,13 @@ inline Armor LightChainmailArmor() {return Armor(
     "A military grade light chainmail armor (+2 Defense).",
     250,
     2
+);}
+
+inline Armor DragonScaleArmor() {return Armor(
+    "Dragon Scale Armor",
+    "A military grade light chainmail armor (+5 Defense).",
+    700,
+    5
 );}
 
 inline Consumables SmallPotion() {return Consumables(

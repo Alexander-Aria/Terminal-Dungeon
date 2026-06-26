@@ -7,12 +7,15 @@ enum class Choice{
     NOTHING,
     SLASH,
     STAB,
+    SHOOT,
+    CHARGE,
     HOWL,
     DOUBLESHOT,
     BASH,
     ROCKTHROW,
     ICEBEAM,
     SHIELDCHARGE,
+    CLOSECOMBAT,
     BLOCK
 };
 
@@ -55,5 +58,6 @@ class Entity{
         void RockThrow(Entity &defender);
         void IceBeam(Entity &defender);
         void ShieldCharge(Entity &defender);
+        void CloseCombat(Entity &defender);
         bool Block() {return true;}
 };

@@ -10,14 +10,12 @@ using std::cin;
 void Game(bool developermode){
     GameState game(developermode);
     bool loop = true;
-    int devstage = 0;
 
     if(developermode){
         cout << "\n____________________________________\n";
         cout << "DEVELOPER MODE\n\n";
         cout << "Choose stage (0-10) : ";
-        NumInput(devstage);
-        game.GetStage() = devstage;
+        NumInput(game.GetStage());
     }
 
     while(loop){

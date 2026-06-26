@@ -161,8 +161,11 @@ void StageThree(GameState &game){
     cout << "As you continue going deeper into the dungeon, you saw a dim light in the distance...\n";
     cout << "An old shack lies in front of you with a sign hanging from the side, [SHOP]. Do you want to go in?\n\n";
     if(YesorNo()) {
-        cout << "\nYou decided to go in the shack...\n";
+        cout << "\nYou decided to go in the shack...\n\n";
+        cout << "\"Welcome Traveler!\"\n";
+        cout << "\"Care to look at my wares?\"\n\n";
         ShopFunction(game.GetPlayer(), ShopConfigOne());
+        cout << "\nBest of luck for your adventure!\n\n";
     }
     else cout << "\nYou decided to ignore the shack and continue with your journey...\n\n";
     
@@ -268,9 +271,6 @@ void StageFive(GameState &game){
     cout << "You found the entrance to the next area. Do you still want to explore this area?\n";
     if(YesorNo()) StageFiveExtra(game);
     if(!IsRunning(game.GetStatus())) return;
-
-    // Temporary
-    if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
 }
 
 void StageFiveExtra(GameState &game){
@@ -284,8 +284,8 @@ void StageFiveExtra(GameState &game){
     if(!IsRunning(game.GetStatus())) return;
 
     cout << "As you were about to go in, strong freezing wind blew towards you.\n";
-    cout << "The freezing cold is making it hard to defend yourself.\n";
-    game.GetPlayer().GetStats().GetTempDefenseBoost() = -2;
+    cout << "The freezing cold is weakening you.\n\n";
+    game.GetPlayer().GetStats().GetTempStrengthBoost() = -2;
 
     Battle(game, *enemy1);
     if(!IsRunning(game.GetStatus())) return;
@@ -299,11 +299,74 @@ void StageFiveExtra(GameState &game){
 }
 
 void StageSix(GameState &game){
+    auto enemy1 = make_unique<WolfEnemy>(TrainedWolf());
 
+    cout << "Entering area 6, you found a small village.\n";
+    cout << "No flag is in sight and the people seem friendly.\n";
+    cout << "However, the village is strangely silent. The people are doing nothing but working.\n\n";
+
+    cout << "On the side of the street lies a shop.\n";
+    cout << "Do you want to enter?\n\n";
+    if(YesorNo()) {
+        cout << "\nYou decided to go in the shop...\n\n";
+        cout << "\"What do you... Wait, are you a traveler?\"\n";
+        cout << "\"Quick, into my basement.\"\n\n";
+
+        cout << "\"I know we just met but we need your help.\"\n";
+        cout << "\"The nearest clan recently enslaved the entire village.\"\n";
+        cout << "\"We were forced to give all of our earnings to them.\"\n";
+        cout << "\"We're lucky the bandits from the south are giving us aids. We would've starved without them.\"\n\n";
+        
+        cout << "\"You seem to be a tough fighter. They're coming soon. Can you defeat them?\"\n";
+        cout << "\"You can even buy some of my wares I hid from them.\"\n";
+        ShopFunction(game.GetPlayer(), ShopConfigTwo());
+
+        cout << "\"Thank you traveler. May god bless you.\"\n\n";
+
+        cout << "Taking the warning, you prepare yourself.\n\n";
+    }
+    else cout << "\nYou decided to take a break.\n\n";
+
+    Choice(game);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "You hear a carriage coming. It's that flag again.\n";
+    cout << "It is guarded by an archer and a trained wolf.\n";
+    cout << "The carriage stops in front of the shop.\n\n";    
+
+    cout << "You sneaked into the side of the carriage and successfully assasinated the coachman!\n";
+    cout << "The wolf immediately strikes!\n\n";
+
+    Battle(game, *enemy1);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "Knowing that she's outmatched, the archer fled into the fog.\n";
+    cout << "Do you want to chase her?\n";
+
+    if(YesorNo()) {
+        StageSixExtra(game);
+        if(!IsRunning(game.GetStatus())) return;
+    }
+    else cout << " Going into the fog seems like a bad idea. You decided to let her go.\n\n";
+
+    // Temporary
+    if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
 }
 
 void StageSixExtra(GameState &game){
-    
+    auto enemy1 = make_unique<ArcherEnemy>(Archer());
+
+    cout << "You chased the archer into the fog.\n";
+    cout << "The lack of vision makes it hard to defend yourself. She could be anywhere.\n\n";
+    game.GetPlayer().GetStats().GetTempDefenseBoost() = -2;
+
+    cout << "Maybe this was a bas idea...\n\n";
+
+    Battle(game, *enemy1);
+    if(!IsRunning(game.GetStatus())) return;
+
+    game.GetPlayer().ChangeEquipment(ShortBow());
+    cout << "The archer dropped a short bow!\n\n";
 }
 
 void StageSeven(GameState &game){

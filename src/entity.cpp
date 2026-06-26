@@ -52,7 +52,7 @@ void Entity::Stab(Entity &defender){
             defender.GetBlock() = false;
         }
         else{
-            cout << "The defenders defense held strong!\n";
+            cout << "The defenders defense held strong thanks to the shield!\n";
         }
     }
     else{
@@ -72,16 +72,28 @@ void Entity::Shoot(Entity &defender){
     Random RNG;
     double basedamage = 8.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
     double range[2] = {0.8, 1.2};
+    double blockresist = 0.6;
     int damage, multiplieddamage; 
-    
-    damage = static_cast<int>(RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage)));
-    if(charge > 0) multiplieddamage = damage * 3 * charge;
-    else multiplieddamage = damage;
 
-    if(defender.GetBlock()) {
+    if(defender.GetInventory().GetMelee().GetShieldEffect()){
+        damage = static_cast<int>(blockresist * round(RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage))));
+        if(RNG.Int(0, 2) == 0){
+            cout << "The defense is broken!\n";
+            defender.GetBlock() = false;
+        }
+        else{
+            cout << "The defenders defense held strong thanks to the shield!\n";
+        }
+    }
+    else if(defender.GetBlock()) {
         cout << "The defense is broken!\n";
         defender.GetBlock() = false;
+        damage = static_cast<int>(RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage)));
     }
+    else damage = static_cast<int>(RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage)));
+
+    if(charge > 0) multiplieddamage = damage * 3 * charge;
+    else multiplieddamage = damage;
 
     defender.GetStats().GetHealth() -= multiplieddamage;
     cout << "The attacker dealt " << multiplieddamage << " damage!\n\n";
@@ -198,4 +210,27 @@ void Entity::ShieldCharge(Entity &defender){
 
     block = Block();
     cout << "The attacker is blocking!\n\n";
+}
+
+void Entity::CloseCombat(Entity &defender){
+    Random RNG;
+    int chance = RNG.Int(0,3);
+    double basedamage = 5.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    double blockresist = 0.8;
+    double range[2] = {0.6, 1.4};
+    int damage; 
+    
+    if(defender.GetBlock()){
+        damage = static_cast<int>(round(blockresist * RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage))));
+        if(chance == 0){
+            cout << "The defense is broken!\n";
+            defender.GetBlock() = false;
+        }
+        else cout << "The defenders defense held strong!\n";
+    }
+    else damage = static_cast<int>(RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage)));
+
+    defender.GetStats().GetHealth() -= damage;
+    defender.GetCharge() = 0;
+    cout << "The attacker dealt " << damage << " damage!\n\n";
 }

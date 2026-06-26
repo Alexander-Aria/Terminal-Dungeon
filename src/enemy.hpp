@@ -77,8 +77,14 @@ class WolfEnemy : public Enemy{
         void Turn(Player &player) override;
 };
 
+enum class BanditType{
+    REGULAR,
+    LEADER
+};
+
 class BanditEnemy : public Enemy{
     private:
+        BanditType bandittype = BanditType::REGULAR;
         int slashchance = 0;
         int blockchance = 0;
     public:
@@ -89,8 +95,9 @@ class BanditEnemy : public Enemy{
             const int &greward,
             const int &ereward,
             const int &slash,
-            const int &block
-        ) : Enemy(s, n, d, greward, ereward), slashchance(slash), blockchance(block) {}
+            const int &block,
+            const BanditType &type
+        ) : Enemy(s, n, d, greward, ereward), slashchance(slash), blockchance(block), bandittype(type) {}
 
         void Turn(Player &player) override;
 };
@@ -143,6 +150,25 @@ class GuardEnemy : public Enemy{
             const int &shield,
             const GuardType &type
         ) : Enemy(s, i, n, d, greward, ereward), slashchance(slash), shieldchance(shield), guardtype(type) {}
+
+        void Turn(Player &player) override;
+};
+
+class ArcherEnemy : public Enemy{
+    private:
+        int shootchance;
+        int chargechance;
+    public:
+        ArcherEnemy(
+            const Stats &s, 
+            const Inventory &i,
+            const string &n, 
+            const string &d,
+            const int &greward,
+            const int &ereward,
+            const int &shoot,
+            const int &charge
+        ) : Enemy(s, i, n, d, greward, ereward), shootchance(shoot), chargechance(charge) {}
 
         void Turn(Player &player) override;
 };
@@ -208,6 +234,17 @@ inline WolfEnemy MaleWolf() {return WolfEnemy(
     20
 );}
 
+inline WolfEnemy TrainedWolf() {return WolfEnemy(
+    Stats(175, 175, 25, 15),
+    "Trained Wolf",
+    "A trained male wolf. It is the archer's pet.",
+    50,
+    75,
+    40,
+    30,
+    30
+);}
+
 inline BanditEnemy Bandit() {return BanditEnemy(
     Stats(100, 100, 15, 6), 
     "Bandit", 
@@ -215,7 +252,8 @@ inline BanditEnemy Bandit() {return BanditEnemy(
     100, 
     70,
     70,
-    30
+    30,
+    BanditType::REGULAR
 );}
 
 inline BanditEnemy BanditLeader() {return BanditEnemy(
@@ -225,7 +263,8 @@ inline BanditEnemy BanditLeader() {return BanditEnemy(
     250, 
     100,
     70,
-    30
+    30,
+    BanditType::LEADER
 );}
 
 inline GolemEnemy BrokenGolem() {return GolemEnemy(
@@ -260,4 +299,15 @@ inline GuardEnemy PatrolGuard() {return GuardEnemy(
     40,
     60,
     GuardType::PATROL
+);}
+
+inline ArcherEnemy Archer() {return ArcherEnemy(
+    Stats(200, 200, 35, 15), 
+    Inventory({}, NoMelee(), ShortBow(), LightChainmailArmor()),
+    "Archer", 
+    "An archer of an unknown clan. Equipped with a short bow.", 
+    200,
+    150,
+    50,
+    50
 );}
