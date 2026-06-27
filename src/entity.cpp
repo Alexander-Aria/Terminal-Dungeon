@@ -45,7 +45,7 @@ void Entity::Stab(Entity &defender){
     double range[2] = {0.8, 1.2};
     int damage; 
 
-    if(defender.GetInventory().GetMelee().GetShieldEffect()){
+    if(defender.GetInventory().GetMelee().GetShieldEffect() && defender.GetBlock()){
         damage = static_cast<int>(blockresist * round(RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage))));
         if(RNG.Int(0, 1) == 0){
             cout << "The defense is broken!\n";
@@ -70,12 +70,12 @@ void Entity::Stab(Entity &defender){
 
 void Entity::Shoot(Entity &defender){
     Random RNG;
-    double basedamage = 8.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    double basedamage = 12.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
     double range[2] = {0.8, 1.2};
     double blockresist = 0.6;
     int damage, multiplieddamage; 
 
-    if(defender.GetInventory().GetMelee().GetShieldEffect()){
+    if(defender.GetInventory().GetMelee().GetShieldEffect() && defender.GetBlock()){
         damage = static_cast<int>(blockresist * round(RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage))));
         if(RNG.Int(0, 2) == 0){
             cout << "The defense is broken!\n";

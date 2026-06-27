@@ -192,7 +192,7 @@ inline BatEnemy Bat() {return BatEnemy(
 );}
 
 inline BatEnemy AlphaBat() { return BatEnemy(
-    Stats(80, 80, 10, 5), 
+    Stats(80, 80, 12, 5), 
     "Alpha Bat", 
     "The leader of the bats.", 
     50, 
@@ -202,7 +202,7 @@ inline BatEnemy AlphaBat() { return BatEnemy(
 );}
 
 inline WolfEnemy WolfCub() {return WolfEnemy(
-    Stats(60, 60, 10, 6), 
+    Stats(60, 60, 12, 6), 
     "Wolf Cub", 
     "A young wolf cub.", 
     20, 
@@ -213,7 +213,7 @@ inline WolfEnemy WolfCub() {return WolfEnemy(
 );}
 
 inline WolfEnemy FemaleWolf() {return WolfEnemy(
-    Stats(120, 120, 15, 8),
+    Stats(110, 110, 15, 8),
     "Female Wolf",
     "A female wolf and a grieving mother of a wolf cub.",
     50,
@@ -224,7 +224,7 @@ inline WolfEnemy FemaleWolf() {return WolfEnemy(
 );}
 
 inline WolfEnemy MaleWolf() {return WolfEnemy(
-    Stats(150, 150, 18, 10),
+    Stats(130, 130, 18, 10),
     "Male Wolf",
     "A male wolf and a father of a wolf cub.",
     80,
@@ -235,7 +235,7 @@ inline WolfEnemy MaleWolf() {return WolfEnemy(
 );}
 
 inline WolfEnemy TrainedWolf() {return WolfEnemy(
-    Stats(175, 175, 25, 15),
+    Stats(150, 150, 27, 15),
     "Trained Wolf",
     "A trained male wolf. It is the archer's pet.",
     50,
@@ -246,7 +246,7 @@ inline WolfEnemy TrainedWolf() {return WolfEnemy(
 );}
 
 inline BanditEnemy Bandit() {return BanditEnemy(
-    Stats(100, 100, 15, 6), 
+    Stats(100, 100, 12, 6), 
     "Bandit", 
     "A bandit. Possibly one of many living in the dungeon.", 
     100, 
@@ -257,7 +257,7 @@ inline BanditEnemy Bandit() {return BanditEnemy(
 );}
 
 inline BanditEnemy BanditLeader() {return BanditEnemy(
-    Stats(150, 150, 20, 8), 
+    Stats(125, 125, 18, 8), 
     "Bandit Leader", 
     "One of the leader of the bandits. He is armed with a powerful crossbow and a sharp dagger.", 
     250, 
@@ -268,7 +268,7 @@ inline BanditEnemy BanditLeader() {return BanditEnemy(
 );}
 
 inline GolemEnemy BrokenGolem() {return GolemEnemy(
-    Stats(175, 400, 12, 20), 
+    Stats(125, 400, 10, 17), 
     "Broken Golem", 
     "A guardian of a temple. It has been damaged by the bandits.", 
     300, 
@@ -279,7 +279,7 @@ inline GolemEnemy BrokenGolem() {return GolemEnemy(
 );}
 
 inline GolemEnemy IceGolem() {return GolemEnemy(
-    Stats(400, 400, 20, 12), 
+    Stats(300, 300, 20, 7), 
     "Ice Golem", 
     "A powerful but fragile golem. The weakest of it's kind.", 
     300, 
@@ -290,10 +290,10 @@ inline GolemEnemy IceGolem() {return GolemEnemy(
 );}
 
 inline GuardEnemy PatrolGuard() {return GuardEnemy(
-    Stats(200, 200, 12, 12), 
+    Stats(175, 175, 20, 10), 
     Inventory({}, Shield(), NoRanged(), LightChainmailArmor()),
     "Patroling Guard", 
-    "A patroling guard of an unknown clan. He carries a sword and a shield.", 
+    "A patroling guard of an unknown clan. His shield made ranged weapon ineffective.", 
     200,
     100,
     40,
@@ -301,8 +301,20 @@ inline GuardEnemy PatrolGuard() {return GuardEnemy(
     GuardType::PATROL
 );}
 
+inline GuardEnemy RoyalGuard() {return GuardEnemy(
+    Stats(200, 200, 30, 20), 
+    Inventory({}, Shield(), NoRanged(), NoArmor()),
+    "Royal Guard", 
+    "A royal guard of an unknown clan. His shield and heavy armor made ranged weapon ineffective.", 
+    200,
+    150,
+    30,
+    70,
+    GuardType::ROYALGUARD
+);}
+
 inline ArcherEnemy Archer() {return ArcherEnemy(
-    Stats(200, 200, 35, 15), 
+    Stats(150, 150, 35, 8), 
     Inventory({}, NoMelee(), ShortBow(), LightChainmailArmor()),
     "Archer", 
     "An archer of an unknown clan. Equipped with a short bow.", 

@@ -143,6 +143,7 @@ void GuardEnemy::Turn(Player &player){
             break;
         case Choice::SHIELDCHARGE:
             cout << GetName() << " charges with their shield!\n";
+            ShieldCharge(player);
             break;
         default:
             if(GetName() == "Broken Golem") cout << GetName() << " is breaking down!\n\n";
