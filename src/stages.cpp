@@ -391,7 +391,7 @@ void StageSeven(GameState &game){
 
     cout << "\nAREA 7\n\n";
 
-    cout << "You continued your journey into area 7.But, your goal has changed.\n";
+    cout << "You continued your journey into area 7. But, your goal has changed.\n";
     cout << "You started your journey to search for treasures. Now, an entire village is counting on you.\n\n";
 
     cout << "You have reached the gate of the clan fortress.\n";
@@ -421,13 +421,30 @@ void StageSeven(GameState &game){
 
     cout << "This seems like a point of no return...\n";
     game.GetStage()++;
-
-    // Temporary
-    if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
 }
 
 void StageEight(GameState &game){
+    auto enemy1 = Knight();
 
+    Choice(game);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "\nYou rushed into the clan leader's throne.\n";
+    cout << "There he is, the leader. You pulled out your bow and shoots!\n";
+    cout << "The arrow hits what sounds like pure metal.\n\n";
+
+    cout << "\"You'll need fight harder than that.\"\n\n";
+
+    Battle(game, enemy1);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "\nThe clan's most powerful fighter has fallen.\n";
+    cout << "Shocked, the clan leader immediately ran.\n";
+    cout << "Without hesitation, you chase him.\n";
+    game.GetStage()++;
+
+    // Temporary
+    if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
 }
 
 void StageNine(GameState &game){

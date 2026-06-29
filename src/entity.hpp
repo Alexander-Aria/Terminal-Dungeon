@@ -16,6 +16,7 @@ enum class Choice{
     ICEBEAM,
     SHIELDCHARGE,
     CLOSECOMBAT,
+    HEAVYBLOW,
     BLOCK
 };
 
@@ -59,5 +60,6 @@ class Entity{
         void IceBeam(Entity &defender);
         void ShieldCharge(Entity &defender);
         void CloseCombat(Entity &defender);
+        void HeavyBlow(Entity &defender);
         bool Block() {return true;}
 };

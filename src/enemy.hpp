@@ -173,6 +173,25 @@ class ArcherEnemy : public Enemy{
         void Turn(Player &player) override;
 };
 
+class KnightEnemy : public Enemy{
+    private:
+        int heavyblowchance;
+        int shieldchance;
+    public:
+        KnightEnemy(
+            const Stats &s, 
+            const Inventory &i,
+            const string &n, 
+            const string &d,
+            const int &greward,
+            const int &ereward,
+            const int &heavyblow,
+            const int &shield
+        ) : Enemy(s, i, n, d, greward, ereward), heavyblowchance(heavyblow), shieldchance(shield) {}
+
+        void Turn(Player &player) override;
+};
+
 inline Enemy Dummy() {return Enemy(
     Stats(100, 100, 0, 5),
     "Dummy",
@@ -202,7 +221,7 @@ inline BatEnemy AlphaBat() { return BatEnemy(
 );}
 
 inline WolfEnemy WolfCub() {return WolfEnemy(
-    Stats(60, 60, 12, 6), 
+    Stats(60, 60, 12, 5), 
     "Wolf Cub", 
     "A young wolf cub.", 
     20, 
@@ -213,7 +232,7 @@ inline WolfEnemy WolfCub() {return WolfEnemy(
 );}
 
 inline WolfEnemy FemaleWolf() {return WolfEnemy(
-    Stats(110, 110, 15, 8),
+    Stats(100, 100, 15, 6),
     "Female Wolf",
     "A female wolf and a grieving mother of a wolf cub.",
     50,
@@ -224,7 +243,7 @@ inline WolfEnemy FemaleWolf() {return WolfEnemy(
 );}
 
 inline WolfEnemy MaleWolf() {return WolfEnemy(
-    Stats(130, 130, 18, 10),
+    Stats(120, 120, 18, 8),
     "Male Wolf",
     "A male wolf and a father of a wolf cub.",
     80,
@@ -235,7 +254,7 @@ inline WolfEnemy MaleWolf() {return WolfEnemy(
 );}
 
 inline WolfEnemy TrainedWolf() {return WolfEnemy(
-    Stats(150, 150, 27, 15),
+    Stats(150, 150, 27, 12),
     "Trained Wolf",
     "A trained male wolf. It is the archer's pet.",
     50,
@@ -279,7 +298,7 @@ inline GolemEnemy BrokenGolem() {return GolemEnemy(
 );}
 
 inline GolemEnemy IceGolem() {return GolemEnemy(
-    Stats(300, 300, 20, 7), 
+    Stats(250, 250, 20, 7), 
     "Ice Golem", 
     "A powerful but fragile golem. The weakest of it's kind.", 
     300, 
@@ -290,8 +309,8 @@ inline GolemEnemy IceGolem() {return GolemEnemy(
 );}
 
 inline GuardEnemy PatrolGuard() {return GuardEnemy(
-    Stats(175, 175, 20, 10), 
-    Inventory({}, Shield(), NoRanged(), LightChainmailArmor()),
+    Stats(160, 160, 20, 12), 
+    Inventory({}, Shield(), NoRanged(), NoArmor()),
     "Patroling Guard", 
     "A patroling guard of an unknown clan. His shield made ranged weapon ineffective.", 
     200,
@@ -302,7 +321,7 @@ inline GuardEnemy PatrolGuard() {return GuardEnemy(
 );}
 
 inline GuardEnemy RoyalGuard() {return GuardEnemy(
-    Stats(200, 200, 30, 20), 
+    Stats(180, 180, 30, 15), 
     Inventory({}, Shield(), NoRanged(), NoArmor()),
     "Royal Guard", 
     "A royal guard of an unknown clan. His shield and heavy armor made ranged weapon ineffective.", 
@@ -314,12 +333,23 @@ inline GuardEnemy RoyalGuard() {return GuardEnemy(
 );}
 
 inline ArcherEnemy Archer() {return ArcherEnemy(
-    Stats(150, 150, 35, 8), 
-    Inventory({}, NoMelee(), ShortBow(), LightChainmailArmor()),
+    Stats(130, 130, 35, 10), 
+    Inventory({}, NoMelee(), ShortBow(), NoArmor()),
     "Archer", 
     "An archer of an unknown clan. Equipped with a short bow.", 
     200,
     150,
+    50,
+    50
+);}
+
+inline KnightEnemy Knight() {return KnightEnemy(
+    Stats(215, 215, 30, 20), 
+    Inventory({}, Shield(), NoRanged(), NoArmor()),
+    "Knight", 
+    "The clan leader's personal fighter. Equipped with a long sword and heavy armor. No weaknesses in sight.", 
+    150,
+    200,
     50,
     50
 );}

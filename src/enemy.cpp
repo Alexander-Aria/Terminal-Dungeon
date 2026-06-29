@@ -126,7 +126,7 @@ void GuardEnemy::Turn(Player &player){
     Choice choice = Choice::NOTHING;
 
     if(RNGnum <= slashchance) choice = Choice::SLASH;
-    else if(RNGnum >= 100 - shieldchance && GetBlock() == false){
+    else if(RNGnum >= 100 - shieldchance && !GetBlock()){
         if(guardtype == GuardType::PATROL) choice = Choice::BLOCK;
         else if(guardtype == GuardType::ROYALGUARD) choice = Choice::SHIELDCHARGE;
     }
@@ -172,6 +172,30 @@ void ArcherEnemy::Turn(Player &player){
         case Choice::CLOSECOMBAT:
             cout << GetName() << " uses close combat!\n";
             CloseCombat(player);
+            break;
+        default:
+            if(GetName() == "Broken Golem") cout << GetName() << " is breaking down!\n\n";
+            else cout << GetName() << " does nothing!\n\n";
+    }
+}
+
+void KnightEnemy::Turn(Player &player){
+     Random RNG;
+    int RNGnum = RNG.Int(1,100);
+    Choice choice = Choice::NOTHING;
+    
+    if(RNGnum <= heavyblowchance) choice = Choice::HEAVYBLOW;
+    else if(RNGnum >= 100 - shieldchance && !GetBlock()) choice = Choice::SHIELDCHARGE;
+    else choice = Choice::HEAVYBLOW;
+
+    switch(choice){
+        case Choice::HEAVYBLOW:
+            cout << GetName() << " uses heavy blow!\n";
+            HeavyBlow(player);
+            break;
+        case Choice::SHIELDCHARGE:
+            cout << GetName() << " charges with their shield!\n";
+            ShieldCharge(player);
             break;
         default:
             if(GetName() == "Broken Golem") cout << GetName() << " is breaking down!\n\n";

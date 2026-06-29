@@ -50,7 +50,7 @@ void Player::LevelUp(){
         GetStats().GetRawStrength() += 2;
         exp -= 250;
         cout << "you leveled up to level " << level << "!\n";
-        cout << "You health has been restored!\n\n";
+        cout << "Your health has been restored!\n\n";
     }
 }
 

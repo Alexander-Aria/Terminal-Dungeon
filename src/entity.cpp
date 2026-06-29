@@ -18,9 +18,9 @@ void Entity::MaxHealthCheck(){
 void Entity::Slash(Entity &defender){
     Random RNG;
     int chance = RNG.Int(0,2);
-    double basedamage = 10.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
-    double blockresist = 0.5;
-    double range[2] = {0.8, 1.2};
+    const double basedamage = 10.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    const double blockresist = 0.5;
+    const double range[2] = {0.8, 1.2};
     int damage; 
     
     if(defender.GetBlock()){
@@ -40,9 +40,9 @@ void Entity::Slash(Entity &defender){
 
 void Entity::Stab(Entity &defender){
     Random RNG;
-    double basedamage = 7.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
-    double blockresist = 0.5;
-    double range[2] = {0.8, 1.2};
+    const double basedamage = 7.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    const double blockresist = 0.5;
+    const double range[2] = {0.8, 1.2};
     int damage; 
 
     if(defender.GetInventory().GetMelee().GetShieldEffect() && defender.GetBlock()){
@@ -70,9 +70,9 @@ void Entity::Stab(Entity &defender){
 
 void Entity::Shoot(Entity &defender){
     Random RNG;
-    double basedamage = 12.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
-    double range[2] = {0.8, 1.2};
-    double blockresist = 0.6;
+    const double basedamage = 12.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    const double range[2] = {0.8, 1.2};
+    const double blockresist = 0.6;
     int damage, multiplieddamage; 
 
     if(defender.GetInventory().GetMelee().GetShieldEffect() && defender.GetBlock()){
@@ -116,8 +116,8 @@ void Entity::Howl(Stats &defenderstats){
 
 void Entity::DoubleShot(Entity &defender){
     Random RNG;
-    double basedamage = 7.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
-    double range[2] = {0.8, 1.2};
+    const double basedamage = 7.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    const double range[2] = {0.8, 1.2};
     int damage1, damage2;
 
     damage1 = static_cast<int>(RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage)));
@@ -137,9 +137,9 @@ void Entity::DoubleShot(Entity &defender){
 void Entity::Bash(Entity &defender){
     Random RNG;
     int chance = RNG.Int(0,1);
-    double basedamage = 12.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
-    double blockresist = 0.7;
-    double range[2] = {0.8, 1.2};
+    const double basedamage = 12.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    const double blockresist = 0.7;
+    const double range[2] = {0.8, 1.2};
     int damage; 
     
     if(defender.GetBlock()){
@@ -159,9 +159,9 @@ void Entity::Bash(Entity &defender){
 
 void Entity::RockThrow(Entity &defender){
     Random RNG;
-    double basedamage = 8.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
-    double blockresist = 0.6;
-    double range[2] = {0.8, 1.2};
+    const double basedamage = 8.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    const double blockresist = 0.6;
+    const double range[2] = {0.8, 1.2};
     int damage;
     int chance;
 
@@ -182,9 +182,9 @@ void Entity::RockThrow(Entity &defender){
 
 void Entity::IceBeam(Entity &defender){
     Random RNG;
-    double basedamage = 10.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
-    double blockresist = 0.2;
-    double range[2] = {0.9, 1.1};
+    const double basedamage = 10.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    const double blockresist = 0.2;
+    const double range[2] = {0.9, 1.1};
     int damage;
     int chance;
 
@@ -197,9 +197,9 @@ void Entity::IceBeam(Entity &defender){
 
 void Entity::ShieldCharge(Entity &defender){
     Random RNG;
-    double basedamage = 7.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
-    double blockresist = 0.8;
-    double range[2] = {0.8, 1.2};
+    const double basedamage = 7.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    const double blockresist = 0.8;
+    const double range[2] = {0.8, 1.2};
     int damage;
 
     if(defender.GetBlock()) damage = static_cast<int>(blockresist * RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage)));
@@ -215,9 +215,32 @@ void Entity::ShieldCharge(Entity &defender){
 void Entity::CloseCombat(Entity &defender){
     Random RNG;
     int chance = RNG.Int(0,3);
-    double basedamage = 5.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
-    double blockresist = 0.8;
-    double range[2] = {0.6, 1.4};
+    const double basedamage = 5.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    const double blockresist = 0.8;
+    const double range[2] = {0.6, 1.4};
+    int damage; 
+    
+    if(defender.GetBlock()){
+        damage = static_cast<int>(round(blockresist * RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage))));
+        if(chance == 0){
+            cout << "The defense is broken!\n";
+            defender.GetBlock() = false;
+        }
+        else cout << "The defenders defense held strong!\n";
+    }
+    else damage = static_cast<int>(RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage)));
+
+    defender.GetStats().GetHealth() -= damage;
+    defender.GetCharge() = 0;
+    cout << "The attacker dealt " << damage << " damage!\n\n";
+}
+
+void Entity::HeavyBlow(Entity &defender){
+    Random RNG;
+    int chance = RNG.Int(0,2);
+    const double basedamage = 15.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    const double blockresist = 0.4;
+    const double range[2] = {0.7, 1.3};
     int damage; 
     
     if(defender.GetBlock()){

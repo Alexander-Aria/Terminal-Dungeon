@@ -134,17 +134,17 @@ inline Melee IronSword() {return Melee(
 
 inline Melee LongSword() {return Melee(
     "Long Sword",
-    "A heavy and hard hitting long sword (+2 Strength).",
+    "A heavy and hard hitting long sword (+4 Strength).",
     250,
-    2,
+    4,
     false
 );}
 
 inline Melee DragonSlayer() {return Melee(
     "Dragon Slayer",
-    "A carefully forged sword designed to slay dragons (+5 Strength).",
+    "A carefully forged sword designed to slay dragons (+10 Strength).",
     700,
-    5,
+    10,
     false
 );}
 
@@ -167,18 +167,18 @@ inline Ranged NoRanged() {return Ranged(
 
 inline Ranged Crossbow() {return Ranged(
     "Crossbow",
-    "A quick and powerful crossbow (+2 Strength, 5 arrows/battle).",
+    "A quick and powerful crossbow (+4 Strength, 5 arrows/battle).",
     400,
-    2,
+    4,
     5,
     5
 );}
 
 inline Ranged ShortBow() {return Ranged(
     "Short Bow",
-    "A reliable short bow. A standard for military archers. (+4 Strength, 6 arrows/battle).",
+    "A reliable short bow. A standard for military archers. (+10 Strength, 6 arrows/battle).",
     400,
-    4,
+    10,
     6,
     6
 );}
@@ -199,16 +199,16 @@ inline Armor LeatherArmor() {return Armor(
 
 inline Armor LightChainmailArmor() {return Armor(
     "Light Chainmail Armor",
-    "A military grade light chainmail armor (+2 Defense).",
+    "A military grade light chainmail armor (+3 Defense).",
     250,
-    2
+    3
 );}
 
 inline Armor DragonScaleArmor() {return Armor(
     "Dragon Scale Armor",
-    "A military grade light chainmail armor (+5 Defense).",
+    "A military grade light chainmail armor (+8 Defense).",
     700,
-    5
+    8
 );}
 
 inline Consumables SmallPotion() {return Consumables(
@@ -231,20 +231,20 @@ inline Consumables LargePotion() {return Consumables(
 
 inline Consumables PowerStone() {return Consumables(
     "Power Stone",
-    "A magical stone that increases your strength by 3 in a single fight.", 
+    "A magical stone that increases your strength by 5 in a single fight.", 
     200, 
     0, 
-    3, 
+    5, 
     0
 );}
 
 inline Consumables ArmorStone() {return Consumables(
     "Armor Stone", 
-    "A magical stone that increases your defense by 3 in a single fight.", 
+    "A magical stone that increases your defense by 5 in a single fight.", 
     200, 
     0, 
     0, 
-    3
+    5
 );}
 
 inline Consumables LifeStone() {return Consumables(
