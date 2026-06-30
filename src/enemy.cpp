@@ -99,6 +99,7 @@ void GolemEnemy::Turn(Player &player){
     else if(RNGnum >= 100 - magicchance){
         if(golemtype == GolemType::ROCK) choice = Choice::ROCKTHROW;
         else if(golemtype == GolemType::ICE) choice = Choice::ICEBEAM;
+        else if(golemtype == GolemType::FIRE) choice = Choice::FIREBLAST;
     }
 
     switch(choice){
@@ -113,6 +114,10 @@ void GolemEnemy::Turn(Player &player){
         case Choice::ICEBEAM:
             cout << GetName() << " uses ice beam!\n";
             IceBeam(player);
+            break;
+        case Choice::FIREBLAST:
+            cout << GetName() << " uses fire blast!\n";
+            FireBlast(player);
             break;
         default:
             if(GetName() == "Broken Golem") cout << GetName() << " is breaking down!\n\n";

@@ -14,6 +14,7 @@ enum class Choice{
     BASH,
     ROCKTHROW,
     ICEBEAM,
+    FIREBLAST,
     SHIELDCHARGE,
     CLOSECOMBAT,
     HEAVYBLOW,
@@ -58,6 +59,7 @@ class Entity{
         void Bash(Entity &defender);
         void RockThrow(Entity &defender);
         void IceBeam(Entity &defender);
+        void FireBlast(Entity &defender);
         void ShieldCharge(Entity &defender);
         void CloseCombat(Entity &defender);
         void HeavyBlow(Entity &defender);

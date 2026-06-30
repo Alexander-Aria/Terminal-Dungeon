@@ -442,13 +442,28 @@ void StageEight(GameState &game){
     cout << "Shocked, the clan leader immediately ran.\n";
     cout << "Without hesitation, you chase him.\n";
     game.GetStage()++;
-
-    // Temporary
-    if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
 }
 
 void StageNine(GameState &game){
+    auto enemy1 = FireGolem();
 
+    cout << "\nYou chased the clan leader into a cave below a volcano.\n";
+    cout << "\"Is he insane? He's trapped there!\" You thought.\n\n";
+
+    cout << "AS you go deeper into the cave, you can hear something rumbling deeper.\n";
+    cout << "You prepare yourself for the worst.\n\n";
+
+    Choice(game);
+    if(!IsRunning(game.GetStatus())) return;
+
+    cout << "Suddenly, a golem rushed towards you!\n\n";
+
+    Battle(game, enemy1);
+    if(!IsRunning(game.GetStatus())) return;
+    game.GetStage()++;
+    
+    // Temporary
+    if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
 }
 
 void StageTen(GameState &game){

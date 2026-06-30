@@ -195,6 +195,23 @@ void Entity::IceBeam(Entity &defender){
     cout << "The attacker dealt " << damage << " damage!\n";
 }
 
+void Entity::FireBlast(Entity &defender){
+    Random RNG;
+    const double basedamage = 22.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());
+    const double blockresist = 0.8;
+    const double range[2] = {0.7, 1.3};
+    int damage;
+    int chance;
+
+    if(defender.GetBlock()) damage = static_cast<int>(blockresist * RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage)));
+    else damage = static_cast<int>(RNG.Int(round(range[0] * basedamage), round(range[1] * basedamage)));
+    defender.GetStats().GetHealth() -= damage;
+    defender.GetCharge() = 0;
+    GetStats().GetTempDefenseBoost() -= 2;
+    cout << "The attacker dealt " << damage << " damage!\n";
+    cout << "The defender's defense dropped by 2!\n";
+}
+
 void Entity::ShieldCharge(Entity &defender){
     Random RNG;
     const double basedamage = 7.0 * (stats.GetRawStrength() + stats.GetStrengthBuff() + stats.GetTempStrengthBoost())/(defender.GetStats().GetRawDefense() + defender.GetStats().GetDefenseBuff() + defender.GetStats().GetTempDefenseBoost());

@@ -308,6 +308,17 @@ inline GolemEnemy IceGolem() {return GolemEnemy(
     GolemType::ICE
 );}
 
+inline GolemEnemy FireGolem() {return GolemEnemy(
+    Stats(300, 300, 30, 17), 
+    "Fire Golem", 
+    "A powerful and agressive fire golem.", 
+    300, 
+    200,
+    50,
+    50,
+    GolemType::FIRE
+);}
+
 inline GuardEnemy PatrolGuard() {return GuardEnemy(
     Stats(160, 160, 20, 12), 
     Inventory({}, Shield(), NoRanged(), NoArmor()),
