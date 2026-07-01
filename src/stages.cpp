@@ -295,7 +295,7 @@ void StageFiveExtra(GameState &game){
 
     cout << "\nAs you were about to go in, strong freezing wind blew towards you.\n";
     cout << "The freezing cold is weakening you.\n\n";
-    game.GetPlayer().GetStats().GetTempStrengthBoost() = -2;
+    game.GetPlayer().GetStats().GetTempStrengthBoost() -= 2;
 
     Battle(game, enemy1);
     if(!IsRunning(game.GetStatus())) return;
@@ -311,7 +311,9 @@ void StageFiveExtra(GameState &game){
 void StageSix(GameState &game){
     auto enemy1 = TrainedWolf();
 
-    cout << "Entering area 6, you found a small village.\n";
+    cout << "\nAREA 6\n\n";
+
+    cout << "You found a small village.\n";
     cout << "No flag is in sight and the people seem friendly.\n";
     cout << "However, the village is strangely silent. The people are doing nothing but working.\n\n";
 
@@ -450,7 +452,7 @@ void StageNine(GameState &game){
     cout << "\nYou chased the clan leader into a cave below a volcano.\n";
     cout << "\"Is he insane? He's trapped there!\" You thought.\n\n";
 
-    cout << "AS you go deeper into the cave, you can hear something rumbling deeper.\n";
+    cout << "As you go deeper into the cave, you can hear something rumbling deeper.\n";
     cout << "You prepare yourself for the worst.\n\n";
 
     Choice(game);
@@ -461,11 +463,16 @@ void StageNine(GameState &game){
     Battle(game, enemy1);
     if(!IsRunning(game.GetStatus())) return;
     game.GetStage()++;
-    
-    // Temporary
-    if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
 }
 
 void StageTen(GameState &game){
+    auto enemy1 = ClanLeader();
 
+    cout << "\nAfter defeating the fire golem, you confront the clan leader.\n";
+    cout << "He isn't some kind of powerful warrior. Without his troops, he's nothing.\n\n";
+
+    Battle(game, enemy1);
+    if(!IsRunning(game.GetStatus())) return;
+
+    if(game.GetStatus() == Status::ONGOING) game.GetStatus() = Status::WIN;
 }

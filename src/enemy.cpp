@@ -4,7 +4,7 @@
 
 void Enemy::Turn(Player &player){cout << GetName() << " does nothing!\n\n";}
 
-void BatEnemy::Turn(Player &player){
+void RegularEnemy::Turn(Player &player){
     Random RNG;
     int RNGnum = RNG.Int(1,100);
     Choice choice = Choice::NOTHING;

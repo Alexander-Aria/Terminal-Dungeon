@@ -39,12 +39,12 @@ class Enemy : public Entity{
         virtual void Turn(Player &player);
 };
 
-class BatEnemy : public Enemy{
+class RegularEnemy : public Enemy{
     private:
         int slashchance = 80;
         int blockchance = 20;
     public:
-        BatEnemy(
+        RegularEnemy(
             const Stats &s, 
             const string &n, 
             const string &d,
@@ -200,7 +200,7 @@ inline Enemy Dummy() {return Enemy(
     0
 );}
 
-inline BatEnemy Bat() {return BatEnemy(
+inline RegularEnemy Bat() {return RegularEnemy(
     Stats(50, 50, 8, 5), 
     "Bat", 
     "An agressive and territorial bat.", 
@@ -210,7 +210,7 @@ inline BatEnemy Bat() {return BatEnemy(
     20
 );}
 
-inline BatEnemy AlphaBat() { return BatEnemy(
+inline RegularEnemy AlphaBat() { return RegularEnemy(
     Stats(80, 80, 12, 5), 
     "Alpha Bat", 
     "The leader of the bats.", 
@@ -360,7 +360,17 @@ inline KnightEnemy Knight() {return KnightEnemy(
     "Knight", 
     "The clan leader's personal fighter. Equipped with a long sword and heavy armor. No weaknesses in sight.", 
     150,
-    200,
+    225,
+    50,
+    50
+);}
+
+inline RegularEnemy ClanLeader() {return RegularEnemy(
+    Stats(75, 75, 15, 5), 
+    "Clan Leader", 
+    "A lone clan leader. Without his army, he's defenseless.", 
+    1000, 
+    20,
     50,
     50
 );}
