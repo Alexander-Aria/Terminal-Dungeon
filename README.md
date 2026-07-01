@@ -5,9 +5,9 @@ A terminal-based dungeon game written in C++.
 ## Features
 
 - Battle System
-- Inventory System
-- Economy System 
-- 10 stages/levels (WIP)
+- Inventory/Equipment System
+- Economy/Shop System 
+- 10 stages/levels
 - RNG
 - Terminal Interface
 
